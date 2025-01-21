@@ -113,7 +113,7 @@ function updateVideoSource() {
     if (window.innerWidth >= 768) {  // Pantalla grande (por ejemplo, mayor a 768px)
         videoLarge.src = "ruta-del-video-grande.mp4"; // Fuente de video para pantallas grandes
         videoSmall.src = ""; // Desactiva la fuente para pantallas pequeñas
-    } else {  // Pantalla pequeña
+    } else {  
         videoSmall.src = "ruta-del-video-pequeño.mp4"; // Fuente de video para pantallas pequeñas
         videoLarge.src = ""; // Desactiva la fuente para pantallas grandes
     }
