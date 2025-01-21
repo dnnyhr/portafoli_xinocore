@@ -14,14 +14,21 @@ body {
 }
 
 .hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
+    height: 100vh; /* Asegura que ocupe toda la ventana */
     overflow: hidden;
-    background: url('https://i.ibb.co/GHRR5YQ/Dise-o-sin-t-tulo-12-removebg-preview.png') no-repeat center center/cover;
 }
+
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video cubra toda el área */
+    z-index: -1; /* Coloca el video por detrás del contenido */
+}
+
 
 .hero::before {
     content: '';
@@ -40,17 +47,13 @@ body {
     color: white;
 }
 
-.hero h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombras para mayor visibilidad */
+/* Otros estilos para el contenido sobre el video */
+.hero h1, .hero p {
+    position: relative;
+    z-index: 1; /* Asegura que el texto esté sobre el video */
+    color: white;
+    text-align: center;
 }
-
-.hero p {
-    font-size: 1.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
 
 .projects {
     padding: 5rem 2rem;

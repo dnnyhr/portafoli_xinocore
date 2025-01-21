@@ -26,7 +26,7 @@ setTimeout(() => {
         ease: "power2.inOut", 
         overwrite: "auto" 
     });
-}, 2000); 
+}, 5000); 
 gsap.utils.toArray('.project-card').forEach((card, i) => {
     gsap.to(card, {
         scrollTrigger: {
@@ -103,4 +103,15 @@ window.addEventListener('click', (e) => {
 if (e.target === modal) {
 modal.style.display = 'none';
 }
+});
+// Obtener el video de la sección hero
+const video = document.getElementById('hero-video');
+
+// Reproducir el video automáticamente
+video.play();
+
+// Pausar el video cuando termine
+video.addEventListener('ended', () => {
+    video.pause(); // Pausa el video cuando termine
+    video.currentTime = video.duration; // Asegura que se quede en el último fotograma
 });
