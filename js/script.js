@@ -26,7 +26,7 @@ setTimeout(() => {
         ease: "power2.inOut", 
         overwrite: "auto" 
     });
-}, 8000); 
+}, 2000); 
 gsap.utils.toArray('.project-card').forEach((card, i) => {
     gsap.to(card, {
         scrollTrigger: {
