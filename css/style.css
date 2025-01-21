@@ -20,24 +20,14 @@ body {
     overflow: hidden;
 }
 
-
-/* Video para pantallas grandes */
-#hero-video source#video-large {
-    display: block;
-}
-
-#hero-video source#video-small {
-    display: none;
-}
-
-/* Video para pantallas pequeñas */
-@media (max-width: 767px) {
-    #hero-video source#video-large {
-        display: none;
-    }
-    #hero-video source#video-small {
-        display: block;
-    }
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video cubra toda el área */
+    z-index: -1; /* Coloca el video por detrás del contenido */
 }
 
 /* Otros estilos para el contenido sobre el video */
@@ -47,6 +37,7 @@ body {
     color: white;
     text-align: center;
 }
+
 
 
 
