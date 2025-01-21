@@ -29,6 +29,24 @@ body {
     object-fit: cover; /* Asegura que el video cubra toda el área */
     z-index: -1; /* Coloca el video por detrás del contenido */
 }
+/* Video para pantallas grandes */
+#hero-video source#video-large {
+    display: block;
+}
+
+#hero-video source#video-small {
+    display: none;
+}
+
+/* Video para pantallas pequeñas */
+@media (max-width: 767px) {
+    #hero-video source#video-large {
+        display: none;
+    }
+    #hero-video source#video-small {
+        display: block;
+    }
+}
 
 /* Otros estilos para el contenido sobre el video */
 .hero h1, .hero p {
