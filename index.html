@@ -29,10 +29,13 @@
 </nav>
     <section class="hero" id="inicio">
         <!-- Video de fondo -->
-    <video id="hero-video" autoplay muted>
-        <source src="./assets/Introduccin de Pxeles de Nen_free (1).mp4" type="video/mp4">
-        Tu navegador no soporta este formato de video.
-    </video>
+        <video id="hero-video" autoplay muted loop>
+            <!-- Fuente para pantallas grandes -->
+            <source id="video-large" src="./assets/introXL.mp4" type="video/mp4">
+            <!-- Fuente para pantallas pequeñas -->
+            <source id="video-small" src="./assets/introXS.mp4" type="video/mp4">
+            Tu navegador no soporta este formato de video.
+        </video>
         
         <div class="scroll-indicator">
             ↓

@@ -13,6 +13,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Asegura que la sección hero ocupe toda la ventana */
 .hero {
     position: relative;
     height: 100vh; /* Asegura que ocupe toda la ventana */
@@ -29,19 +30,20 @@ body {
     z-index: -1; /* Coloca el video por detrás del contenido */
 }
 
-
-.hero-content {
-    text-align: center;
-    z-index: 2; /* Asegura que el texto esté delante de la superposición */
-    color: white;
-}
-
 /* Otros estilos para el contenido sobre el video */
 .hero h1, .hero p {
     position: relative;
     z-index: 1; /* Asegura que el texto esté sobre el video */
     color: white;
     text-align: center;
+}
+
+
+
+.hero-content {
+    text-align: center;
+    z-index: 2; /* Asegura que el texto esté delante de la superposición */
+    color: white;
 }
 
 .projects {
