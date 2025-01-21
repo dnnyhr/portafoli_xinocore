@@ -18,7 +18,7 @@ gsap.to('.nav', {
 });
 setTimeout(() => {
     gsap.to(window, {
-        duration: 2, // 
+        duration: 5, // 
         scrollTo: {
             y: "#proyectos",
             offsetY: 70 
