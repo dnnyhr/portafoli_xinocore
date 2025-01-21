@@ -14,6 +14,7 @@ body {
 }
 
 /* Asegura que la sección hero ocupe toda la ventana */
+/* Asegura que la sección hero ocupe toda la ventana */
 .hero {
     position: relative;
     height: 100vh; /* Asegura que ocupe toda la ventana */
@@ -37,9 +38,6 @@ body {
     color: white;
     text-align: center;
 }
-
-
-
 
 .hero-content {
     text-align: center;

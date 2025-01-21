@@ -104,29 +104,15 @@ if (e.target === modal) {
 modal.style.display = 'none';
 }
 });
+// Obtener el video de la sección hero
 const video = document.getElementById('hero-video');
-const videoLarge = document.getElementById('video-large');
-const videoSmall = document.getElementById('video-small');
 
-// Función para actualizar la fuente del video
-function updateVideoSource() {
-    if (window.innerWidth >= 768) {  // Pantalla grande (por ejemplo, mayor a 768px)
-        videoLarge.src = "../assets/introXL.mp4"; // Fuente de video para pantallas grandes
-        videoSmall.src = ""; // Desactiva la fuente para pantallas pequeñas
-    } else {  // Pantalla pequeña
-        videoSmall.src = "../assets/introXS.mp4"; // Fuente de video para pantallas pequeñas
-        videoLarge.src = ""; // Desactiva la fuente para pantallas grandes
-    }
-}
-
-// Llamar a la función al cargar la página
-window.addEventListener('load', updateVideoSource);
-
-// Llamar a la función cuando la ventana cambie de tamaño
-window.addEventListener('resize', updateVideoSource);
+// Reproducir el video automáticamente
+video.play();
 
 // Pausar el video cuando termine
 video.addEventListener('ended', () => {
     video.pause(); // Pausa el video cuando termine
     video.currentTime = video.duration; // Asegura que se quede en el último fotograma
 });
+
