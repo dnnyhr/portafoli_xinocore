@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Obtener el video de la sección hero
+// Obtener el video de la sección 
 const video = document.getElementById('hero-video');
 
 // Reproducir el video automáticamente
