@@ -21,26 +21,28 @@ body {
     overflow: hidden;
 }
 
-#hero-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
-}
-
+/* Imagen de fondo por defecto */
 .fallback-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('./assets/gato.jpg') no-repeat center center/cover;
-    z-index: -1;
-    display: none; 
+    background: url('ruta-de-la-imagen.jpg') no-repeat center center/cover;
+    z-index: -1; /* Fondo detrás del contenido */
 }
+
+/* Estilo del video (oculto por defecto) */
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video cubra todo el área */
+    z-index: -1;
+}
+
 
 .hero h1,
 .hero p {

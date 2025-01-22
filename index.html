@@ -28,16 +28,19 @@
     </div>
 </nav>
 <section class="hero">
-    <!-- Video de fondo -->
-    <video id="hero-video" autoplay muted playsinline>
-        <source src="./assets/intro.mp4" type="video/mp4">
+    <!-- Imagen de fondo (por defecto) -->
+    <div id="fallback-image" class="fallback-image"></div>
+
+    <!-- Video oculto inicialmente -->
+    <video id="hero-video" muted playsinline style="display: none;">
+        <source src="ruta-del-video.mp4" type="video/mp4">
         Tu navegador no soporta este formato de video.
     </video>
-    <!-- Imagen de fondo alternativa -->
-    <div id="fallback-image" class="fallback-image" style="display: none;"></div>
+
     <h1>Bienvenido</h1>
     <p>Explora nuestro contenido</p>
 </section>
+
 
     <section class="projects" id="proyectos">
         <div class="projects-header">

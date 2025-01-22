@@ -120,28 +120,30 @@ modal.style.display = 'none';
 });
 // Detectar si es un dispositivo iPhone o iOS
 // Función para detectar iOS
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+// Función para detectar Android
+function isAndroid() {
+    return /Android/i.test(navigator.userAgent);
 }
 
-// Configurar video o fallback
+// Configuración de fondo (imagen o video)
 document.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('hero-video');
     const fallbackImage = document.getElementById('fallback-image');
 
-    if (isIOS()) {
-        console.log('Dispositivo iOS detectado. Usando imagen de fondo.');
-        video.style.display = 'none'; // Oculta el video
-        fallbackImage.style.display = 'block'; // Muestra la imagen de fondo
-    } else {
-        // Intentar reproducir el video
+    if (isAndroid()) {
+        console.log('Dispositivo Android detectado. Mostrando video.');
+        fallbackImage.style.display = 'none'; // Oculta la imagen de fondo
+        video.style.display = 'block'; // Muestra el video
         video.play().catch((error) => {
-            console.warn('El video no se puede reproducir automáticamente. Mostrando imagen de fondo.');
-            video.style.display = 'none'; // Oculta el video
-            fallbackImage.style.display = 'block'; // Muestra la imagen de fondo
+            console.warn('El video no se puede reproducir automáticamente:', error);
+            video.style.display = 'none'; // Si falla, oculta el video
+            fallbackImage.style.display = 'block'; // Vuelve a mostrar la imagen
         });
+    } else {
+        console.log('No se detectó Android. Usando imagen de fondo.');
     }
 });
+
 
 
 // Obtener el video de la sección 
