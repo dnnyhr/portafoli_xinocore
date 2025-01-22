@@ -27,18 +27,18 @@
         <a href="#contacto">Contacto</a>
     </div>
 </nav>
-    <section class="hero" id="inicio">
-        <video id="hero-video" autoplay muted>
-            <source src="./assets/intro.mp4" type="video/mp4">
-            Tu navegador no soporta este formato de video.
-        </video>
-        <div id="fallback-image" class="fallback-image" style="display: none;">
-            <!-- Este contenedor se muestra si el video se reemplaza -->
-        </div>
-        <div class="scroll-indicator">
-            ↓
-        </div>
-    </section>
+<section class="hero">
+    <!-- Video de fondo -->
+    <video id="hero-video" autoplay muted playsinline>
+        <source src="ruta-del-video.mp4" type="video/mp4">
+        Tu navegador no soporta este formato de video.
+    </video>
+    <!-- Imagen de fondo alternativa -->
+    <div id="fallback-image" class="fallback-image" style="display: none;"></div>
+    <h1>Bienvenido</h1>
+    <p>Explora nuestro contenido</p>
+</section>
+
     <section class="projects" id="proyectos">
         <div class="projects-header">
             <h2>Proyectos</h2>
