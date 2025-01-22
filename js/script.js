@@ -104,6 +104,27 @@ if (e.target === modal) {
 modal.style.display = 'none';
 }
 });
+// Detectar si es un dispositivo iPhone o iOS
+function isIPhone() {
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+// Reemplazar video por imagen si es un iPhone
+document.addEventListener('DOMContentLoaded', () => {
+    const video = document.getElementById('hero-video');
+    const fallbackImage = document.getElementById('fallback-image');
+
+    if (isIPhone()) {
+        // Ocultar el video y mostrar la imagen
+        video.style.display = 'none';
+        fallbackImage.style.display = 'block';
+        console.log('Se detectó un dispositivo iOS. Mostrando la imagen de fondo.');
+    } else {
+        // Reproducir el video normalmente en otros dispositivos
+        video.play();
+    }
+});
+
 // Obtener el video de la sección hero
 const video = document.getElementById('hero-video');
 
