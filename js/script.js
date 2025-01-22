@@ -63,13 +63,13 @@ const projectDetails = {
 title: "Menú interactivo La Catrina Taqueria",
 description: "Un menú llamativo donde explorar los platillos de forma interactiva pudiendo ver fotos y sus ingredientes.",
 video: "./assets/lacatrina.mp4",
-link: "https://lacatrina.surge.sh" 
+link: "https://lacatrina.xinocore.com" 
 },
 "amigas": {
-title: "Menu Interactivo Cafeteria Amigas Express",
+title: "Menu Interactivo Cafeteria Amigas Express (sin terminar)",
 description: "Un menú llamativo donde explorar los platillos de forma interactiva a través de categorías con fotos e ingredientes.",
 video: "/path/to/amigas-video.mp4", 
-link: "https://amigas_express.surge.sh" 
+link: "https://amigasexpress.xinocore.com" 
 }
 };
 const modal = document.getElementById('project-modal');
