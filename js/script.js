@@ -119,25 +119,30 @@ modal.style.display = 'none';
 }
 });
 // Detectar si es un dispositivo iPhone o iOS
-function isIPhone() {
-    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+// Función para detectar iOS
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 }
 
-// Reemplazar video por imagen si es un iPhone
+// Configurar video o fallback
 document.addEventListener('DOMContentLoaded', () => {
     const video = document.getElementById('hero-video');
     const fallbackImage = document.getElementById('fallback-image');
 
-    if (isIPhone()) {
-        // Ocultar el video y mostrar la imagen
-        video.style.display = 'none';
-        fallbackImage.style.display = 'block';
-        console.log('Se detectó un dispositivo iOS. Mostrando la imagen de fondo.');
+    if (isIOS()) {
+        console.log('Dispositivo iOS detectado. Usando imagen de fondo.');
+        video.style.display = 'none'; // Oculta el video
+        fallbackImage.style.display = 'block'; // Muestra la imagen de fondo
     } else {
-        // Reproducir el video normalmente en otros dispositivos
-        video.play();
+        // Intentar reproducir el video
+        video.play().catch((error) => {
+            console.warn('El video no se puede reproducir automáticamente. Mostrando imagen de fondo.');
+            video.style.display = 'none'; // Oculta el video
+            fallbackImage.style.display = 'block'; // Muestra la imagen de fondo
+        });
     }
 });
+
 
 // Obtener el video de la sección hero
 const video = document.getElementById('hero-video');
