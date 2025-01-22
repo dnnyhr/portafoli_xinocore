@@ -122,6 +122,7 @@ modal.style.display = 'none';
 // Función para detectar iOS
 // Función para detectar Android
 // Función para detectar Android
+// Función para detectar Android
 function isAndroid() {
     return /Android/i.test(navigator.userAgent);
 }
@@ -133,18 +134,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isAndroid()) {
         console.log('Dispositivo Android detectado. Mostrando video.');
-        fallbackImage.style.display = 'none'; // Oculta la imagen de fondo
-        video.style.display = 'block'; // Muestra el video
+        fallbackImage.style.opacity = '0'; // Oculta la imagen suavemente
+        video.style.opacity = '1'; // Muestra el video
         video.play().catch((error) => {
             console.warn('El video no se puede reproducir automáticamente:', error);
-            video.style.display = 'none'; // Oculta el video si falla
-            fallbackImage.style.display = 'block'; // Vuelve a mostrar la imagen
+            video.style.opacity = '0'; // Oculta el video si falla
+            fallbackImage.style.opacity = '1'; // Vuelve a mostrar la imagen
         });
     } else {
         console.log('No se detectó Android. Mostrando imagen de fondo por defecto.');
-        fallbackImage.style.display = 'block'; // Asegura que la imagen se muestre
+        fallbackImage.style.opacity = '1'; // Asegura que la imagen esté visible
+        video.style.opacity = '0'; // Asegura que el video permanezca oculto
     }
 });
+
 
 
 // Obtener el video de la sección 
