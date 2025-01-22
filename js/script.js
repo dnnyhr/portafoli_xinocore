@@ -16,17 +16,31 @@ gsap.to('.nav', {
     duration: 1,
     delay: 1
 });
+// Bloquear y desbloquear scroll durante la animación automática
+const blockScroll = () => {
+    document.body.classList.add('no-scroll'); // Bloquea el scroll
+};
+
+const unblockScroll = () => {
+    document.body.classList.remove('no-scroll'); // Restaura el scroll
+};
+
+// Ejecutar scroll automático
 setTimeout(() => {
+    blockScroll(); // Bloquea el scroll antes de iniciar la animación
+
     gsap.to(window, {
-        duration: 7, // 
+        duration: 2, // Duración del scroll automático
         scrollTo: {
-            y: "#proyectos",
-            offsetY: 70 
+            y: "#proyectos", // ID de la sección de destino
+            offsetY: 70 // Offset si es necesario
         },
-        ease: "power2.inOut", 
-        overwrite: "auto" 
+        ease: "power2.inOut", // Animación suave
+        overwrite: "auto",
+        onComplete: unblockScroll // Desbloquear el scroll cuando la animación termine
     });
-}, 2000); 
+}, 2000); // Inicia el scroll automático después de 2 segundos
+
 gsap.utils.toArray('.project-card').forEach((card, i) => {
     gsap.to(card, {
         scrollTrigger: {
