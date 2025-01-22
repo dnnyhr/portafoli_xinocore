@@ -46,8 +46,6 @@ body {
     opacity: 0; /* Oculto por defecto */
     transition: opacity 0.3s ease; /* Transición suave */
 }
-
-
 .hero h1,
 .hero p {
     position: relative;
