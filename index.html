@@ -29,23 +29,25 @@
         
         /* Navbar styles */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 2rem;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem 2rem; /* Ajusta el padding si es necesario */
+    z-index: 1000;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Asegura que no se desborde */
+}
+
+.nav-container {
+    max-width: 1200px; /* Limita el tamaño máximo del contenedor */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
         
         .logo-container {
             display: flex;
