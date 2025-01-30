@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xinocore</title>
     <head>
-        <!-- ... otros meta tags ... -->
-        
-        <!-- GSAP y ScrollToPlugin PRIMERO -->
+        <meta http-equiv="Content-Security-Policy" 
+        content="default-src 'self' https://cdnjs.cloudflare.com; 
+                 script-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; 
+                 style-src 'self' https://cdnjs.cloudflare.com 'unsafe-inline'; 
+                 img-src 'self' data:;">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
         
