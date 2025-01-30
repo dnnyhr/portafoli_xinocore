@@ -190,40 +190,43 @@ function toggleDishEditor() {
         button.textContent = '▼ Mostrar';
     }
 }
-// Asegura que GSAP esté cargado antes de registrar plugins
-if (typeof gsap !== "undefined" && gsap.registerPlugin) {
-    gsap.registerPlugin(ScrollToPlugin);
-}
+// script.js - Versión simplificada
+document.addEventListener('DOMContentLoaded', () => {
+    // Scroll suave mejorado para Cloudflare
+    const handleSmoothScroll = (e) => {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
+        if (target) {
+            const navbar = document.querySelector('.navbar');
+            const offset = target.offsetTop - (navbar ? navbar.offsetHeight : 0);
+            
+            // Método nativo con polyfill
+            window.scroll({
+                top: offset,
+                behavior: 'smooth'
+            });
+            
+            // Actualizar URL sin recargar
+            history.pushState(null, null, targetId);
+        }
+        
+        // Cerrar menú móvil
+        document.getElementById('navMenu').classList.remove('active');
+    };
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Scroll suave para todos los enlaces con #
+    // Asignar eventos
     document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute("href");
-            const target = document.querySelector(targetId);
-
-            if (target) {
-                // Calcula el offset considerando el navbar fijo
-                const navbar = document.querySelector(".navbar");
-                const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                const offset = target.offsetTop - navbarHeight;
-
-                // Animación con GSAP
-                gsap.to(window, {
-                    duration: 1,
-                    scrollTo: { y: offset, autoKill: false },
-                    ease: "power2.inOut",
-                });
-            }
-
-            // Cierra el menú móvil si está abierto
-            const navMenu = document.getElementById("navMenu");
-            if (navMenu.classList.contains("active")) {
-                navMenu.classList.remove("active");
-            }
-        });
+        link.addEventListener('click', handleSmoothScroll);
     });
+
+    // Funciones del menú
+    window.toggleMenu = () => document.getElementById('navMenu').classList.toggle('active');
 });
+// Inicializar polyfill
+if ('scrollBehavior' in document.documentElement.style === false) {
+    SmoothScrollPolyfill.polyfill();
+}
 loadDish(0);
 
