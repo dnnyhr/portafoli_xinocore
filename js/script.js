@@ -190,48 +190,40 @@ function toggleDishEditor() {
         button.textContent = '▼ Mostrar';
     }
 }
-// Registra el plugin de ScrollTo
-if (typeof gsap !== "undefined") {
+// Asegura que GSAP esté cargado antes de registrar plugins
+if (typeof gsap !== "undefined" && gsap.registerPlugin) {
     gsap.registerPlugin(ScrollToPlugin);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Scroll suave para todos los enlaces internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
+document.addEventListener("DOMContentLoaded", () => {
+    // Scroll suave para todos los enlaces con #
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", (e) => {
             e.preventDefault();
-            const targetId = this.hash;
+            const targetId = link.getAttribute("href");
             const target = document.querySelector(targetId);
-            
+
             if (target) {
-                const navbar = document.querySelector('.navbar');
+                // Calcula el offset considerando el navbar fijo
+                const navbar = document.querySelector(".navbar");
                 const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                const offset = target.offsetTop - navbarHeight - 20; // Ajuste fino
-                
+                const offset = target.offsetTop - navbarHeight;
+
                 // Animación con GSAP
                 gsap.to(window, {
-                    duration: 1.2,
-                    scrollTo: {
-                        y: offset,
-                        autoKill: false
-                    },
-                    ease: "power3.out",
-                    onComplete: () => window.history.pushState(null, null, targetId) // Actualiza la URL
+                    duration: 1,
+                    scrollTo: { y: offset, autoKill: false },
+                    ease: "power2.inOut",
                 });
             }
-            
-            // Cerrar menú móvil
-            const navMenu = document.getElementById('navMenu');
-            if (navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
+
+            // Cierra el menú móvil si está abierto
+            const navMenu = document.getElementById("navMenu");
+            if (navMenu.classList.contains("active")) {
+                navMenu.classList.remove("active");
             }
         });
     });
-
-    // Funciones del menú móvil
-    window.toggleMenu = () => {
-        document.getElementById('navMenu').classList.toggle('active');
-    };
 });
 loadDish(0);
 
