@@ -190,40 +190,48 @@ function toggleDishEditor() {
         button.textContent = '▼ Mostrar';
     }
 }
-// Registra el plugin al inicio
-gsap.registerPlugin(ScrollToPlugin);
+// Registra el plugin de ScrollTo
+if (typeof gsap !== "undefined") {
+    gsap.registerPlugin(ScrollToPlugin);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Scroll suave mejorado
+    // Scroll suave para todos los enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.hash;
+            const target = document.querySelector(targetId);
             
             if (target) {
                 const navbar = document.querySelector('.navbar');
-                const offset = navbar ? navbar.offsetHeight : 0;
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                const offset = target.offsetTop - navbarHeight - 20; // Ajuste fino
                 
+                // Animación con GSAP
                 gsap.to(window, {
-                    duration: 3,
+                    duration: 1.2,
                     scrollTo: {
-                        y: target,
-                        offsetY: offset + 20, // Espacio adicional
-                        autoKill: true
+                        y: offset,
+                        autoKill: false
                     },
-                    ease: "power3.out"
+                    ease: "power3.out",
+                    onComplete: () => window.history.pushState(null, null, targetId) // Actualiza la URL
                 });
             }
             
             // Cerrar menú móvil
             const navMenu = document.getElementById('navMenu');
-            navMenu.classList.remove('active');
+            if (navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+            }
         });
     });
 
-    // Funciones del menú
-    window.toggleMenu = () => document.getElementById('navMenu').classList.toggle('active');
-    window.closeMenu = () => document.getElementById('navMenu').classList.remove('active');
+    // Funciones del menú móvil
+    window.toggleMenu = () => {
+        document.getElementById('navMenu').classList.toggle('active');
+    };
 });
 loadDish(0);
 
