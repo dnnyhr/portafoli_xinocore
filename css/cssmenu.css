@@ -718,3 +718,111 @@ margin: 0 auto;
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
+.dish-editor {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dish-control h4 {
+    color: var(--preview-text);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.dish-control input[type="text"],
+.dish-control textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dish-control textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+#dishSelector {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    background: var(--preview-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+/* Agrega estos estilos */
+.image-upload-preview {
+    cursor: pointer;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.image-upload-preview:hover {
+    border-color: var(--primary);
+    transform: scale(1.02);
+}
+
+.preview-container {
+    width: 100%;
+    height:200px;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#dishImagePreview {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+/* Encabezado del editor */
+.dish-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Botón de toggle mejorado */
+.toggle-button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+
+.toggle-button:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Contenedor del editor */
+.dish-editor {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dish-editor.active {
+    max-height: 1000px; /* Ajusta según tu contenido máximo */
+    opacity: 1;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}

@@ -128,3 +128,102 @@ function addToHistory(gradient) {
 
     gradientHistory.appendChild(gradientButton);
 }
+let currentDish = 0;
+const dishes = document.querySelectorAll('.menu-item');
+
+function loadDish(index) {
+    currentDish = index;
+    const dish = dishes[index];
+    const currentImage = dish.querySelector('.item-image img').src;
+    document.getElementById('dishName').value = 
+        dish.querySelector('.item-title').innerText;
+    
+    document.getElementById('dishDescription').value = 
+        dish.querySelector('.item-description').innerText;
+    
+    document.getElementById('dishPrice').value = 
+        dish.querySelector('.item-price').innerText.replace('$', '');
+      
+    document.getElementById('dishImagePreview').src = currentImage;
+}
+
+function updateDish(type, value) {
+    const dish = dishes[currentDish];
+    
+    switch(type) {
+        case 'title':
+            dish.querySelector('.item-title').innerText = value;
+            break;
+        case 'description':
+            dish.querySelector('.item-description').innerText = value;
+            break;
+        case 'price':
+            dish.querySelector('.item-price').innerText = `$${value}`;
+            break;
+    }
+}
+
+// Modifica la función updateDishImage
+function updateDishImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        const dishImage = dishes[currentDish].querySelector('.item-image img');
+        const previewImage = document.getElementById('dishImagePreview');
+        
+        reader.onload = function(e) {
+            dishImage.src = e.target.result;
+            previewImage.src = e.target.result;
+        };
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function toggleDishEditor() {
+    const editor = document.getElementById('dishEditor');
+    const button = document.querySelector('.toggle-button');
+    
+    editor.classList.toggle('active');
+    
+    if(editor.classList.contains('active')) {
+        button.textContent = '▲ Ocultar';
+    } else {
+        button.textContent = '▼ Mostrar';
+    }
+}
+// Registra el plugin al inicio
+gsap.registerPlugin(ScrollToPlugin);
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Scroll suave mejorado
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            
+            if (target) {
+                const navbar = document.querySelector('.navbar');
+                const offset = navbar ? navbar.offsetHeight : 0;
+                
+                gsap.to(window, {
+                    duration: 3,
+                    scrollTo: {
+                        y: target,
+                        offsetY: offset + 20, // Espacio adicional
+                        autoKill: true
+                    },
+                    ease: "power3.out"
+                });
+            }
+            
+            // Cerrar menú móvil
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('active');
+        });
+    });
+
+    // Funciones del menú
+    window.toggleMenu = () => document.getElementById('navMenu').classList.toggle('active');
+    window.closeMenu = () => document.getElementById('navMenu').classList.remove('active');
+});
+loadDish(0);
+

@@ -32,12 +32,13 @@
                 <p>Personaliza cada detalle con las herramientas a continuación</p>
             </div>
             <div class="controls-panel" data-aos="fade-down">
-                <center>
+               
                 <div class="control-group">
-                    <h3>Logo del Restaurante</h3>
+                    <h3><i>Logo del Restaurante</i></h3>
+                    <center>
                     <div class="logoPreview">
                         <div class="logo-container" onclick="document.getElementById('logoInput').click()">
-                            <img id="logoPreview" src="/api/placeholder/400/320" alt="Logo preview">
+                            <img id="logoPreview" src="./assets/logopreview.png" alt="Logo preview">
                         </div>
                         <label class="logo-upload-button">
                             <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="previewLogo(event)">
@@ -46,7 +47,7 @@
                 </div>
                 </center>
                 <div class="control-group">
-                    <h3>Color de Fondo</h3>
+                    <h3><i>Color de Fondo</i></h3>
                     <div class="color-picker">
                         <div class="color-card" onclick="triggerBgColorPicker()">
                             <label class="color-label">Color Actual:</label>
@@ -57,7 +58,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <h3>Tipo de Color</h3>
+                    <h3><i>Color de los elementos</i></h3>
                     <select id="colorType" onchange="toggleColorType(this.value)" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
                         <option value="solid">Color Sólido</option>
                         <option value="gradient">Gradiente</option>
@@ -94,13 +95,54 @@
                         </div>
                     </div>
                 </div>
+                <div class="control-group">
+                    <address class="dish-editor-header">
+        <h3>Editar Platillos</h3>
+        <button class="toggle-button" onclick="toggleDishEditor()">▼ Mostrar</button>
+    </div>
+    <div class="dish-editor" id="dishEditor">
+                        <select id="dishSelector" class="item-button" onchange="loadDish(this.value)">
+                            <option value="0">Platillo 1</option>
+                            <option value="1">Platillo 2</option>
+                        </select>
+                        <div class="dish-control">
+                            <h4>Nombre del platillo</h4>
+                            <input type="text" id="dishName" oninput="updateDish('title', this.value)">
+                        </div>
+                
+                        <div class="dish-control">
+                            <h4>Descripción</h4>
+                            <textarea id="dishDescription" oninput="updateDish('description', this.value)"></textarea>
+                        </div>
+                
+                        <div class="dish-control">
+                            <h4>Precio</h4>
+                            <input type="text" id="dishPrice" oninput="updateDish('price', this.value)">
+                        </div>
+                
+                        <!-- Modifica el control de imagen en el panel (dentro de dish-control) -->
+<div class="dish-control">
+    <h4>Imagen</h4>
+    <div class="image-upload-preview" onclick="document.getElementById('dishImageInput').click()">
+        <div class="preview-container">
+            <img id="dishImagePreview" src="./assets/platillopreview.png" alt="Vista previa">
+        </div>
+        <input type="file" 
+               id="dishImageInput" 
+               style="display: none;" 
+               accept="image/*" 
+               onchange="updateDishImage(this)">
+    </div>
+</div>
+                    </div>
+                </div>
             </div>
 
                 <div class="device-preview">
                     <div class="device-notch"></div>
 <div class="status-bar">
     <div class="left-items">
-        <h3>9:41</h3></div>
+        <h3>11:11</h3></div>
     <div class="right-items">
         <span class="signal">📶</span>
         <span class="battery">🔋 <h3>100%</h3></span>
@@ -109,7 +151,7 @@
                     <div class="menu-preview">
                         <div class="menu-header">
                             <div class="logo-container">
-                                <img id="previewLogo" src="/api/placeholder/400/320" alt="Logo del restaurante">
+                                <img id="previewLogo" src="./assets/logopreview.png" alt="Logo del restaurante">
                             </div>
                             <div class="menu-title-card">
                                 <h1 class="menu-title">Menú</h1>
@@ -127,7 +169,7 @@
                             <div class="menu-grid">
                                 <div class="menu-item">
                                     <div class="item-image">
-                                        <img src="/api/placeholder/400/320" alt="Taco al Pastor">
+                                        <img src="./assets/platillopreview.png" alt="Taco al Pastor">
                                         <div class="item-price">$25</div>
                                     </div>
                                     <div class="item-content">
@@ -138,7 +180,7 @@
                                 </div>
                                 <div class="menu-item">
                                     <div class="item-image">
-                                        <img src="/api/placeholder/400/320" alt="Taco de Suadero">
+                                        <img src="./assets/platillopreview.png" alt="Taco de Suadero">
                                         <div class="item-price">$25</div>
                                     </div>
                                     <div class="item-content">
