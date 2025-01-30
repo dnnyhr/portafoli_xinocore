@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizador de Menús</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="../css/cssmenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    
+</head>
+<body>
+    <a href="./index.html" class="floating-back-button">
+        ← Volver al inicio
+    </a>
+    <div class="hero">
+        <div class="floating-circles">
+            <div class="circle" style="width: 100px; height: 100px; top: 20%; left: 10%;"></div>
+            <div class="circle" style="width: 150px; height: 150px; top: 50%; right: 20%;"></div>
+            <div class="circle" style="width: 80px; height: 80px; bottom: 30%; left: 30%;"></div>
+        </div>
+        <h1 data-aos="fade-up">Menus Basicos</h1>
+        <p data-aos="fade-up" data-aos-delay="100">hecha un vistazo a tu nuevo menu digital</p>
+    </div>
+
+    
+    
+    <section class="customizer-section">
+        <div class="customizer-grid">
+            <div class="editor-title-card" data-aos="zoom-in">
+                <h2>¡Edita tu Menú!</h2>
+                <p>Personaliza cada detalle con las herramientas a continuación</p>
+            </div>
+            <div class="controls-panel" data-aos="fade-down">
+                <center>
+                <div class="control-group">
+                    <h3>Logo del Restaurante</h3>
+                    <div class="logoPreview">
+                        <div class="logo-container" onclick="document.getElementById('logoInput').click()">
+                            <img id="logoPreview" src="/api/placeholder/400/320" alt="Logo preview">
+                        </div>
+                        <label class="logo-upload-button">
+                            <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="previewLogo(event)">
+                        </label>
+                    </div>
+                </div>
+                </center>
+                <div class="control-group">
+                    <h3>Color de Fondo</h3>
+                    <div class="color-picker">
+                        <div class="color-card" onclick="triggerBgColorPicker()">
+                            <label class="color-label">Color Actual:</label>
+                            <div class="color-preview" id="bgColorPreview" style="background: var(--preview-background);"></div>
+                            <input type="color" id="bgColorInput" value="#ffffff" 
+                                   class="color-input-hidden" onchange="updateBackgroundColor(this.value)">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <h3>Tipo de Color</h3>
+                    <select id="colorType" onchange="toggleColorType(this.value)" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                        <option value="solid">Color Sólido</option>
+                        <option value="gradient">Gradiente</option>
+                    </select>
+                </div>
+
+                <div class="color-picker" id="solidColors">
+                    <div class="color-option active" style="background: #4f46e5;" onclick="updateColor('#4f46e5')"></div>
+                    <div class="color-option" style="background: #2dd4bf;" onclick="updateColor('#2dd4bf')"></div>
+                    <div class="color-option" style="background: #f43f5e;" onclick="updateColor('#f43f5e')"></div>
+                    <div class="color-option" style="background: #8b5cf6;" onclick="updateColor('#8b5cf6')"></div>
+                </div>
+
+                <div class="color-picker" id="gradientColors" style="display: none;">
+                    <div class="control-group" id="gradientCustomization" style="display: block;">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem;">Personalizar Gradiente</h3>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="color-card" onclick="triggerColorPicker(1)">
+                                <label class="color-label">Color 1:</label>
+                                <div class="color-preview" id="previewColor1" style="background: #4f46e5;"></div>
+                                <input type="color" id="gradientColor1" value="#4f46e5" class="color-input-hidden" onchange="applyGradient()">
+                            </div>
+                            <div class="color-card" onclick="triggerColorPicker(2)">
+                                <label class="color-label">Color 2:</label>
+                                <div class="color-preview" id="previewColor2" style="background: #2dd4bf;"></div>
+                                <input type="color" id="gradientColor2" value="#2dd4bf" class="color-input-hidden" onchange="applyGradient()">
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label for="gradientAngle" style="display: block; font-weight: bold; color: var(--preview-text); font-size: 1rem; margin-bottom: 0.5rem;">
+                                Ángulo del Gradiente: <span id="angleValue">45°</span>
+                            </label>
+                            <input type="range" id="gradientAngle" value="45" min="0" max="360" step="1" class="slider" oninput="applyGradient()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="device-preview">
+                    <div class="device-notch"></div>
+<div class="status-bar">
+    <div class="left-items">
+        <h3>9:41</h3></div>
+    <div class="right-items">
+        <span class="signal">📶</span>
+        <span class="battery">🔋 <h3>100%</h3></span>
+    </div>
+</div>
+                    <div class="menu-preview">
+                        <div class="menu-header">
+                            <div class="logo-container">
+                                <img id="previewLogo" src="/api/placeholder/400/320" alt="Logo del restaurante">
+                            </div>
+                            <div class="menu-title-card">
+                                <h1 class="menu-title">Menú</h1>
+                            </div>
+                        </div>
+                        
+                        <div class="search-bar">
+                            <input type="text" placeholder="Buscar platillos...">
+                        </div>
+        
+                        <div class="menu-category">
+                            <div class="category-header">
+                                <h3>Entradas</h3>
+                            </div>
+                            <div class="menu-grid">
+                                <div class="menu-item">
+                                    <div class="item-image">
+                                        <img src="/api/placeholder/400/320" alt="Taco al Pastor">
+                                        <div class="item-price">$25</div>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Taco al Pastor</h4>
+                                        <p class="item-description">Delicioso taco de cerdo marinado con piña</p>
+                                        <button class="item-button">Ver más detalles</button>
+                                    </div>
+                                </div>
+                                <div class="menu-item">
+                                    <div class="item-image">
+                                        <img src="/api/placeholder/400/320" alt="Taco de Suadero">
+                                        <div class="item-price">$25</div>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Taco de Suadero</h4>
+                                        <p class="item-description">Suave y jugosa carne de res</p>
+                                        <button class="item-button">Ver más detalles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
