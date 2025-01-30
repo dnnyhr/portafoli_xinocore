@@ -190,34 +190,40 @@ function toggleDishEditor() {
         button.textContent = '▼ Mostrar';
     }
 }
-// Inicialización segura para Cloudflare
+// Registra el plugin al inicio
+gsap.registerPlugin(ScrollToPlugin);
+
 document.addEventListener('DOMContentLoaded', function() {
     // Scroll suave mejorado
-    const scrollLinks = document.querySelectorAll('a[href^="#"]');
-    
-    scrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.hash);
+            const target = document.querySelector(this.getAttribute('href'));
             
-            if(target) {
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                const offset = target.offsetTop - navbarHeight - 20;
+            if (target) {
+                const navbar = document.querySelector('.navbar');
+                const offset = navbar ? navbar.offsetHeight : 0;
                 
                 gsap.to(window, {
-                    duration: 1.2,
-                    scrollTo: { y: offset },
+                    duration: 3,
+                    scrollTo: {
+                        y: target,
+                        offsetY: offset + 20, // Espacio adicional
+                        autoKill: true
+                    },
                     ease: "power3.out"
                 });
             }
             
             // Cerrar menú móvil
-            document.getElementById('navMenu').classList.remove('active');
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.remove('active');
         });
     });
 
     // Funciones del menú
     window.toggleMenu = () => document.getElementById('navMenu').classList.toggle('active');
+    window.closeMenu = () => document.getElementById('navMenu').classList.remove('active');
 });
 loadDish(0);
 
