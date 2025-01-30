@@ -190,43 +190,40 @@ function toggleDishEditor() {
         button.textContent = '▼ Mostrar';
     }
 }
-// script.js - Versión simplificada
 document.addEventListener('DOMContentLoaded', () => {
-    // Scroll suave mejorado para Cloudflare
-    const handleSmoothScroll = (e) => {
+    // Scroll suave mejorado
+    const handleScroll = (e) => {
         e.preventDefault();
         const targetId = e.target.getAttribute('href');
         const target = document.querySelector(targetId);
         
         if (target) {
-            const navbar = document.querySelector('.navbar');
-            const offset = target.offsetTop - (navbar ? navbar.offsetHeight : 0);
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const offset = target.offsetTop - navbarHeight;
             
-            // Método nativo con polyfill
+            // Método 100% nativo con polyfill
             window.scroll({
                 top: offset,
                 behavior: 'smooth'
             });
             
-            // Actualizar URL sin recargar
-            history.pushState(null, null, targetId);
+            console.log('Scroll ejecutado a:', offset); // Para debug
         }
         
         // Cerrar menú móvil
         document.getElementById('navMenu').classList.remove('active');
     };
 
-    // Asignar eventos
+    // Asigna eventos a todos los enlaces
     document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', handleSmoothScroll);
+        link.addEventListener('click', handleScroll);
     });
 
     // Funciones del menú
-    window.toggleMenu = () => document.getElementById('navMenu').classList.toggle('active');
+    window.toggleMenu = () => {
+        document.getElementById('navMenu').classList.toggle('active');
+    };
 });
-// Inicializar polyfill
-if ('scrollBehavior' in document.documentElement.style === false) {
-    SmoothScrollPolyfill.polyfill();
-}
+
 loadDish(0);
 
