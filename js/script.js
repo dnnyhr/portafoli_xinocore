@@ -99,7 +99,7 @@ function addToHistory(gradient) {
     gradientHistory.appendChild(gradientButton);
 }
 let currentDish = 0;
-const dishes = document.querySelectorAll('.menu-item');
+const dishes = document.querySelectorAll('.menu-items');
 function loadDish(index) {
     currentDish = index;
     const dish = dishes[index];
