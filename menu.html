@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalizador de Menús</title>
@@ -10,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 </head>
 <body>
-    
     <a href="./index.html" class="floating-back-button">
         ← Volver al inicio
     </a>
@@ -23,9 +21,6 @@
         <h1 data-aos="fade-up">Menús Interactivos</h1>
         <p data-aos="fade-up" data-aos-delay="100">hecha un vistazo a tu nuevo menu digital para tu negocio</p>
     </div>
-
-    
-    
     <section class="customizer-section">
         <div class="customizer-grid">
             <div class="editor-title-card" data-aos="zoom-in">
@@ -65,14 +60,12 @@
                         <option value="gradient">Gradiente</option>
                     </select>
                 </div>
-
                 <div class="color-picker" id="solidColors">
                     <div class="color-option active" style="background: #4f46e5;" onclick="updateColor('#4f46e5')"></div>
                     <div class="color-option" style="background: #2dd4bf;" onclick="updateColor('#2dd4bf')"></div>
                     <div class="color-option" style="background: #f43f5e;" onclick="updateColor('#f43f5e')"></div>
                     <div class="color-option" style="background: #8b5cf6;" onclick="updateColor('#8b5cf6')"></div>
                 </div>
-
                 <div class="color-picker" id="gradientColors" style="display: none;">
                     <div class="control-group" id="gradientCustomization" style="display: block;">
                         <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem;">Personalizar Gradiente</h3>
@@ -122,8 +115,6 @@
                             <h4>Precio</h4>
                             <input type="text" id="dishPrice" oninput="updateDish('price', this.value)">
                         </div>
-                
-                        <!-- Modifica el control de imagen en el panel (dentro de dish-control) -->
 <div class="dish-control">
     <h4>Imagen</h4>
     <div class="image-upload-preview" onclick="document.getElementById('dishImageInput').click()">
@@ -159,11 +150,9 @@
                                 <h1 class="menu-title">Menú</h1>
                             </div>
                         </div>
-                        
                         <div class="search-bar">
                             <input type="text" placeholder="Buscar platillos...">
                         </div>
-        
                         <div class="menu-category">
                             <div class="category-header">
                                 <h3>Entradas</h3>
@@ -193,13 +182,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
     <script src="./js/script.js"></script>
 </body>
 </html>

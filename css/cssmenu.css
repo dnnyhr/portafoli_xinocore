@@ -1,11 +1,10 @@
- /* General Styles */
+/* falta unificar estilos con style.css, recordar hacerlo antes del viernes */
  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', sans-serif;
 }
-
 :root {
     --primary: #6366f1;
     --secondary: #8b5cf6;
@@ -14,7 +13,6 @@
     --preview-text: #1f2937;
     --preview-background: #ffffff;
 }
-
 body {
     background: #f9fafb;
     color: var(--preview-text);
@@ -25,8 +23,6 @@ button {
       touch-action: manipulation;
 
 }
-
-/* Hero Section */
 .hero {
     max-width: 100%;
     background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(45, 212, 191, 0.1) 100%);
@@ -35,7 +31,6 @@ button {
     position: relative;
     overflow: hidden;
 }
-
 .hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
@@ -43,16 +38,12 @@ button {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    
     animation: titleFloat 3s ease-in-out infinite;
 }
-
 .hero p {
     font-size: 1.25rem;
     color: #666;
 }
-
 .floating-circles {
     position: absolute;
     width: 100%;
@@ -62,7 +53,6 @@ button {
     overflow: hidden;
     pointer-events: none;
 }
-
 .circle {
     position: absolute;
     background: linear-gradient(45deg, var(--primary), var(--accent));
@@ -70,7 +60,6 @@ button {
     opacity: 0.1;
     animation: floatAround 20s infinite linear;
 }
-
 @keyframes floatAround {
     0% { transform: translate(0, 0) rotate(0deg); }
     50% { transform: translate(100px, 50px) rotate(180deg); }
@@ -80,42 +69,34 @@ button {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
 }
-
-/* Customizer Section */
 .customizer-section {
     padding: 4rem 2rem;
     margin: 0 auto;
 }
-
 .customizer-grid {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 2rem;
     margin-top: 2rem;
 }
-
 .controls-panel {
     background: white;
     padding: 1.5rem;
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .control-group {
     margin-bottom: 1.5rem;
 }
-
 .control-group h3 {
     margin-bottom: 1rem;
     color: var(--primary);
 }
-
 .color-picker {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 1rem;
 }
-
 .color-option {
     width: 30px;
     height: 30px;
@@ -126,15 +107,12 @@ button {
     touch-action: manipulation;
 
 }
-
 .color-option:hover {
     transform: scale(1.1);
 }
-
 .color-option.active {
     border-color: var(--primary);
 }
-
 .preview-container {
     max-width: 100vw;
     background: white;
@@ -142,7 +120,6 @@ button {
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .device-preview {
     position: relative;
     padding: 20px;
@@ -152,7 +129,6 @@ button {
     max-width: 430px;
     max-height: 932px;
 }
-
 .menu-preview {
     max-width: 100%;
     margin: 0 auto;
@@ -161,7 +137,6 @@ button {
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .menu-header {
     background: var(--preview-background);
     padding: 1.5rem;
@@ -171,7 +146,6 @@ button {
     align-items: center;
     gap: 1.5rem;
 }
-
 .logo-containeres {
     width: 150px;
     height: 150px;
@@ -185,17 +159,14 @@ button {
     touch-action: manipulation;
 
 }
-
 .logo-containeres:hover {
     transform: scale(1.05);
 }
-
 .logo-containeres img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .menu-title-card {
     background: white;
     padding: 1rem 2.5rem;
@@ -203,24 +174,21 @@ button {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transform: translateY(-20px);
 }
-
 .menu-title {
 font-size: 2.5rem;
 font-weight: bold;
-background: var(--preview-primary);  /* Changed from gradient to variable */
+background: var(--preview-primary);  
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;
 text-transform: uppercase;
 letter-spacing: 2px;
 }
-
 .search-bar {
     margin: 1rem auto;
     max-width: 500px;
     padding: 0 1rem;
 }
-
 .search-bar input {
     width: 100%;
     padding: 0.75rem;
@@ -228,7 +196,6 @@ letter-spacing: 2px;
     border-radius: 25px;
     font-size: 1rem;
 }
-
 .category-header {
 text-align: center;
 margin: 2rem 0 1rem;
@@ -241,42 +208,35 @@ position: relative;
 z-index: 1;
 overflow: hidden;
 }
-
 .menu-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     padding: 1rem;
 }
-
 .menu-items {
     background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    
 border: 1px solid rgba(0,0,0,0.1);
 }
-
 .menu-items:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .item-image {
     width: 100%;
     height: 150px;
     background: #f0f0f0;
     position: relative;
 }
-
 .item-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
 .item-price {
     position: absolute;
     top: 10px;
@@ -287,24 +247,20 @@ border: 1px solid rgba(0,0,0,0.1);
     border-radius: 20px;
     font-weight: bold;
 }
-
 .item-content {
     padding: 1rem;
 }
-
 .item-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     color: var(--preview-text);
 }
-
 .item-description {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 1rem;
 }
-
 .item-button {
     display: block;
     width: 100%;
@@ -317,12 +273,9 @@ border: 1px solid rgba(0,0,0,0.1);
     cursor: pointer;
     transition: background 0.3s;
 }
-
 .item-button:hover {
     background: var(--secondary);
 }
-
-/* Gradient Customization */
 .color-card {
     flex: 1;
     padding: 1rem;
@@ -338,12 +291,10 @@ border: 1px solid rgba(0,0,0,0.1);
     cursor: pointer;
     position: relative;
 }
-
 .color-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-
 .color-label {
     margin-bottom: 0.5rem;
     font-size: 1rem;
@@ -351,7 +302,6 @@ border: 1px solid rgba(0,0,0,0.1);
     color: var(--preview-text);
     pointer-events: none;
 }
-
 .color-preview {
     width: 50px;
     height: 50px;
@@ -361,7 +311,6 @@ border: 1px solid rgba(0,0,0,0.1);
     border: 2px solid #ddd;
     pointer-events: none;
 }
-
 .color-input-hidden {
     position: absolute;
     top: 0;
@@ -371,7 +320,6 @@ border: 1px solid rgba(0,0,0,0.1);
     opacity: 0;
     cursor: pointer;
 }
-
 .slider {
     width: 100%;
     -webkit-appearance: none;
@@ -383,11 +331,9 @@ border: 1px solid rgba(0,0,0,0.1);
     transition: background 0.3s;
     cursor: pointer;
 }
-
 .slider:hover {
     background: var(--primary);
 }
-
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -399,11 +345,9 @@ border: 1px solid rgba(0,0,0,0.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
 }
-
 .slider::-webkit-slider-thumb:hover {
     transform: scale(1.2);
 }
-
 .slider::-moz-range-thumb {
     width: 16px;
     height: 16px;
@@ -413,19 +357,15 @@ border: 1px solid rgba(0,0,0,0.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
 }
-
 .slider::-moz-range-thumb:hover {
     transform: scale(1.2);
 }
-
-/* Gradient History */
 .gradient-history {
     display: flex;
     gap: 0.5rem;
     margin-top: 1rem;
     flex-wrap: wrap;
 }
-
 .gradient-history .color-option {
     width: 30px;
     height: 30px;
@@ -434,12 +374,10 @@ border: 1px solid rgba(0,0,0,0.1);
     border: 2px solid transparent;
     transition: transform 0.3s, border-color 0.3s;
 }
-
 .gradient-history .color-option:hover {
     transform: scale(1.1);
     border-color: var(--primary);
 }
-
 @media (max-width: 768px) {
 .hero {
     padding: 4rem 1rem;
@@ -523,8 +461,6 @@ select {
     padding: 0.5rem 1rem;
 }
 }
-
-/* Añadir media query adicional para pantallas muy pequeñas */
 @media (max-width: 480px) {
 .hero h1 {
     padding: 0 0.5rem;
@@ -584,13 +520,9 @@ font-size: 2rem;
 font-size: 1rem;
 }
 }
-
-/* Add matching styles for background color picker */
 .bg-color-card .color-preview {
 border: 2px solid rgba(0,0,0,0.1);
 }
-
-/* Add this to ensure proper preview display */
 #bgColorPreview {
 transition: background-color 0.3s ease;
 border: 2px solid rgba(0,0,0,0.1);
@@ -606,7 +538,6 @@ background: #333;
 border-radius: 0 0 15px 15px;
 z-index: 2;
 }
-
 .status-bar {
 position: absolute;
 top: 10px;
@@ -621,13 +552,11 @@ font-size: 12px;
 font-family: system-ui, -apple-system, sans-serif;
 z-index: 1;
 }
-
 .status-bar .right-items {
 display: flex;
 align-items: center;
 gap: 5px;
 }
-
 .status-bar .battery {
 display: flex;
 align-items: center;
@@ -636,7 +565,6 @@ gap: 3px;
 .services {
     padding: 5rem 0;
 }
-
 .service-card {
     background: white;
     border-radius: 20px;
@@ -647,12 +575,10 @@ gap: 3px;
     position: relative;
     overflow: hidden;
 }
-
 .service-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
-
 .service-card::before {
     content: '';
     position: absolute;
@@ -663,13 +589,12 @@ gap: 3px;
     background: linear-gradient(45deg, var(--primary), var(--accent));
 }
 .container {
-    max-width: 100vw; /* Aseguramos que ningún contenedor exceda el ancho del viewport */
-    overflow: hidden; /* Previene contenido que sobresalga */
+    max-width: 100vw;
+    overflow: hidden;
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
 }
-/* Estilos para el título del editor */
 .editor-title-card {
 grid-column: 1 / -1;
 background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -681,14 +606,12 @@ box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
 border: 2px solid rgba(255,255,255,0.1);
 z-index: 9999;
 }
-
 .editor-title-card h2 {
 font-size: 2.5rem;
 color: white;
 margin-bottom: 1rem;
 text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 .editor-title-card p {
 color: rgba(255,255,255,0.9);
 font-size: 1.1rem;
@@ -713,7 +636,6 @@ margin: 0 auto;
     gap: 5px;
     z-index: 999999;
 }
-
 .floating-back-button:hover {
     background: #4d4d52;
     transform: translateY(-2px);
@@ -725,13 +647,11 @@ margin: 0 auto;
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .dish-control h4 {
     color: var(--preview-text);
     margin-bottom: 0.75rem;
     font-size: 1rem;
 }
-
 .dish-control input[type="text"],
 .dish-control textarea {
     width: 100%;
@@ -741,12 +661,10 @@ margin: 0 auto;
     margin-bottom: 1rem;
     font-family: 'Segoe UI', sans-serif;
 }
-
 .dish-control textarea {
     height: 80px;
     resize: vertical;
 }
-
 #dishSelector {
     width: 100%;
     margin-bottom: 1.5rem;
@@ -755,7 +673,6 @@ margin: 0 auto;
     border: none;
     cursor: pointer;
 }
-/* Agrega estos estilos */
 .image-upload-preview {
     cursor: pointer;
     border: 2px dashed #ddd;
@@ -763,12 +680,10 @@ margin: 0 auto;
     overflow: hidden;
     transition: all 0.3s ease;
 }
-
 .image-upload-preview:hover {
     border-color: var(--primary);
     transform: scale(1.02);
 }
-
 .preview-container {
     width: 100%;
     height:200px;
@@ -777,22 +692,18 @@ margin: 0 auto;
     align-items: center;
     justify-content: center;
 }
-
 #dishImagePreview {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
     border-radius: 8px;
 }
-/* Encabezado del editor */
 .dish-editor-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
 }
-
-/* Botón de toggle mejorado */
 .toggle-button {
     background: var(--primary);
     color: white;
@@ -803,14 +714,11 @@ margin: 0 auto;
     transition: all 0.3s ease;
     font-size: 0.9em;
 }
-
 .toggle-button:hover {
     background: var(--secondary);
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
-
-/* Contenedor del editor */
 .dish-editor {
     background: white;
     border-radius: 12px;
@@ -820,9 +728,8 @@ margin: 0 auto;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .dish-editor.active {
-    max-height: 1000px; /* Ajusta según tu contenido máximo */
+    max-height: 1000px;
     opacity: 1;
     padding: 1.5rem;
     margin-top: 0.5rem;
