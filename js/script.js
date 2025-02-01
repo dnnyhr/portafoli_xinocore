@@ -76,6 +76,27 @@ function applyGradient() {
     document.getElementById('angleValue').textContent = `${angle}°`;
     document.getElementById('previewColor1').style.background = color1;
     document.getElementById('previewColor2').style.background = color2;
+
+
+    // Add the gradient to the history
+    addToHistory(customGradient);
+}
+
+// Function to add a gradient to the history
+function addToHistory(gradient) {
+    const gradientHistory = document.getElementById('gradientHistory');
+    if (gradientHistory.querySelector(`[data-gradient="${gradient}"]`)) return; // Avoid duplicates
+
+    const gradientButton = document.createElement('div');
+    gradientButton.className = 'color-option';
+    gradientButton.style.background = gradient;
+    gradientButton.setAttribute('data-gradient', gradient);
+    gradientButton.title = gradient;
+    gradientButton.onclick = () => {
+        document.documentElement.style.setProperty('--preview-primary', gradient);
+    };
+
+    gradientHistory.appendChild(gradientButton);
 }
 let currentDish = 0;
 const dishes = document.querySelectorAll('.menu-item');
