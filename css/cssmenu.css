@@ -149,7 +149,8 @@ button {
     border: 10px solid #333;
     border-radius: 50px;
     margin: 2rem auto;
-    max-width: 380px;
+    max-width: 430px;
+    max-height: 932px;
 }
 
 .menu-preview {
@@ -171,7 +172,7 @@ button {
     gap: 1.5rem;
 }
 
-.logo-container {
+.logo-containeres {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -185,11 +186,11 @@ button {
 
 }
 
-.logo-container:hover {
+.logo-containeres:hover {
     transform: scale(1.05);
 }
 
-.logo-container img {
+.logo-containeres img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -248,7 +249,7 @@ overflow: hidden;
     padding: 1rem;
 }
 
-.menu-item {
+.menu-items {
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -258,7 +259,7 @@ overflow: hidden;
 border: 1px solid rgba(0,0,0,0.1);
 }
 
-.menu-item:hover {
+.menu-items:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
