@@ -370,9 +370,10 @@ html {
     border-radius: 25px;
     background: white;
 }
-@media (max-width: 768px) {
+@media (max-width: 938px) {
     .phone-mockup {
-        max-width: 300px;
+        max-width: 430px;
+        max-height: 932px;
     }
     
     .live-preview {
