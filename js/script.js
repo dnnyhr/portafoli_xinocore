@@ -1,4 +1,4 @@
-//js global, se necesita refactorizar
+//js global, uwu
 AOS.init({
     duration: 1000,
     once: true,
@@ -77,15 +77,11 @@ function applyGradient() {
     document.getElementById('previewColor1').style.background = color1;
     document.getElementById('previewColor2').style.background = color2;
 
-
-    // Add the gradient to the history
     addToHistory(customGradient);
 }
-
-// Function to add a gradient to the history
 function addToHistory(gradient) {
     const gradientHistory = document.getElementById('gradientHistory');
-    if (gradientHistory.querySelector(`[data-gradient="${gradient}"]`)) return; // Avoid duplicates
+    if (gradientHistory.querySelector(`[data-gradient="${gradient}"]`)) return;
 
     const gradientButton = document.createElement('div');
     gradientButton.className = 'color-option';
@@ -178,5 +174,74 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleMenu = () => {
         document.getElementById('navMenu').classList.toggle('active');
     };
+});
+document.addEventListener('DOMContentLoaded', () => {
+    const logo = document.querySelector('.logo svg');
+    const leftEye = document.getElementById('left-eye');
+    const rightEye = document.getElementById('right-eye');
+    const mouth = document.getElementById('mouth');
+    const logocontainer = document.querySelector('.logo-container');
+    const name = document.querySelector('.brand-name');
+    
+    let isAnimating = false;
+    const elements = [leftEye, rightEye, mouth];
+
+    const startAnimation = () => {
+        if (isAnimating) return;
+        
+        isAnimating = true;
+
+        elements.forEach(element => {
+            element.style.animation = 'none';
+            element.classList.remove('animate-once');
+            void element.offsetWidth; 
+            element.style.animation = ''; 
+        });
+
+        requestAnimationFrame(() => {
+            elements.forEach(element => {
+                element.classList.add('animate-once');
+            });
+        });
+        setTimeout(() => {
+            isAnimating = false;
+            elements.forEach(element => {
+            });
+        }, 9000); 
+    };
+    startAnimation();
+    const clickableElements = [logo, logocontainer, name];
+    clickableElements.forEach(element => {
+        if (element) { 
+            element.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                if (!isAnimating) {
+                    startAnimation();
+                }
+            });
+        }
+    });
+});
+
+const filterButtons = document.querySelectorAll('.filter-button');
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filter = button.textContent.trim();
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        document.querySelectorAll('.project-card').forEach(project => {
+            const category = project.dataset.category;
+            if (filter === 'Todos' || category === filter) {
+                project.classList.remove('hidden');
+                project.style.opacity = '1';
+                project.style.transform = 'scale(1)';
+            } else {
+                project.style.opacity = '0';
+                project.style.transform = 'scale(0.95)';
+                setTimeout(() => project.classList.add('hidden'), 300);
+            }
+        });
+    });
 });
 loadDish(0);

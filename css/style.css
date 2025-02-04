@@ -39,8 +39,8 @@ overflow-x: hidden;
     gap: 1rem;
 }
 .logo {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(45deg, var(--primary), var(--accent));
     border-radius: 10px;
     display: flex;
@@ -125,8 +125,8 @@ overflow-x: hidden;
     100% { transform: translate(0, 0) rotate(360deg); }
 }
 .container {
-    max-width: 100vw; /* Aseguramos que ningún contenedor exceda el ancho del viewport */
-    overflow: hidden; /* Previene contenido que sobresalga */
+    max-width: 100vw;
+    overflow: hidden; 
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
@@ -216,7 +216,7 @@ section {
 .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    background: linear-gradient(45deg, var(--primary), var(--accent));
     color: white;
     text-decoration: none;
     border-radius: 50px;
@@ -227,6 +227,7 @@ section {
 .cta-button:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    background: linear-gradient(140deg, var(--primary), var(--accent));
 }
 @media (max-width: 768px) {
     .menu-button {
@@ -378,5 +379,304 @@ html {
     
     .live-preview {
         height: 500px;
+    }
+}
+#left-eye.animate-once, 
+#right-eye.animate-once, 
+#mouth.animate-once {
+    animation-iteration-count: 1 !important;
+    animation-fill-mode: forwards;
+}
+
+#left-eye:not(.animate-once), 
+#right-eye:not(.animate-once), 
+#mouth:not(.animate-once) {
+    animation: none;
+}
+
+
+#left-eye, #right-eye {
+    animation: cuteFace 9s infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  #mouth {
+    animation: mouthAppear 9s infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  @keyframes mouthAppear {
+    0%, 49%, 60%, 100% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    50% {
+      opacity: 0;
+      transform: translateY(-40px) scale(0.8);
+    }
+    52% {
+      opacity: 1;
+      transform: translateY(-50px) scale(1);
+      stroke-width: 8;
+    }
+    55% {
+      opacity: 1;
+      transform: translateY(-50px) scale(1.2) skewX(10deg);
+      stroke-width: 10;
+    }
+    58% {
+      opacity: 0;
+      transform: translateY(-60px) scale(0.8);
+    }
+  }
+  
+  @keyframes cuteFace {
+    0%, 100% {
+      transform: scale(1) translate(0, 0);
+      opacity: 1;
+    }
+    /* Movimiento lento a la izquierda con transformación a carita */
+    10% {
+      transform: translateX(-40px) scale(0.9, 1.1) rotate(-8deg);
+      animation-timing-function: ease-in-out;
+    }
+    /* Mantener mirada a la izquierda como carita */
+    20% {
+      transform: translateX(-40px) scale(1.1, 0.9) rotate(-5deg);
+    }
+    /* Movimiento lento a la derecha con transformación */
+    30% {
+      transform: translateX(40px) scale(0.9, 1.1) rotate(8deg);
+      animation-timing-function: ease-in-out;
+    }
+    /* Mantener mirada a la derecha como carita */
+    40% {
+      transform: translateX(40px) scale(1.1, 0.9) rotate(5deg);
+    }
+    /* Regreso rápido al centro con transformación suave */
+    45% {
+      transform: translateX(0) scale(1.05) rotate(0deg);
+    }
+    /* Mirada hacia arriba con expresión sorpresa */
+    50% {
+      transform: translateY(-35px) scale(1.2, 0.8);
+    }
+    /* Cierre de ojos rápido con expresión tierna */
+    55% {
+      transform: translateY(-10px) scaleY(0.1) scaleX(1.3);
+      opacity: 1;
+    }
+    /* Recuperación a forma original con rebote */
+    60% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+     
+  }
+  .projects-section {
+    top: -100px;
+    padding: 120px 0 60px 0;
+    min-height: 100vh;
+}
+
+.projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.filter-button {
+    background: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-button:hover,
+.filter-button.active {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    padding: 20px;
+grid-auto-rows: 1fr; /* Nueva línea añadida */
+
+position: relative;
+    
+}
+
+.project-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+height: 100%;
+min-height: 420px; 
+}
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    z-index: 99999;
+}
+
+.project-card.hidden {
+opacity: 0;
+transform: ease-in(0.95);
+height: 0;
+padding: 0;
+margin: 0;
+border: 0;
+pointer-events: none;
+position: absolute;
+overflow: hidden;
+}
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.project-image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 60%; /* Aspecto 16:10 */
+    overflow: hidden;
+}
+
+.project-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    
+overflow: hidden;
+}
+
+.project-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.project-content p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+    line-height: 1.6;
+    display: -webkit-box;
+-webkit-line-clamp: 4;
+line-clamp: 4; 
+-webkit-box-orient: vertical;
+overflow: hidden;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.project-tag {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.project-link {
+    text-align: center;
+}
+
+.project-link .cta-button {
+    margin: 0;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 10px;
+        
+    }
+
+    .section-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .filter-container {
+        gap: 0.5rem;
+    }
+
+    .filter-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
     }
 }

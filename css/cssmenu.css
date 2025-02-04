@@ -1,4 +1,4 @@
-/* falta unificar estilos con style.css, recordar hacerlo antes del viernes */
+/* falta unificar estilos con style.css, recordar hacerlo antes del viernes, estupido carlos no lo inifico >:( */
  * {
     margin: 0;
     padding: 0;
@@ -200,7 +200,7 @@ letter-spacing: 2px;
 text-align: center;
 margin: 2rem 0 1rem;
 padding: 1rem;
-background: var(--preview-primary);  /* Changed from fixed gradient to variable */
+background: var(--preview-primary); 
 color: white;
 border-radius: 10px;
 margin: 1.5rem 1rem;
@@ -520,6 +520,7 @@ font-size: 2rem;
 font-size: 1rem;
 }
 }
+
 .bg-color-card .color-preview {
 border: 2px solid rgba(0,0,0,0.1);
 }
@@ -623,7 +624,7 @@ margin: 0 auto;
     top: 20px;
     left: 20px;
     z-index: 1000;
-    background: var(--preview-primary);
+    background:  linear-gradient(45deg, var(--primary), var(--accent));
     color: white;
     padding: 10px 20px;
     border-radius: 25px;
@@ -637,7 +638,8 @@ margin: 0 auto;
     z-index: 999999;
 }
 .floating-back-button:hover {
-    background: #4d4d52;
+    background:  linear-gradient(45deg, var(--accent), var(--primary));
+
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
