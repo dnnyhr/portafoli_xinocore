@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="cf-please-wait" content="none">
-    <title>Personalizador de Menús</title>
+    <title>Menu Customizer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <link rel="icon" href="./assets/favicon/Favicon-portafolio.png" type="image/png">
     <link rel="stylesheet" href="../css/cssmenu.css">
@@ -13,7 +13,7 @@
 <body>
     
     <a href="./index.html" class="floating-back-button">
-        ← Volver al inicio
+        ← Back to Home
     </a>
     <div class="hero">
         <div class="floating-circles">
@@ -21,23 +21,23 @@
             <div class="circle" style="width: 150px; height: 150px; top: 50%; right: 20%;"></div>
             <div class="circle" style="width: 80px; height: 80px; bottom: 30%; left: 30%;"></div>
         </div>
-        <h1 data-aos="fade-up">Menús Interactivos</h1>
-        <p data-aos="fade-up" data-aos-delay="100">hecha un vistazo a tu nuevo menu digital para tu negocio</p>
-    </div>
+        <h1 data-aos="fade-up">Interactive Menus</h1>
+        <p data-aos="fade-up" data-aos-delay="100">Take A Look At Your New Digital Menu For Your Business</p>
+        </div>
     <section class="customizer-section">
         <div class="customizer-grid">
             <div class="editor-title-card" data-aos="zoom-in">
-                <h2>¡Edita tu Menú!</h2>
-                <p>Personaliza cada detalle con las herramientas a continuación</p>
+                <h2>Edit Your Menu!</h2>
+                <p>Customize Every Detail With The Tools Below</p>
             </div>
             <div class="controls-panel" data-aos="fade-down">
                
                 <div class="control-group">
-                    <h3><i>Logo del Restaurante</i></h3>
+                    <h3><i>Restaurant Logo</i></h3>
                     <center>
                     <div class="logoPreview">
                         <div class="logo-containeres" onclick="document.getElementById('logoInput').click()">
-                            <img id="logoPreview" src="./assets/logopreview.png" alt="Logo preview">
+                            <img id="logoPreview" src="./assets/logopreview.png" alt="Logo Preview">
                         </div>
                         <label class="logo-upload-button">
                             <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="previewLogo(event)">
@@ -46,7 +46,7 @@
                 </div>
                 </center>
                 <div class="control-group">
-                    <h3><i>Color de Fondo</i></h3>
+                    <h3><i>Background Color</i></h3>
                     <div class="color-picker">
                         <div class="color-card" onclick="triggerBgColorPicker()">
                             <label class="color-label">Color Actual:</label>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <h3><i>Color de los elementos</i></h3>
+                    <h3><i>Element Color</i></h3>
                     <select id="colorType" onchange="toggleColorType(this.value)" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
                         <option value="solid">Color Sólido</option>
                         <option value="gradient">Gradiente</option>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="color-picker" id="gradientColors" style="display: none;">
                     <div class="control-group" id="gradientCustomization" style="display: block;">
-                        <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem;">Personalizar Gradiente</h3>
+                        <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem;">Customize Gradient</h3>
                         <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
                             <div class="color-card" onclick="triggerColorPicker(1)">
                                 <label class="color-label">Color 1:</label>
@@ -86,7 +86,7 @@
                         </div>
                         <div style="margin-bottom: 1.5rem;">
                             <label for="gradientAngle" style="display: block; font-weight: bold; color: var(--preview-text); font-size: 1rem; margin-bottom: 0.5rem;">
-                                Ángulo del Gradiente: <span id="angleValue">45°</span>
+                                Gradient Angle: <span id="angleValue">45°</span>
                             </label>
                             <input type="range" id="gradientAngle" value="45" min="0" max="360" step="1" class="slider" oninput="applyGradient()">
                         </div>
@@ -94,45 +94,44 @@
                 </div>
                 <div class="control-group">
                     <address class="dish-editor-header">
-        <h3>Editar Platillos</h3>
+        <h3>Edit Dishes</h3>
         <button class="toggle-button" onclick="toggleDishEditor()"> 
-            ▼ Mostrar
+            ▼ Show
         </button>
     </div>
     <div class="dish-editor" id="dishEditor">
-                        <select id="dishSelector" class="item-button" onchange="loadDish(this.value)">
-                            <option value="0">Platillo 1</option>
-                            <option value="1">Platillo 2</option>
-                        </select>
-                        <div class="dish-control">
-                            <h4>Nombre del platillo</h4>
-                            <input type="text" id="dishName" oninput="updateDish('title', this.value)">
-                        </div>
-                
-                        <div class="dish-control">
-                            <h4>Descripción</h4>
-                            <textarea id="dishDescription" oninput="updateDish('description', this.value)"></textarea>
-                        </div>
-                
-                        <div class="dish-control">
-                            <h4>Precio</h4>
-                            <input type="text" id="dishPrice" oninput="updateDish('price', this.value)">
-                        </div>
-<div class="dish-control">
-    <h4>Imagen</h4>
-    <div class="image-upload-preview" onclick="document.getElementById('dishImageInput').click()">
-        <div class="preview-container">
-            <img id="dishImagePreview" src="./assets/platillopreview.png" alt="Vista previa">
+        <select id="dishSelector" class="item-button" onchange="loadDish(this.value)">
+            <option value="0">Dish 1</option>
+            <option value="1">Dish 2</option>
+        </select>
+        <div class="dish-control">
+            <h4>Dish Name</h4>
+            <input type="text" id="dishName" oninput="updateDish('title', this.value)">
         </div>
-        <input type="file" 
-               id="dishImageInput" 
-               style="display: none;" 
-               accept="image/*" 
-               onchange="updateDishImage(this)">
-    </div>
-                    </div>
+
+        <div class="dish-control">
+            <h4>Description</h4>
+            <textarea id="dishDescription" oninput="updateDish('description', this.value)"></textarea>
+        </div>
+
+        <div class="dish-control">
+            <h4>Price</h4>
+            <input type="text" id="dishPrice" oninput="updateDish('price', this.value)">
+        </div>
+        <div class="dish-control">
+            <h4>Image</h4>
+            <div class="image-upload-preview" onclick="document.getElementById('dishImageInput').click()">
+                <div class="preview-container">
+                    <img id="dishImagePreview" src="./assets/platillopreview.png" alt="Preview">
                 </div>
+                <input type="file" 
+                       id="dishImageInput" 
+                       style="display: none;" 
+                       accept="image/*" 
+                       onchange="updateDishImage(this)">
             </div>
+        </div>
+    </div>
 
                 <div class="device-preview">
                     <div class="device-notch"></div>
@@ -147,40 +146,40 @@
                     <div class="menu-preview">
                         <div class="menu-header">
                             <div class="logo-containeres">
-                                <img id="previewLogo" src="./assets/logopreview.png" alt="Logo del restaurante">
+                                <img id="previewLogo" src="./assets/logopreview.png" alt="Restaurant Logo">
                             </div>
                             <div class="menu-title-card">
-                                <h1 class="menu-title">Menú</h1>
+                                <h1 class="menu-title">Menu</h1>
                             </div>
                         </div>
                         <div class="search-bar">
-                            <input type="text" placeholder="Buscar platillos...">
+                            <input type="text" placeholder="Search Dishes...">
                         </div>
                         <div class="menu-category">
                             <div class="category-header">
-                                <h3>Entradas</h3>
+                                <h3>Appetizers </h3>
                             </div>
                             <div class="menu-grid">
                                 <div class="menu-items">
                                     <div class="item-image">
-                                        <img src="./assets/platillopreview.png" alt="Taco al Pastor">
+                                        <img src="./assets/platillopreview.png" alt="Taco Al Pastor">
                                         <div class="item-price">$25</div>
                                     </div>
                                     <div class="item-content">
-                                        <h4 class="item-title">Platillo 1</h4>
-                                        <p class="item-description">Agrega una descripcion</p>
-                                        <button class="item-button">Ver más detalles</button>
+                                        <h4 class="item-title">Dish 1</h4>
+                                        <p class="item-description">Add A Description</p>
+                                        <button class="item-button">View More Details</button>
                                     </div>
                                 </div>
                                 <div class="menu-items">
                                     <div class="item-image">
-                                        <img src="./assets/platillopreview.png" alt="Taco de Suadero">
+                                        <img src="./assets/platillopreview.png" alt="Taco De Suadero">
                                         <div class="item-price">$25</div>
                                     </div>
                                     <div class="item-content">
-                                        <h4 class="item-title">Platillo 2</h4>
-                                        <p class="item-description">Agrega una descripcion</p>
-                                        <button class="item-button">Ver más detalles</button>
+                                        <h4 class="item-title">Dish 2</h4>
+                                        <p class="item-description">Add A Description</p>
+                                        <button class="item-button">View More Details</button>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +212,7 @@
      'j$$r.                            ,z$${.     
        "[<                            .c@\'       
                                                   
-                   by XINOCORE                                  
+                   By XINOCORE                                  
                                                     
 
  -->

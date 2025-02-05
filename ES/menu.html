@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="cf-please-wait" content="none">
+    <title>Personalizador De Menús</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="icon" href="./assets/favicon/Favicon-portafolio.png" type="image/png">
+    <link rel="stylesheet" href="../css/cssmenu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+    
+    <a href="./index.html" class="floating-back-button">
+        ← Volver Al Inicio
+    </a>
+    <div class="hero">
+        <div class="floating-circles">
+            <div class="circle" style="width: 100px; height: 100px; top: 20%; left: 10%;"></div>
+            <div class="circle" style="width: 150px; height: 150px; top: 50%; right: 20%;"></div>
+            <div class="circle" style="width: 80px; height: 80px; bottom: 30%; left: 30%;"></div>
+        </div>
+        <h1 data-aos="fade-up">Menús Interactivos</h1>
+        <p data-aos="fade-up" data-aos-delay="100">Hecha Un Vistazo A Tu Nuevo Menú Digital Para Tu Negocio</p>
+    </div>
+    <section class="customizer-section">
+        <div class="customizer-grid">
+            <div class="editor-title-card" data-aos="zoom-in">
+                <h2>¡Edita Tu Menú!</h2>
+                <p>Personaliza Cada Detalle Con Las Herramientas A Continuación</p>
+            </div>
+            <div class="controls-panel" data-aos="fade-down">
+               
+                <div class="control-group">
+                    <h3><i>Logo Del Restaurante</i></h3>
+                    <center>
+                    <div class="logoPreview">
+                        <div class="logo-containeres" onclick="document.getElementById('logoInput').click()">
+                            <img id="logoPreview" src="./assets/logopreview.png" alt="Logo Preview">
+                        </div>
+                        <label class="logo-upload-button">
+                            <input type="file" id="logoInput" accept="image/*" style="display: none;" onchange="previewLogo(event)">
+                        </label>
+                    </div>
+                </div>
+                </center>
+                <div class="control-group">
+                    <h3><i>Color De Fondo</i></h3>
+                    <div class="color-picker">
+                        <div class="color-card" onclick="triggerBgColorPicker()">
+                            <label class="color-label">Color Actual:</label>
+                            <div class="color-preview" id="bgColorPreview" style="background: var(--preview-background);"></div>
+                            <input type="color" id="bgColorInput" value="#ffffff" 
+                                   class="color-input-hidden" onchange="updateBackgroundColor(this.value)">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <h3><i>Color De Los Elementos</i></h3>
+                    <select id="colorType" onchange="toggleColorType(this.value)" style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                        <option value="solid">Color Sólido</option>
+                        <option value="gradient">Gradiente</option>
+                    </select>
+                </div>
+                <div class="color-picker" id="solidColors">
+                    <div class="color-option active" style="background: #4f46e5;" onclick="updateColor('#4f46e5')"></div>
+                    <div class="color-option" style="background: #2dd4bf;" onclick="updateColor('#2dd4bf')"></div>
+                    <div class="color-option" style="background: #f43f5e;" onclick="updateColor('#f43f5e')"></div>
+                    <div class="color-option" style="background: #8b5cf6;" onclick="updateColor('#8b5cf6')"></div>
+                </div>
+                <div class="color-picker" id="gradientColors" style="display: none;">
+                    <div class="control-group" id="gradientCustomization" style="display: block;">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem;">Personalizar Gradiente</h3>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="color-card" onclick="triggerColorPicker(1)">
+                                <label class="color-label">Color 1:</label>
+                                <div class="color-preview" id="previewColor1" style="background: #4f46e5;"></div>
+                                <input type="color" id="gradientColor1" value="#4f46e5" class="color-input-hidden" onchange="applyGradient()">
+                            </div>
+                            <div class="color-card" onclick="triggerColorPicker(2)">
+                                <label class="color-label">Color 2:</label>
+                                <div class="color-preview" id="previewColor2" style="background: #2dd4bf;"></div>
+                                <input type="color" id="gradientColor2" value="#2dd4bf" class="color-input-hidden" onchange="applyGradient()">
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1.5rem;">
+                            <label for="gradientAngle" style="display: block; font-weight: bold; color: var(--preview-text); font-size: 1rem; margin-bottom: 0.5rem;">
+                                Ángulo Del Gradiente: <span id="angleValue">45°</span>
+                            </label>
+                            <input type="range" id="gradientAngle" value="45" min="0" max="360" step="1" class="slider" oninput="applyGradient()">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <address class="dish-editor-header">
+        <h3>Editar Platillos</h3>
+        <button class="toggle-button" onclick="toggleDishEditor()"> 
+            ▼ Mostrar
+        </button>
+    </div>
+    <div class="dish-editor" id="dishEditor">
+                        <select id="dishSelector" class="item-button" onchange="loadDish(this.value)">
+                            <option value="0">Platillo 1</option>
+                            <option value="1">Platillo 2</option>
+                        </select>
+                        <div class="dish-control">
+                            <h4>Nombre Del Platillo</h4>
+                            <input type="text" id="dishName" oninput="updateDish('title', this.value)">
+                        </div>
+                
+                        <div class="dish-control">
+                            <h4>Descripción</h4>
+                            <textarea id="dishDescription" oninput="updateDish('description', this.value)"></textarea>
+                        </div>
+                
+                        <div class="dish-control">
+                            <h4>Precio</h4>
+                            <input type="text" id="dishPrice" oninput="updateDish('price', this.value)">
+                        </div>
+<div class="dish-control">
+    <h4>Imagen</h4>
+    <div class="image-upload-preview" onclick="document.getElementById('dishImageInput').click()">
+        <div class="preview-container">
+            <img id="dishImagePreview" src="./assets/platillopreview.png" alt="Vista Previa">
+        </div>
+        <input type="file" 
+               id="dishImageInput" 
+               style="display: none;" 
+               accept="image/*" 
+               onchange="updateDishImage(this)">
+    </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="device-preview">
+                    <div class="device-notch"></div>
+<div class="status-bar">
+    <div class="left-items">
+        <h3>11:11</h3></div>
+    <div class="right-items">
+        <span class="signal">📶</span>
+        <span class="battery">🔋 <h3>100%</h3></span>
+    </div>
+</div>
+                    <div class="menu-preview">
+                        <div class="menu-header">
+                            <div class="logo-containeres">
+                                <img id="previewLogo" src="./assets/logopreview.png" alt="Logo Del Restaurante">
+                            </div>
+                            <div class="menu-title-card">
+                                <h1 class="menu-title">Menú</h1>
+                            </div>
+                        </div>
+                        <div class="search-bar">
+                            <input type="text" placeholder="Buscar Platillos...">
+                        </div>
+                        <div class="menu-category">
+                            <div class="category-header">
+                                <h3>Entradas</h3>
+                            </div>
+                            <div class="menu-grid">
+                                <div class="menu-items">
+                                    <div class="item-image">
+                                        <img src="./assets/platillopreview.png" alt="Taco Al Pastor">
+                                        <div class="item-price">$25</div>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Platillo 1</h4>
+                                        <p class="item-description">Agrega Una Descripción</p>
+                                        <button class="item-button">Ver Más Detalles</button>
+                                    </div>
+                                </div>
+                                <div class="menu-items">
+                                    <div class="item-image">
+                                        <img src="./assets/platillopreview.png" alt="Taco De Suadero">
+                                        <div class="item-price">$25</div>
+                                    </div>
+                                    <div class="item-content">
+                                        <h4 class="item-title">Platillo 2</h4>
+                                        <p class="item-description">Agrega Una Descripción</p>
+                                        <button class="item-button">Ver Más Detalles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--                        ....                       
+               '"<(nW$$$$$$$@Mr{i^.               
+           .,(&$$$z/?i;,,,,;>[tM$$$#}"            
+         "/$$@tI`               .`<x$$B{`         
+       :#$$j,                       .;c$$x^       
+     `v$$|'                            ^n$$\.     
+    l$$*`                                :8$8^    
+   ]$$\      `'                    ``     .v$$,   
+  <$$|      f$$r^                ;M$$l     .v$$^  
+ `$$c       .~%$$x^            ;W$$M:       .B$&. 
+ /$$^         .~B$$n^        IW$$#:          <$$i 
+ $$M            .+B$$u^    l&$$#:            .$$v 
+'$$\              .~B$$n'"W$$*:               B$B 
+'$$/              .?@$$j.^#$$M;               @$% 
+ @$W            .]@$$j`    :#$$W;            '$$x 
+ |$$"         .]@$$f`        :#$$W;          +$$I 
+ '@$*       .]@$$f`            :#$$W;       'B$M  
+  l$$t      f$$f`                ,*$$I     .*$@`  
+   +$$f.     `'                    ''     '*$@"   
+    :B$W"                                IB$W`    
+     'j$$r.                            ,z$${.     
+       "[<                            .c@\'       
+                                                  
+                   By XINOCORE                                  
+                                                    
+
+ -->
+    <script src="./js/script.js"></script>
+</body>
+</html>
