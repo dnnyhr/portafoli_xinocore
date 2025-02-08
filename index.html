@@ -4,10 +4,10 @@
   <script>
     const userLanguage = navigator.language.split("-")[0];
     const languageToFolder = {
-      en: "https://en.xinocore.com",
-      es: "https://es.xinocore.com",
+      en: "./en/home.html",
+      es: "./es/inicio.html",
     };
-    const targetFolder = languageToFolder[userLanguage] || "https://en.xinocore.com"; // Fallback a inglés
+    const targetFolder = languageToFolder[userLanguage] || "./en/home.html"; // Fallback a inglés
     window.location.href = targetFolder;
   </script>
 </head>
