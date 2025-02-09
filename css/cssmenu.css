@@ -624,7 +624,14 @@ margin: 0 auto;
     top: 20px;
     left: 20px;
     z-index: 1000;
-    background:  linear-gradient(45deg, var(--primary), var(--accent));
+    background: linear-gradient(
+        270deg,
+        #6366f1,
+          #8b5cf6,
+         #f472b6
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 15s ease infinite;
     color: white;
     padding: 10px 20px;
     border-radius: 25px;
@@ -637,11 +644,20 @@ margin: 0 auto;
     gap: 5px;
     z-index: 999999;
 }
-.floating-back-button:hover {
-    background:  linear-gradient(45deg, var(--accent), var(--primary));
-
+.floating-back-button:hover { 
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 .dish-editor {
     background: white;

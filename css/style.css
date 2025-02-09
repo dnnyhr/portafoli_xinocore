@@ -213,10 +213,18 @@ section {
     background: rgba(99, 102, 241, 0.1);
     transform: translateX(10px);
 }
+
 .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
-    background: linear-gradient(45deg, var(--primary), var(--accent));
+    background: linear-gradient(
+        270deg,
+        #6366f1,
+          #8b5cf6,
+         #f472b6
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 8s ease infinite;
     color: white;
     text-decoration: none;
     border-radius: 50px;
@@ -227,7 +235,14 @@ section {
 .cta-button:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
-    background: linear-gradient(140deg, var(--primary), var(--accent));
+    background: linear-gradient(
+        270deg,
+        #6366f1,
+          #8b5cf6,
+         #f472b6
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 8s ease infinite;
 }
 @media (max-width: 768px) {
     .menu-button {
@@ -278,7 +293,14 @@ section {
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 2rem;
-    background: #25D366;
+    background: linear-gradient(
+        145deg,
+        #25D366,
+        #05f75e,
+        #25D366
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 10s ease infinite;
     color: white;
     text-decoration: none;
     border-radius: 50px;
@@ -489,7 +511,7 @@ html {
          #f472b6
     );
     background-size: 300% 100%;
-    animation: gradientMove 8s ease infinite;
+    animation: gradientMove 10s ease infinite;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
