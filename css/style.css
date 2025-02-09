@@ -73,7 +73,7 @@ overflow-x: hidden;
     transition: color 0.3s;
 }
 .nav-menu a:hover {
-    color: var(--primary);
+    color:#783759;
 }
 .menu-button {
     display: none;
@@ -474,6 +474,112 @@ html {
     }
      
   }
+  .language-switch {
+    position: relative;
+    padding: 1px 20px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    overflow: hidden;
+    background: linear-gradient(
+        270deg,
+         #6366f1,
+          #8b5cf6,
+         #f472b6
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 8s ease infinite;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.language-switch::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 22px;
+    background: linear-gradient(
+        270deg,
+        #6366f1,
+          #8b5cf6,
+         #f472b6
+    );
+    background-size: 300% 100%;
+    animation: gradientMove 8s ease infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.language-switch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+}
+
+.language-switch:hover::before {
+    opacity: 1;
+}
+.globe {
+    display: inline-block;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.language-switch:hover .globe {
+    animation: pulse 1s infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Mejora para dispositivos móviles */
+@media (max-width: 768px) {
+    .language-switch {
+        padding: 4px 12px; /* Padding más pequeño */
+        font-size: 0.85em; /* Texto más pequeño */
+        margin: 0 auto; /* Centrado horizontal */
+        width: fit-content; /* Ajusta el ancho al contenido */
+        max-width: 150px; /* Ancho máximo para móviles */
+    }
+    
+    /* Reducir el tamaño del ícono del globo en móviles */
+    .globe {
+        transform: scale(0.9);
+    }
+    
+    /* Ajustar el espacio entre el ícono y el texto */
+    .language-switch {
+        gap: 4px;
+    }
+}
   .projects-section {
     top: -100px;
     padding: 120px 0 60px 0;
