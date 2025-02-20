@@ -738,11 +738,11 @@
         
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
-    // 1️⃣ Asegurar que el contenedor y el canvas siempre existan
+    // 1️⃣ Asegurar que el contenedor del gráfico siempre exista
     let container = document.querySelector('.chart-container');
     if (!container) {
         console.error("❌ No se encontró '.chart-container'. Restaurando...");
-        let card = document.querySelector('.card'); // Obtener cualquier tarjeta donde colocar el gráfico
+        let card = document.querySelector('.card:has(#monthlyChart)') || document.querySelector('.card');
         if (!card) {
             console.error("❌ No se encontró una tarjeta para restaurar el gráfico.");
             return;
@@ -759,22 +759,22 @@
         chartCanvas = document.querySelector('#monthlyChart');
     }
 
-    const ctx = chartCanvas.getContext('2d');
-
-    // 3️⃣ Si hay un gráfico previo, destruirlo antes de crear uno nuevo
-    if (window.monthlyChartInstance) {
-        window.monthlyChartInstance.destroy();
-    }
-
-    // 4️⃣ Si no hay datos, mostrar mensaje sin eliminar el contenedor
+    // 3️⃣ Si no hay datos, mostrar mensaje en pantalla sin eliminar la estructura
     if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
         console.warn("⚠️ No hay datos disponibles. Mostrando mensaje...");
         container.innerHTML = `
             <div class="no-data">
-                <p>No hay datos disponibles para el período seleccionado.</p>
+                <p>📊 No hay datos disponibles para el período seleccionado.</p>
             </div>
         `;
         return;
+    }
+
+    const ctx = chartCanvas.getContext('2d');
+
+    // 4️⃣ Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+    if (window.monthlyChartInstance) {
+        window.monthlyChartInstance.destroy();
     }
 
     // 5️⃣ Crear el nuevo gráfico
