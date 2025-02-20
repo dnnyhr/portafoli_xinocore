@@ -149,6 +149,14 @@
     });
 }
 
+let testDate = "2025-02-19";  // Reemplaza con la fecha que elegiste en el selector
+fetch(window.location.origin + `?stats=true&date=${testDate}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log("🔹 Fecha solicitada:", testDate);
+        console.log("🔹 Fecha devuelta por el backend:", data.date);
+        console.log("🔹 Primeros 5 registros de visitas:", data.visits.slice(0, 5));
+    });
 
 
         // Manejo del selector de fecha
