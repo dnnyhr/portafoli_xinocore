@@ -606,50 +606,58 @@
             // Contar visitas por página
             const pageVisits = {};
             data.visits.forEach(visit => {
-                if (!visit.page) return;
-                
-                if (!pageVisits[visit.page]) {
-                    pageVisits[visit.page] = 0;
-                }
-                pageVisits[visit.page]++;
+            if (!visit.page) return;
+            
+            if (!pageVisits[visit.page]) {
+                pageVisits[visit.page] = 0;
+            }
+            pageVisits[visit.page]++;
             });
             
             // Preparar datos para el gráfico
             const pages = Object.keys(pageVisits);
             const counts = Object.values(pageVisits);
-            const colors = pages.map(getPageColor);
+            const colors = pages.map(page => {
+            if (page.includes('/ES/')) {
+                return getComputedStyle(document.documentElement)
+                   .getPropertyValue('--primary').trim();
+            } else if (page.includes('/EN/')) {
+                return getComputedStyle(document.documentElement)
+                   .getPropertyValue('--secondary').trim();
+            }
+            return '#8338ec';
+            });
             
             // Crear gráfico
             const ctx = document.getElementById('pageDistributionChart').getContext('2d');
             new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: pages.map(getPageName),
-                    datasets: [{
-                        data: counts,
-                        backgroundColor: colors,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 12,
-                                font: {
-                                    size: 10
-                                },
-                                padding: 10
-                            }
-                        }
+            type: 'doughnut',
+            data: {
+                labels: pages.map(getPageName),
+                datasets: [{
+                data: counts,
+                backgroundColor: colors,
+                borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                    boxWidth: 12,
+                    font: {
+                        size: 10
+                    },
+                    padding: 10
                     }
                 }
+                }
+            }
             });
         }
-        
         // Función para renderizar la tabla de visitas
         function renderVisitsTable(data) {
     const tableContainer = document.getElementById('visits-table');
