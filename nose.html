@@ -523,8 +523,13 @@
         function renderHourlyChart(data) {
     if (!data.hourlyVisits) return;
 
-    // 🔍 📊 Extraemos los datos correctamente estructurados
-    const labels = Object.keys(data.hourlyVisits).map(hour => `${hour}:00`);
+    const userTimezoneOffset = new Date().getTimezoneOffset(); // Diferencia en minutos
+    const labels = Object.keys(data.hourlyVisits).map(hour => {
+        const utcDate = new Date();
+        utcDate.setUTCHours(hour, 0, 0, 0);
+        return utcDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    });
+
     const esData = Object.values(data.hourlyVisits).map(d => d.ES);
     const enData = Object.values(data.hourlyVisits).map(d => d.EN);
 
@@ -559,21 +564,13 @@
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        precision: 0
-                    }
-                }
+                y: { beginAtZero: true, ticks: { precision: 0 } }
             },
-            plugins: {
-                legend: {
-                    position: 'top'
-                }
-            }
+            plugins: { legend: { position: 'top' } }
         }
     });
 }
+
 
         
         // Función para renderizar el gráfico de distribución de páginas
@@ -629,56 +626,52 @@
         
         // Función para renderizar la tabla de visitas
         function renderVisitsTable(data) {
-            const tableContainer = document.getElementById('visits-table');
-            
-            if (!data.visits || data.visits.length === 0) {
-                tableContainer.innerHTML = `
-                    <div class="no-data">
-                        <p>No hay visitas registradas para el día de hoy.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Ordenar visitas por tiempo (más recientes primero)
-            const sortedVisits = [...data.visits]
-                .filter(visit => visit.time)
-                .sort((a, b) => new Date(b.time) - new Date(a.time));
-            
-            // Crear tabla
-            let tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Página</th>
-                            <th>Hora</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            sortedVisits.forEach(visit => {
-                const iconClass = getPageIconClass(visit.page);
-                tableHTML += `
-                    <tr>
-                        <td>
-                            <div class="page-url">
-                                <span class="page-icon ${iconClass}"></span>
-                                ${getPageName(visit.page)}
-                            </div>
-                        </td>
-                        <td>${formatDateTime(visit.time)}</td>
-                    </tr>
-                `;
-            });
-            
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            tableContainer.innerHTML = tableHTML;
-        }
+    const tableContainer = document.getElementById('visits-table');
+
+    if (!data.visits || data.visits.length === 0) {
+        tableContainer.innerHTML = `
+            <div class="no-data">
+                <p>No hay visitas registradas para el día de hoy.</p>
+            </div>
+        `;
+        return;
+    }
+
+    const sortedVisits = [...data.visits]
+        .filter(visit => visit.time)
+        .sort((a, b) => new Date(b.time) - new Date(a.time));
+
+    let tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Página</th>
+                    <th>Hora Local</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    sortedVisits.forEach(visit => {
+        const localTime = new Date(visit.time).toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit', 
+            second: '2-digit', 
+            hour12: false 
+        });
+
+        tableHTML += `
+            <tr>
+                <td>${getPageName(visit.page)}</td>
+                <td>${localTime}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `</tbody></table>`;
+    tableContainer.innerHTML = tableHTML;
+}
+
         
         // Inicializar selectores de mes y año
         function initDateFilters() {
