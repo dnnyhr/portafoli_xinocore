@@ -87,8 +87,21 @@
     <script>
         async function loadChart(date) {
     let url = window.location.origin + `?stats=true&date=${date}`;
+    console.log("URL solicitada:", url); // Agrega este log para depuración
     let response = await fetch(url);
+    
+    if (!response.ok) {
+        console.error("Error al obtener datos:", response.status);
+        return;
+    }
+
     let data = await response.json();
+    console.log("Datos recibidos:", data); // Verifica que devuelve visitas
+    
+    if (!data.visits) {
+        console.error("El JSON no tiene la clave 'visits'");
+        return;
+    }
 
     let hourlyCounts = new Array(24).fill(0);
     data.visits.forEach(timestamp => {
