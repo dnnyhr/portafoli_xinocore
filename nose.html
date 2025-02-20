@@ -523,19 +523,18 @@
         function renderHourlyChart(data) {
     if (!data.hourlyVisits) return;
 
-    // Obtener la zona horaria del usuario y calcular la hora local de inicio (1 AM)
-    const userTimezoneOffset = new Date().getTimezoneOffset() / 60; // Diferencia en horas
-    const startHour = 1; // Queremos que el gráfico comience a la 1 AM
+    // Configurar la hora de inicio (1 AM) y la hora final (12 AM)
+    const startHour = 1;
     const orderedHours = [...Array(24).keys()].map(i => (startHour + i) % 24);
 
-    // Crear etiquetas ajustadas a la zona horaria del usuario
+    // Crear etiquetas con horas locales correctamente alineadas
     const labels = orderedHours.map(hour => {
         const localDate = new Date();
         localDate.setHours(hour, 0, 0, 0);
         return localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     });
 
-    // Reordenar los datos según la hora local (1 AM -> 12 AM)
+    // Ajustar los datos de visitas para que coincidan con el nuevo orden de horas
     const esData = orderedHours.map(hour => data.hourlyVisits[hour]?.ES || 0);
     const enData = orderedHours.map(hour => data.hourlyVisits[hour]?.EN || 0);
 
