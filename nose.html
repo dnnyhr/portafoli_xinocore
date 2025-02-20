@@ -663,33 +663,33 @@
         }
         // Función para renderizar la tabla de visitas
         function renderVisitsTable(data) {
-    const tableContainer = document.getElementById('visits-table');
+        const tableContainer = document.getElementById('visits-table');
 
-    if (!data.visits || data.visits.length === 0) {
+        if (!data.visits || data.visits.length === 0) {
         tableContainer.innerHTML = `
             <div class="no-data">
-                <p>No hay visitas registradas para el día de hoy.</p>
+            <p>No hay visitas registradas para el día de hoy.</p>
             </div>
         `;
         return;
-    }
+        }
 
-    const sortedVisits = [...data.visits]
+        const sortedVisits = [...data.visits]
         .filter(visit => visit.time)
         .sort((a, b) => new Date(b.time) - new Date(a.time));
 
-    let tableHTML = `
+        let tableHTML = `
         <table>
             <thead>
-                <tr>
-                    <th>Página</th>
-                    <th>Hora Local</th>
-                </tr>
+            <tr>
+                <th>Página</th>
+                <th>Hora Local</th>
+            </tr>
             </thead>
             <tbody>
-    `;
+        `;
 
-    sortedVisits.forEach(visit => {
+        sortedVisits.forEach(visit => {
         const visitDate = new Date(visit.time);
         if (isNaN(visitDate.getTime())) {
             console.warn("Fecha inválida:", visit.time);
@@ -704,19 +704,18 @@
             hour12: false 
         });
 
+        const rowColor = getPageColor(visit.page);
         tableHTML += `
-            <tr>
-                <td>${getPageName(visit.page)}</td>
-                <td>${localTime}</td>
+            <tr style="background-color: ${rowColor}20;">
+            <td>${getPageName(visit.page)}</td>
+            <td>${localTime}</td>
             </tr>
         `;
-    });
+        });
 
-    tableHTML += `</tbody></table>`;
-    tableContainer.innerHTML = tableHTML;
-}
-
-        
+        tableHTML += `</tbody></table>`;
+        tableContainer.innerHTML = tableHTML;
+    }
         // Inicializar selectores de mes y año
         function initDateFilters() {
             const yearSelect = document.getElementById('year-select');
