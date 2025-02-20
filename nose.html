@@ -441,7 +441,8 @@
             if (!response.ok) {
                 throw new Error('No se pudieron cargar los datos históricos');
             }
-            const data = await response.json();
+            const text = await response.text();
+            const data = JSON.parse(text);
             return data;
         } catch (error) {
             console.error('Error al cargar datos históricos:', error);
