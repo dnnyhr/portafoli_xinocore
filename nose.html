@@ -435,49 +435,26 @@
             }
         }
 
-        // Función para cargar datos históricos (simulada)
         async function loadHistoricalData(year, month) {
-            try {
-                // En un entorno real, esta sería una llamada a la API con los parámetros year y month
-                const response = await fetch(`https://xinocore.com/?stats=historical&year=${year}&month=${month}`);
-                if (!response.ok) {
-                    // Como fallback, generamos datos simulados
-                    return generateMockHistoricalData(year, month);
-                }
-                return await response.json();
-            } catch (error) {
-                console.error('Error al cargar datos históricos:', error);
-                // Generamos datos simulados como fallback
-                return generateMockHistoricalData(year, month);
+        try {
+            const response = await fetch(`https://xinocore.com/?stats=historical&year=${year}&month=${month}`);
+            if (!response.ok) {
+                throw new Error('No se pudieron cargar los datos históricos');
             }
+            return await response.json();
+        } catch (error) {
+            console.error('Error al cargar datos históricos:', error);
+            document.querySelector('#monthlyChart').parentElement.innerHTML = `
+                <div class="no-data">
+                    <p>Error al cargar los datos históricos. Por favor, intenta nuevamente más tarde.</p>
+                    <p>${error.message}</p>
+                </div>
+            `;
+            return null;
         }
+    }
 
-        // Función para generar datos históricos simulados
-        function generateMockHistoricalData(year, month) {
-            const daysInMonth = new Date(year, month, 0).getDate();
-            const data = {
-                year: year,
-                month: month,
-                dailyVisits: []
-            };
-
-            // Generar datos para cada día del mes
-            for (let day = 1; day <= daysInMonth; day++) {
-                // Generar números aleatorios pero con una tendencia
-                const esVisits = Math.floor(Math.random() * 50) + 10;
-                const enVisits = Math.floor(Math.random() * 30) + 5;
-                
-                data.dailyVisits.push({
-                    date: `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
-                    es: esVisits,
-                    en: enVisits,
-                    total: esVisits + enVisits
-                });
-            }
-
-            return data;
-        }
-        
+       
         // Función para renderizar las estadísticas generales
         function renderStats(data) {
             const statCards = document.getElementById('stat-cards');
