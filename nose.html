@@ -738,31 +738,8 @@
         
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
-    // 1️⃣ Asegurar que el contenedor del gráfico siempre exista
-    let container = document.querySelector('.chart-container');
-    if (!container) {
-        console.error("❌ No se encontró '.chart-container'. Restaurando...");
-        let card = document.querySelector('.card:has(#monthlyChart)') || document.querySelector('.card');
-        if (!card) {
-            console.error("❌ No se encontró una tarjeta para restaurar el gráfico.");
-            return;
-        }
-        card.innerHTML += `<div class="chart-container"><canvas id="monthlyChart"></canvas></div>`;
-        container = document.querySelector('.chart-container');
-    }
-
-    // 2️⃣ Restaurar el canvas si no existe
-    let chartCanvas = document.querySelector('#monthlyChart');
-    if (!chartCanvas) {
-        console.warn("⚠️ No se encontró '#monthlyChart'. Restaurando...");
-        container.innerHTML = `<canvas id="monthlyChart"></canvas>`;
-        chartCanvas = document.querySelector('#monthlyChart');
-    }
-
-    // 3️⃣ Si no hay datos, mostrar mensaje en pantalla sin eliminar la estructura
     if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
-        console.warn("⚠️ No hay datos disponibles. Mostrando mensaje...");
-        container.innerHTML = `
+        document.querySelector('.chart-container').innerHTML = `
             <div class="no-data">
                 <p>📊 No hay datos disponibles para el período seleccionado.</p>
             </div>
@@ -770,28 +747,52 @@
         return;
     }
 
-    const ctx = chartCanvas.getContext('2d');
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
 
-    // 4️⃣ Si ya existe un gráfico, destruirlo antes de crear uno nuevo
     if (window.monthlyChartInstance) {
         window.monthlyChartInstance.destroy();
     }
 
-    // 5️⃣ Crear el nuevo gráfico
+    const labels = data.dailyVisits.map(d => d.date.split('-')[2]); // Extrae el día del mes
+    const esData = data.dailyVisits.map(d => d.ES || 0); // Visitas en español
+    const enData = data.dailyVisits.map(d => d.EN || 0); // Visitas en inglés
+
+    const datasets = [
+        {
+            label: 'Total de visitas',
+            data: data.dailyVisits.map(d => d.total),
+            backgroundColor: 'rgba(58, 134, 255, 0.2)',
+            borderColor: '#3a86ff',
+            borderWidth: 2,
+            tension: 0.2,
+            fill: true,
+            hidden: currentMonthlyTab === 'language'
+        },
+        {
+            label: 'Visitas en Español (ES)',
+            data: esData,
+            backgroundColor: 'rgba(58, 134, 255, 0.2)',
+            borderColor: '#3a86ff',
+            borderWidth: 2,
+            tension: 0.2,
+            fill: true,
+            hidden: currentMonthlyTab === 'visits'
+        },
+        {
+            label: 'Visitas en Inglés (EN)',
+            data: enData,
+            backgroundColor: 'rgba(255, 0, 110, 0.2)',
+            borderColor: '#ff006e',
+            borderWidth: 2,
+            tension: 0.2,
+            fill: true,
+            hidden: currentMonthlyTab === 'visits'
+        }
+    ];
+
     window.monthlyChartInstance = new Chart(ctx, {
         type: 'line',
-        data: {
-            labels: data.dailyVisits.map(d => d.date.split('-')[2]), // Solo mostrar el día
-            datasets: [{
-                label: 'Total de visitas',
-                data: data.dailyVisits.map(d => d.total),
-                backgroundColor: 'rgba(58, 134, 255, 0.2)',
-                borderColor: '#3a86ff',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true
-            }]
-        },
+        data: { labels, datasets },
         options: {
             responsive: true,
             maintainAspectRatio: false,
