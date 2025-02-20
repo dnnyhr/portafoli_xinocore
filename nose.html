@@ -523,20 +523,27 @@
         function renderHourlyChart(data) {
     if (!data.hourlyVisits) return;
 
-    // Configurar la hora de inicio (1 AM) y la hora final (12 AM)
-    const startHour = 1;
-    const orderedHours = [...Array(24).keys()].map(i => (startHour + i) % 24);
+    // Obtener el desplazamiento horario del usuario en horas
+    const userTimezoneOffset = new Date().getTimezoneOffset() / 60;
 
-    // Crear etiquetas con horas locales correctamente alineadas
-    const labels = orderedHours.map(hour => {
+    // Convertir correctamente cada hora UTC a la hora local
+    const labels = [...Array(24).keys()].map(utcHour => {
+        const localHour = (utcHour - userTimezoneOffset + 24) % 24; // Ajustar la hora a la zona horaria del usuario
         const localDate = new Date();
-        localDate.setHours(hour, 0, 0, 0);
+        localDate.setHours(localHour, 0, 0, 0);
         return localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     });
 
-    // Ajustar los datos de visitas para que coincidan con el nuevo orden de horas
-    const esData = orderedHours.map(hour => data.hourlyVisits[hour]?.ES || 0);
-    const enData = orderedHours.map(hour => data.hourlyVisits[hour]?.EN || 0);
+    // Ajustar los datos de visitas según la zona horaria del usuario
+    const esData = [...Array(24).keys()].map(utcHour => {
+        const localHour = (utcHour - userTimezoneOffset + 24) % 24;
+        return data.hourlyVisits[localHour]?.ES || 0;
+    });
+
+    const enData = [...Array(24).keys()].map(utcHour => {
+        const localHour = (utcHour - userTimezoneOffset + 24) % 24;
+        return data.hourlyVisits[localHour]?.EN || 0;
+    });
 
     const ctx = document.getElementById('hourlyChart').getContext('2d');
 
