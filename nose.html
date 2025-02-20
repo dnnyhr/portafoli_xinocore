@@ -235,12 +235,11 @@
                 const mockData = generateMockData(date);
                 processStats(mockData);
                 
-                // También puedes implementar esto para obtener datos reales:
-                // const response = await fetch(`${statsUrl}?stats=true`);
-                // if (response.ok) {
-                //     const data = await response.json();
-                //     processStats(data);
-                // }
+                const response = await fetch(`${statsUrl}?stats=true`);
+                if (response.ok) {
+                    const data = await response.json();
+                    processStats(data);
+                 }
             } catch (error) {
                 console.error('Error al cargar estadísticas:', error);
             }
