@@ -86,51 +86,50 @@
 
     <script>
         async function loadChart(date) {
-            let url = window.location.origin + `?stats=true&date=${date}`;
-            let response = await fetch(url);
-            let data = await response.json();
+    let url = window.location.origin + `?stats=true&date=${date}`;
+    let response = await fetch(url);
+    let data = await response.json();
 
-            // Contar visitas por hora
-            let hourlyCounts = new Array(24).fill(0);
-            data.visits.forEach(timestamp => {
-                let hour = new Date(timestamp).getHours();
-                hourlyCounts[hour]++;
-            });
+    let hourlyCounts = new Array(24).fill(0);
+    data.visits.forEach(timestamp => {
+        let hour = new Date(timestamp).getHours();
+        hourlyCounts[hour]++;
+    });
 
-            // Mostrar total de visitas
-            document.getElementById("totalVisits").innerText = data.visits.length;
+    document.getElementById("totalVisits").innerText = data.visits.length;
 
-            // Destruir gráfico anterior si existe
-            if (window.visitsChart) {
-                window.visitsChart.destroy();
+    let ctx = document.getElementById("visitsChart").getContext("2d");
+
+    // 🔹 Verifica si el gráfico existe antes de destruirlo
+    if (window.visitsChart instanceof Chart) {
+        window.visitsChart.destroy();
+    }
+
+    window.visitsChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: [...Array(24).keys()].map(h => h + ":00"),
+            datasets: [{
+                label: "Visitas por hora",
+                data: hourlyCounts,
+                backgroundColor: "rgba(99, 102, 241, 0.7)", 
+                borderColor: "rgba(99, 102, 241, 1)",
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            },
+            animation: {
+                duration: 1000
             }
-
-            // Crear gráfico nuevo
-            let ctx = document.getElementById("visitsChart").getContext("2d");
-            window.visitsChart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                    labels: [...Array(24).keys()].map(h => h + ":00"),
-                    datasets: [{
-                        label: "Visitas por hora",
-                        data: hourlyCounts,
-                        backgroundColor: "rgba(99, 102, 241, 0.7)", 
-                        borderColor: "rgba(99, 102, 241, 1)",
-                        borderWidth: 1,
-                        borderRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true }
-                    },
-                    animation: {
-                        duration: 1000
-                    }
-                }
-            });
         }
+    });
+}
+
 
         // Manejo del selector de fecha
         document.getElementById("datePicker").addEventListener("change", function () {
