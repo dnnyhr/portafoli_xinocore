@@ -565,23 +565,25 @@
     }
 
     window.hourlyChartInstance = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [
                 {
                     label: 'Español (ES)',
                     data: esData,
-                    backgroundColor: '#6366f1',
+                    backgroundColor: '#rgba(99, 102, 241, 0.1)',
                     borderColor: '#6366f1',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    fill: true
                 },
                 {
                     label: 'Inglés (EN)',
                     data: enData,
-                    backgroundColor: '#f472b6',
+                    backgroundColor: 'rgba(244, 114, 182, 0.1)',
                     borderColor: '#f472b6',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    fill: true
                 }
             ]
         },
@@ -625,7 +627,7 @@
                     labels: pages.map(getPageName),
                     datasets: [{
                         data: counts,
-                        backgroundColor: colors,
+                        backgroundColor: '#f472b6, #6366f1',
                         borderWidth: 1
                     }]
                 },
@@ -771,7 +773,7 @@
         {
             label: 'Total de visitas',
             data: data.dailyVisits.map(d => d.total),
-            backgroundColor: '#6366f1',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
             borderColor: '#f472b6',
             borderWidth: 2,
             tension: 0.2,
@@ -781,7 +783,7 @@
         {
             label: 'Visitas en Español (ES)',
             data: esData,
-            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
             borderColor: '#6366f1',
             borderWidth: 2,
             tension: 0.2,
@@ -791,7 +793,7 @@
         {
             label: 'Visitas en Inglés (EN)',
             data: enData,
-            backgroundColor: 'rgba(244, 114, 182, 0.2)',
+            backgroundColor: 'rgba(244, 114, 182, 0.1)',
             borderColor: '#f472b6',
             borderWidth: 2,
             tension: 0.2,
