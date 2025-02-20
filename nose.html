@@ -303,11 +303,14 @@
     </header>
     
     <div class="container">
-        <div class="stat-cards" id="stat-cards">
-            <div class="loader" id="loader">
-                <div class="spinner"></div>
+        <center>
+            <div class="stat-cards" id="stat-cards">
+                <div class="loader" id="loader">
+                    <div class="spinner"></div>
+                </div>
             </div>
-        </div>
+        </center>
+        
         
         <div class="dashboard">
             <div class="card">
@@ -733,64 +736,16 @@
             
             // Evento para el botón de filtro
             document.getElementById('apply-filter').addEventListener('click', async () => {
-    const year = yearSelect.value;
-    const month = monthSelect.value;
-    const data = await loadHistoricalData(year, month);
-    
-    renderMonthlyChart(data);  // Ya estaba en tu código
-    renderMonthlyTable(data);  // 🔥 Ahora también actualiza la tabla de meses
-});
-
+                const year = yearSelect.value;
+                const month = monthSelect.value;
+                const data = await loadHistoricalData(year, month);
+                renderMonthlyChart(data);
+            });
             
             // Inicializar con los valores actuales
             document.getElementById('apply-filter').click();
         }
         
-
-        function renderMonthlyTable(data) {
-    const tableContainer = document.getElementById('monthly-table');
-
-    if (!data.dailyVisits || data.dailyVisits.length === 0) {
-        tableContainer.innerHTML = `
-            <div class="no-data">
-                <p>No hay datos de visitas para este mes.</p>
-            </div>
-        `;
-        return;
-    }
-
-    let tableHTML = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                    <th>Español (ES)</th>
-                    <th>Inglés (EN)</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    data.dailyVisits.forEach(day => {
-        tableHTML += `
-            <tr>
-                <td>${day.date}</td>
-                <td>${day.total}</td>
-                <td>${day.ES}</td>
-                <td>${day.EN}</td>
-            </tr>
-        `;
-    });
-
-    tableHTML += `</tbody></table>`;
-    tableContainer.innerHTML = tableHTML;
-}
-
-
-
-
-
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
     if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
