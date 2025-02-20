@@ -3,164 +3,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Visitas</title>
-
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="./css/style.css">
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <title>Dashboard de Estadísticas - XinoCore</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        .container {
-            max-width: 900px;
-            margin: 80px auto 20px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
             padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #f5f5f7;
+            color: #333;
         }
-        .title {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
             text-align: center;
-            color: var(--primary);
+            margin-bottom: 30px;
         }
-        .date-picker {
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .date-selector {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
-        .date-picker input {
+        .date-selector input {
             padding: 8px;
-            border: 1px solid var(--primary);
-            border-radius: 5px;
-            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
         }
-        .visit-count {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--secondary);
+        .date-selector button {
+            padding: 8px 16px;
+            background-color: #4a86e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .date-selector button:hover {
+            background-color: #3a76d8;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             margin-bottom: 20px;
         }
-        .chart-container {
-            padding: 20px;
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        canvas {
-            max-width: 100%;
-            height: auto !important;
+        .stat-card h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .stat-card p {
+            margin: 10px 0 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #4a86e8;
+        }
+        .chart-container {
+            height: 300px;
+        }
+        .visits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .visits-table th, .visits-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .visits-table th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+        }
+        .page-selector {
+            margin-bottom: 20px;
+        }
+        .page-selector select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo-container">
-                <div class="logo">V</div>
-                <h1 class="brand">Visitas</h1>
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard de Estadísticas - XinoCore</h1>
+            <p>Monitoreo de visitas a tu sitio web</p>
+        </div>
+        
+        <div class="date-selector">
+            <input type="date" id="dateSelector" value="">
+            <button id="loadBtn">Cargar Datos</button>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-card">
+                <h3>Total de Visitas</h3>
+                <p id="totalVisits">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Visitas ES</h3>
+                <p id="esVisits">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Visitas EN</h3>
+                <p id="enVisits">-</p>
+            </div>
+            <div class="stat-card">
+                <h3>Hora Pico</h3>
+                <p id="peakHour">-</p>
             </div>
         </div>
-    </nav>
-
-    <!-- Contenedor principal -->
-    <div class="container">
-        <h2 class="title">📊 Estadísticas de Visitas</h2>
-
-        <!-- Selector de Fecha -->
-        <div class="date-picker">
-            <label for="datePicker">📅 Selecciona una fecha:</label>
-            <input type="date" id="datePicker">
-        </div>
-
-        <!-- Contador de visitas -->
-        <div class="visit-count">
-            👀 Visitas Totales: <span id="totalVisits">0</span>
-        </div>
-
-        <!-- Gráfico -->
-        <div class="chart-container">
-            <canvas id="visitsChart"></canvas>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h2>Visitas por Hora</h2>
+                <div class="chart-container">
+                    <canvas id="hourlyChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Distribución por Página</h2>
+                <div class="chart-container">
+                    <canvas id="pageChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="page-selector">
+                    <select id="pageFilter">
+                        <option value="all">Todas las páginas</option>
+                        <option value="https://xinocore.com/ES/Inicio">ES - Inicio</option>
+                        <option value="https://xinocore.com/EN/home">EN - Home</option>
+                    </select>
+                </div>
+                <h2>Listado de Visitas</h2>
+                <div id="visitsTableContainer">
+                    <table class="visits-table">
+                        <thead>
+                            <tr>
+                                <th>Página</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody id="visitsTableBody">
+                            <!-- Datos de visitas serán insertados aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Tendencia de 7 Días</h2>
+                <div class="chart-container">
+                    <canvas id="weeklyTrendChart"></canvas>
+                </div>
+                <p class="no-data" id="weeklyTrendNoData">Datos de 7 días no disponibles aún</p>
+            </div>
         </div>
     </div>
 
     <script>
-       async function loadChart(date) {
-    let url = window.location.origin + `?stats=true&date=${date}`;
-    console.log("URL solicitada:", url);
-    
-    let response = await fetch(url);
-    if (!response.ok) {
-        console.error("Error al obtener datos:", response.status);
-        return;
-    }
-
-    let data = await response.json();
-    console.log("Datos recibidos:", data);
-
-    // Asegurar que solo usamos visitas de la fecha correcta
-    let correctDate = new Date(date).toISOString().split("T")[0];
-    let filteredVisits = data.visits.filter(timestamp => 
-        new Date(timestamp).toISOString().split("T")[0] === correctDate
-    );
-
-    // Si no hay visitas para el día correcto
-    if (filteredVisits.length === 0) {
-        console.warn(`No hay datos para la fecha ${date}. Mostrando datos sin filtrar.`);
-        filteredVisits = data.visits; // Como respaldo, mostramos lo que venga del backend
-    }
-
-    let hourlyCounts = new Array(24).fill(0);
-    filteredVisits.forEach(timestamp => {
-        let hour = new Date(timestamp).getHours();
-        hourlyCounts[hour]++;
-    });
-
-    document.getElementById("totalVisits").innerText = filteredVisits.length;
-
-    let ctx = document.getElementById("visitsChart").getContext("2d");
-
-    if (window.visitsChart instanceof Chart) {
-        window.visitsChart.destroy();
-    }
-
-    window.visitsChart = new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: [...Array(24).keys()].map(h => h + ":00"),
-            datasets: [{
-                label: "Visitas por hora",
-                data: hourlyCounts,
-                backgroundColor: "rgba(99, 102, 241, 0.7)", 
-                borderColor: "rgba(99, 102, 241, 1)",
-                borderWidth: 1,
-                borderRadius: 5
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: { beginAtZero: true }
-            },
-            animation: {
-                duration: 1000
+        // Configurar fecha actual
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dateSelector').value = today;
+        
+        // URL base para solicitar estadísticas
+        const statsUrl = 'https://xinocore.com/'; // Ajusta según tu dominio
+        
+        // Gráficos inicializados
+        let hourlyChart, pageChart, weeklyTrendChart;
+        
+        // Carga los datos al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats(today);
+            document.getElementById('loadBtn').addEventListener('click', () => {
+                const selectedDate = document.getElementById('dateSelector').value;
+                loadStats(selectedDate);
+            });
+            
+            document.getElementById('pageFilter').addEventListener('change', filterVisitsList);
+        });
+        
+        // Función para cargar estadísticas
+        async function loadStats(date) {
+            try {
+                // Simular carga completa para demostración
+                // En producción, usar: const response = await fetch(`${statsUrl}?stats=true`);
+                
+                // Simulamos datos para demostración
+                const mockData = generateMockData(date);
+                processStats(mockData);
+                
+                // También puedes implementar esto para obtener datos reales:
+                // const response = await fetch(`${statsUrl}?stats=true`);
+                // if (response.ok) {
+                //     const data = await response.json();
+                //     processStats(data);
+                // }
+            } catch (error) {
+                console.error('Error al cargar estadísticas:', error);
             }
         }
-    });
-}
-
-
-
-        // Manejo del selector de fecha
-        document.getElementById("datePicker").addEventListener("change", function () {
-            loadChart(this.value);
-        });
-
-        // Cargar datos del día actual
-        let today = new Date().toISOString().split("T")[0];
-        document.getElementById("datePicker").value = today;
-        loadChart(today);
+        
+        // Función para procesar los datos estadísticos
+        function processStats(data) {
+            const visits = data.visits;
+            
+            // Si no hay visitas, mostrar mensaje
+            if (!visits || visits.length === 0) {
+                document.getElementById('totalVisits').textContent = '0';
+                document.getElementById('esVisits').textContent = '0';
+                document.getElementById('enVisits').textContent = '0';
+                document.getElementById('peakHour').textContent = '-';
+                document.getElementById('visitsTableBody').innerHTML = '<tr><td colspan="2" class="no-data">No hay datos disponibles para esta fecha</td></tr>';
+                resetCharts();
+                return;
+            }
+            
+            // Calcular estadísticas generales
+            const totalVisits = visits.length;
+            const esVisits = visits.filter(v => v.page.includes('/ES/')).length;
+            const enVisits = visits.filter(v => v.page.includes('/EN/')).length;
+            
+            // Calcular hora pico
+            const hourCounts = {};
+            visits.forEach(visit => {
+                const hour = new Date(visit.time).getHours();
+                hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+            });
+            
+            const peakHour = Object.keys(hourCounts).reduce((a, b) => 
+                hourCounts[a] > hourCounts[b] ? a : b
+            );
+            
+            // Actualizar tarjetas de estadísticas
+            document.getElementById('totalVisits').textContent = totalVisits;
+            document.getElementById('esVisits').textContent = esVisits;
+            document.getElementById('enVisits').textContent = enVisits;
+            document.getElementById('peakHour').textContent = `${peakHour}:00`;
+            
+            // Actualizar tabla de visitas
+            updateVisitsTable(visits);
+            
+            // Actualizar gráficos
+            updateHourlyChart(visits);
+            updatePageDistributionChart(esVisits, enVisits);
+            simulateWeeklyTrendChart(data.date);
+        }
+        
+        // Actualizar tabla de visitas
+        function updateVisitsTable(visits) {
+            const tableBody = document.getElementById('visitsTableBody');
+            tableBody.innerHTML = '';
+            
+            // Ordenar visitas por hora (más recientes primero)
+            const sortedVisits = [...visits].sort((a, b) => 
+                new Date(b.time) - new Date(a.time)
+            );
+            
+            sortedVisits.forEach(visit => {
+                const row = document.createElement('tr');
+                
+                const pageCell = document.createElement('td');
+                pageCell.textContent = visit.page.includes('/ES/') ? 'ES - Inicio' : 'EN - Home';
+                
+                const timeCell = document.createElement('td');
+                const visitTime = new Date(visit.time);
+                timeCell.textContent = visitTime.toLocaleTimeString();
+                
+                row.appendChild(pageCell);
+                row.appendChild(timeCell);
+                row.dataset.page = visit.page;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Filtrar lista de visitas
+        function filterVisitsList() {
+            const selectedPage = document.getElementById('pageFilter').value;
+            const rows = document.querySelectorAll('#visitsTableBody tr');
+            
+            rows.forEach(row => {
+                if (selectedPage === 'all' || row.dataset.page === selectedPage) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Actualizar gráfico por hora
+        function updateHourlyChart(visits) {
+            // Preparar datos para gráfico por hora
+            const hourLabels = Array.from({ length: 24 }, (_, i) => `${i}:00`);
+            const hourData = Array(24).fill(0);
+            
+            visits.forEach(visit => {
+                const hour = new Date(visit.time).getHours();
+                hourData[hour]++;
+            });
+            
+            // Actualizar o crear gráfico
+            const ctx = document.getElementById('hourlyChart').getContext('2d');
+            
+            if (hourlyChart) {
+                hourlyChart.data.datasets[0].data = hourData;
+                hourlyChart.update();
+            } else {
+                hourlyChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: hourLabels,
+                        datasets: [{
+                            label: 'Visitas por Hora',
+                            data: hourData,
+                            backgroundColor: 'rgba(74, 134, 232, 0.7)',
+                            borderColor: 'rgba(74, 134, 232, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Actualizar gráfico de distribución por página
+        function updatePageDistributionChart(esVisits, enVisits) {
+            const ctx = document.getElementById('pageChart').getContext('2d');
+            
+            if (pageChart) {
+                pageChart.data.datasets[0].data = [esVisits, enVisits];
+                pageChart.update();
+            } else {
+                pageChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['ES - Inicio', 'EN - Home'],
+                        datasets: [{
+                            data: [esVisits, enVisits],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right'
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Simular gráfico de tendencia semanal
+        function simulateWeeklyTrendChart(currentDate) {
+            const ctx = document.getElementById('weeklyTrendChart').getContext('2d');
+            const weekDates = [];
+            const mockData = [];
+            
+            // Generar fechas para los últimos 7 días
+            const date = new Date(currentDate);
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(date);
+                d.setDate(d.getDate() - i);
+                weekDates.push(d.toLocaleDateString());
+                
+                // Generar datos aleatorios entre 10 y 50
+                mockData.push(Math.floor(Math.random() * 40) + 10);
+            }
+            
+            // Ocultar mensaje de "no hay datos"
+            document.getElementById('weeklyTrendNoData').style.display = 'none';
+            
+            if (weeklyTrendChart) {
+                weeklyTrendChart.data.labels = weekDates;
+                weeklyTrendChart.data.datasets[0].data = mockData;
+                weeklyTrendChart.update();
+            } else {
+                weeklyTrendChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: weekDates,
+                        datasets: [{
+                            label: 'Visitas Diarias',
+                            data: mockData,
+                            fill: false,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Reiniciar gráficos
+        function resetCharts() {
+            if (hourlyChart) hourlyChart.destroy();
+            if (pageChart) pageChart.destroy();
+            if (weeklyTrendChart) weeklyTrendChart.destroy();
+            hourlyChart = pageChart = weeklyTrendChart = null;
+        }
+        
+        // Generar datos de prueba para demostración
+        function generateMockData(date) {
+            const visits = [];
+            const pages = [
+                "https://xinocore.com/ES/Inicio",
+                "https://xinocore.com/EN/home"
+            ];
+            
+            // Generar entre 10 y 30 visitas aleatorias
+            const numVisits = Math.floor(Math.random() * 20) + 10;
+            
+            for (let i = 0; i < numVisits; i++) {
+                const pageIndex = Math.floor(Math.random() * pages.length);
+                const hour = Math.floor(Math.random() * 24);
+                const minute = Math.floor(Math.random() * 60);
+                const second = Math.floor(Math.random() * 60);
+                
+                const time = new Date(date);
+                time.setHours(hour, minute, second);
+                
+                visits.push({
+                    page: pages[pageIndex],
+                    time: time.toISOString()
+                });
+            }
+            
+            return {
+                date: date,
+                visits: visits
+            };
+        }
     </script>
-
 </body>
 </html>
