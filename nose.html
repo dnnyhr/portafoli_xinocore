@@ -436,31 +436,36 @@
         }
 
         async function loadHistoricalData(year, month) {
-        try {
-            const response = await fetch(`https://xinocore.com/?stats=historical&year=${year}&month=${month}`);
-            if (!response.ok) {
-                throw new Error('No se pudieron cargar los datos históricos');
-            }
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                throw new Error('La respuesta no es JSON');
-            }
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Error al cargar datos históricos:', error);
-            const monthlyChartElem = document.querySelector('#monthlyChart');
-            if (monthlyChartElem && monthlyChartElem.parentElement) {
-                monthlyChartElem.parentElement.innerHTML = `
+    try {
+        const response = await fetch(`https://xinocore.com/?stats=historical&year=${year}&month=${month}`);
+        
+        if (!response.ok) {
+            throw new Error(`Error ${response.status}: No se pudieron cargar los datos históricos`);
+        }
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('La respuesta del servidor no es JSON válido');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error al cargar datos históricos:', error);
+        const monthlyChartElem = document.querySelector('#monthlyChart');
+        
+        if (monthlyChartElem && monthlyChartElem.parentElement) {
+            monthlyChartElem.parentElement.innerHTML = `
                 <div class="no-data">
                     <p>Error al cargar los datos históricos. Por favor, intenta nuevamente más tarde.</p>
                     <p>${error.message}</p>
                 </div>
             `;
-            }
-            return null;
         }
+        return null;
     }
+}
+
+
 
        
         // Función para renderizar las estadísticas generales
