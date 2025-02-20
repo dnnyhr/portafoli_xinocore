@@ -761,79 +761,78 @@
         
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
-    if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
-        document.querySelector('.chart-container').innerHTML = `
-            <div class="no-data">
+            if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
+            document.querySelector('.chart-container').innerHTML = `
+                <div class="no-data">
                 <p>📊 No hay datos disponibles para el período seleccionado.</p>
-            </div>
-        `;
-        return;
-    }
+                </div>
+            `;
+            return;
+            }
 
-    const ctx = document.getElementById('monthlyChart').getContext('2d');
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
 
-    if (window.monthlyChartInstance) {
-        window.monthlyChartInstance.destroy();
-    }
+            if (window.monthlyChartInstance) {
+            window.monthlyChartInstance.destroy();
+            }
 
-    const labels = data.dailyVisits.map(d => d.date.split('-')[2]); // Extrae el día del mes
-    const esData = data.dailyVisits.map(d => d.ES || 0); // Visitas en español
-    const enData = data.dailyVisits.map(d => d.EN || 0); // Visitas en inglés
+            const labels = data.dailyVisits.map(d => d.date.split('-')[2]); // Extrae el día del mes
+            const esData = data.dailyVisits.map(d => d.ES || 0); // Visitas en español
+            const enData = data.dailyVisits.map(d => d.EN || 0); // Visitas en inglés
 
-    const datasets = [
-        {
-            data: data.dailyVisits.map(d => d.total),
-            backgroundColor: 'rgba(244, 114, 182, 0.5)',
-            borderColor: '#6366f1',
-            borderWidth: 2,
-            tension: 0.2,
-            fill: true,
-            hidden: currentMonthlyTab === 'language'
-        },
-        {
-            data: esData,
-            backgroundColor: 'rgba(99, 102, 241, 0.1)',
-            borderColor: '#6366f1',
-            borderWidth: 2,
-            tension: 0.2,
-            fill: true,
-            hidden: currentMonthlyTab === 'visits'
-        },
-        {
-            data: enData,
-            backgroundColor: 'rgba(244, 114, 182, 0.1)',
-            borderColor: '#f472b6',
-            borderWidth: 2,
-            tension: 0.2,
-            fill: true,
-            hidden: currentMonthlyTab === 'visits'
-        }
-    ];
+            const datasets = [
+            {
+                label: 'Total de visitas',
+                data: data.dailyVisits.map(d => d.total),
+                backgroundColor: 'rgba(244, 114, 182, 0.5)',
+                borderColor: '#6366f1',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: true,
+                hidden: currentMonthlyTab === 'language'
+            },
+            {
+                label: 'Visitas en Español (ES)',
+                data: esData,
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                borderColor: '#6366f1',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: true,
+                hidden: currentMonthlyTab === 'visits'
+            },
+            {
+                label: 'Visitas en Inglés (EN)',
+                data: enData,
+                backgroundColor: 'rgba(244, 114, 182, 0.1)',
+                borderColor: '#f472b6',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: true,
+                hidden: currentMonthlyTab === 'visits'
+            }
+            ];
 
-    window.monthlyChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: { labels, datasets },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
+            window.monthlyChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
                 y: { beginAtZero: true, ticks: { precision: 0 } },
                 x: { title: { display: true, text: 'Día del mes' } }
-            },
-            plugins: {
-                legend: { position: 'top' },
+                },
+                plugins: {
+                legend: { display: false },
                 title: {
                     display: true,
                     text: `Visitas diarias - ${getMonthName(data.month)} ${data.year}`
                 }
+                }
             }
+            });
         }
-    });
-}
-
-
-
-
 
         // Obtener nombre del mes a partir del número
         function getMonthName(monthNumber) {
