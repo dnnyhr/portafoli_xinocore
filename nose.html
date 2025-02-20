@@ -523,25 +523,21 @@
         function renderHourlyChart(data) {
     if (!data.hourlyVisits) return;
 
-    // Obtener el desplazamiento horario del usuario en horas
-    const userTimezoneOffset = new Date().getTimezoneOffset() / 60;
-    
-    // Calcular la hora local de medianoche y ajustar la rotación de datos
-    const localMidnightHour = (24 - userTimezoneOffset) % 24;
+    // Obtener la zona horaria del usuario y calcular la hora local de inicio (1 AM)
+    const userTimezoneOffset = new Date().getTimezoneOffset() / 60; // Diferencia en horas
+    const startHour = 1; // Queremos que el gráfico comience a la 1 AM
+    const orderedHours = [...Array(24).keys()].map(i => (startHour + i) % 24);
 
-    // Obtener las horas ordenadas correctamente desde la medianoche local
-    const sortedHours = [...Array(24).keys()].map(i => (localMidnightHour + i) % 24);
-
-    // Crear etiquetas con las horas locales
-    const labels = sortedHours.map(hour => {
+    // Crear etiquetas ajustadas a la zona horaria del usuario
+    const labels = orderedHours.map(hour => {
         const localDate = new Date();
         localDate.setHours(hour, 0, 0, 0);
         return localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     });
 
-    // Reordenar los datos según la medianoche local
-    const esData = sortedHours.map(hour => data.hourlyVisits[hour]?.ES || 0);
-    const enData = sortedHours.map(hour => data.hourlyVisits[hour]?.EN || 0);
+    // Reordenar los datos según la hora local (1 AM -> 12 AM)
+    const esData = orderedHours.map(hour => data.hourlyVisits[hour]?.ES || 0);
+    const enData = orderedHours.map(hour => data.hourlyVisits[hour]?.EN || 0);
 
     const ctx = document.getElementById('hourlyChart').getContext('2d');
 
@@ -580,6 +576,7 @@
         }
     });
 }
+
 
 
 
