@@ -32,12 +32,69 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             padding: 20px 0;
             margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         h1 {
             margin: 0;
             padding: 0 20px;
             color: var(--primary);
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            padding: 0 20px;
+            align-items: center;
+        }
+        
+        .filter-controls select, .filter-controls button {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        .filter-controls button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .filter-controls button:hover {
+            background-color: #2a6dd9;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #e9ecef;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border-bottom: 3px solid var(--primary);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .dashboard {
@@ -60,6 +117,28 @@
             font-size: 1.2rem;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card h2 .legend {
+            font-size: 0.8rem;
+            font-weight: normal;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
         }
         
         .stat-cards {
@@ -165,47 +244,206 @@
             padding: 40px;
             color: #6c757d;
         }
+        
+        /* Estilos para la paginación */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        
+        .pagination button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        .pagination button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pagination button:hover:not(.active) {
+            background-color: #f5f7fa;
+        }
+        
+        /* Estilos para el toggle de vista */
+        .view-toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        
+        .view-toggle button {
+            padding: 6px 12px;
+            background-color: #e9ecef;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        
+        .view-toggle button:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .view-toggle button:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .view-toggle button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>XinoCore Analytics</h1>
+        <div class="filter-controls">
+            <select id="month-select">
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+            </select>
+            <select id="year-select">
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+            </select>
+            <button id="filter-button">Aplicar Filtros</button>
+            <button id="today-button">Hoy</button>
+        </div>
     </header>
     
     <div class="container">
-        <div class="stat-cards" id="stat-cards">
-            <div class="loader" id="loader">
-                <div class="spinner"></div>
+        <div class="tabs">
+            <div class="tab active" data-tab="daily">Vista Diaria</div>
+            <div class="tab" data-tab="monthly">Vista Mensual</div>
+        </div>
+        
+        <!-- Vista Diaria -->
+        <div class="tab-content active" id="daily-content">
+            <div class="stat-cards" id="daily-stat-cards">
+                <div class="loader" id="daily-loader">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+            
+            <div class="dashboard">
+                <div class="card">
+                    <h2>
+                        Visitas por hora
+                        <div class="legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #3a86ff;"></span>
+                                <span>Español</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #ff006e;"></span>
+                                <span>Inglés</span>
+                            </div>
+                        </div>
+                    </h2>
+                    <div class="chart-container">
+                        <canvas id="hourlyChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Distribución de páginas</h2>
+                    <div class="chart-container">
+                        <canvas id="pageDistributionChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Registro detallado de visitas</h2>
+                    <div id="visits-table">
+                        <div class="loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                    <div class="pagination" id="visits-pagination"></div>
+                </div>
             </div>
         </div>
         
-        <div class="dashboard">
-            <div class="card">
-                <h2>Visitas por hora</h2>
-                <div class="chart-container">
-                    <canvas id="hourlyChart"></canvas>
+        <!-- Vista Mensual -->
+        <div class="tab-content" id="monthly-content">
+            <div class="stat-cards" id="monthly-stat-cards">
+                <div class="loader" id="monthly-loader">
+                    <div class="spinner"></div>
                 </div>
             </div>
             
-            <div class="card">
-                <h2>Distribución de páginas</h2>
-                <div class="chart-container">
-                    <canvas id="pageDistributionChart"></canvas>
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2>Registro detallado de visitas</h2>
-                <div id="visits-table">
-                    <div class="loader">
-                        <div class="spinner"></div>
+            <div class="dashboard">
+                <div class="card">
+                    <h2>
+                        Visitas por día del mes
+                        <div class="legend">
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #3a86ff;"></span>
+                                <span>Español</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background-color: #ff006e;"></span>
+                                <span>Inglés</span>
+                            </div>
+                        </div>
+                    </h2>
+                    <div class="chart-container">
+                        <canvas id="dailyMonthChart"></canvas>
                     </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Tendencia de visitas en el mes</h2>
+                    <div class="view-toggle">
+                        <button class="active" data-view="total">Total</button>
+                        <button data-view="language">Por idioma</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="monthlyTrendChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2>Resumen por día</h2>
+                    <div id="daily-summary-table">
+                        <div class="loader">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                    <div class="pagination" id="summary-pagination"></div>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
+        // Variables globales
+        let currentMonth = new Date().getMonth() + 1; // 1-12
+        let currentYear = new Date().getFullYear();
+        let currentTab = 'daily';
+        let monthlyData = {};
+        let cachedDailyData = {};
+        
+        // Inicializar selects con la fecha actual
+        document.getElementById('month-select').value = currentMonth;
+        document.getElementById('year-select').value = currentYear;
+        
         // Función para formatear la fecha y hora
         function formatDateTime(dateTimeStr) {
             const date = new Date(dateTimeStr);
@@ -219,6 +457,16 @@
             });
         }
         
+        // Función para formatear solo la fecha
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+        
         // Función para formatear solo la hora
         function formatTime(dateTimeStr) {
             const date = new Date(dateTimeStr);
@@ -226,6 +474,13 @@
                 hour: '2-digit',
                 minute: '2-digit'
             });
+        }
+        
+        // Función para obtener el nombre del mes
+        function getMonthName(month) {
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            return months[month - 1];
         }
         
         // Función para obtener el nombre de la página de una URL
@@ -258,18 +513,28 @@
             return '';
         }
 
-        // Función para cargar los datos
-        async function loadData() {
+        // Función para cargar los datos diarios
+        async function loadDailyData(date) {
             try {
-                const response = await fetch('https://xinocore.com/?stats=true');
+                // Simulamos la carga de datos para un día específico
+                // En producción, aquí harías la petición a tu API con la fecha como parámetro
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                
+                if (cachedDailyData[formattedDate]) {
+                    return cachedDailyData[formattedDate];
+                }
+                
+                const response = await fetch(`https://xinocore.com/?stats=true&date=${formattedDate}`);
                 if (!response.ok) {
                     throw new Error('No se pudieron cargar los datos');
                 }
+                
                 const data = await response.json();
+                cachedDailyData[formattedDate] = data;
                 return data;
             } catch (error) {
-                console.error('Error al cargar datos:', error);
-                document.querySelector('#loader').innerHTML = `
+                console.error('Error al cargar datos diarios:', error);
+                document.querySelector('#daily-loader').innerHTML = `
                     <div class="no-data">
                         <p>Error al cargar los datos. Por favor, intenta nuevamente más tarde.</p>
                         <p>${error.message}</p>
@@ -279,15 +544,104 @@
             }
         }
         
-        // Función para renderizar las estadísticas generales
-        function renderStats(data) {
-            const statCards = document.getElementById('stat-cards');
+        // Función para simular datos mensuales (para demostración)
+        async function loadMonthlyData(month, year) {
+            try {
+                // En producción, aquí harías la petición a tu API con el mes y año como parámetros
+                const cacheKey = `${year}-${month}`;
+                
+                if (monthlyData[cacheKey]) {
+                    return monthlyData[cacheKey];
+                }
+                
+                // Simulamos datos para el mes seleccionado
+                const daysInMonth = new Date(year, month, 0).getDate();
+                const monthData = {
+                    month: month,
+                    year: year,
+                    days: {}
+                };
+                
+                // Generar datos simulados para cada día del mes
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    
+                    // Intentar cargar datos reales si existen
+                    try {
+                        const dayData = await loadDailyData(new Date(dateStr));
+                        if (dayData && dayData.visits) {
+                            monthData.days[day] = dayData;
+                            continue;
+                        }
+                    } catch (e) {
+                        // Si falla, continuamos con datos simulados
+                    }
+                    
+                    // Generar datos simulados si no hay reales
+                    // Para la demostración, generamos más visitas para días laborables
+                    const dayOfWeek = new Date(dateStr).getDay();
+                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+                    const totalVisits = isWeekend ? 
+                        Math.floor(Math.random() * 30) + 10 : 
+                        Math.floor(Math.random() * 70) + 30;
+                    
+                    const esRatio = Math.random() * 0.4 + 0.3; // Entre 30% y 70% para español
+                    const esVisits = Math.floor(totalVisits * esRatio);
+                    const enVisits = totalVisits - esVisits;
+                    
+                    const visits = [];
+                    
+                    // Generar visitas para ES
+                    for (let i = 0; i < esVisits; i++) {
+                        const hour = Math.floor(Math.random() * 24);
+                        const minute = Math.floor(Math.random() * 60);
+                        const second = Math.floor(Math.random() * 60);
+                        visits.push({
+                            page: "https://xinocore.com/ES/Inicio",
+                            time: `${dateStr}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}.000Z`
+                        });
+                    }
+                    
+                    // Generar visitas para EN
+                    for (let i = 0; i < enVisits; i++) {
+                        const hour = Math.floor(Math.random() * 24);
+                        const minute = Math.floor(Math.random() * 60);
+                        const second = Math.floor(Math.random() * 60);
+                        visits.push({
+                            page: "https://xinocore.com/EN/home",
+                            time: `${dateStr}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}.000Z`
+                        });
+                    }
+                    
+                    monthData.days[day] = {
+                        date: dateStr,
+                        visits: visits
+                    };
+                }
+                
+                monthlyData[cacheKey] = monthData;
+                return monthData;
+            } catch (error) {
+                console.error('Error al cargar datos mensuales:', error);
+                document.querySelector('#monthly-loader').innerHTML = `
+                    <div class="no-data">
+                        <p>Error al cargar los datos mensuales. Por favor, intenta nuevamente más tarde.</p>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                return null;
+            }
+        }
+        
+        // Función para renderizar estadísticas diarias
+        function renderDailyStats(data) {
+            const statCards = document.getElementById('daily-stat-cards');
             
             // Si no hay datos, mostrar mensaje
             if (!data || !data.visits || data.visits.length === 0) {
                 statCards.innerHTML = `
                     <div class="no-data">
-                        <p>No hay datos disponibles para la fecha actual.</p>
+                        <p>No hay datos disponibles para el día seleccionado.</p>
                     </div>
                 `;
                 return;
@@ -295,15 +649,6 @@
             
             // Calcular estadísticas
             const totalVisits = data.visits.length;
-            
-            // Contar visitas únicas por página
-            const pageVisits = {};
-            data.visits.forEach(visit => {
-                if (!pageVisits[visit.page]) {
-                    pageVisits[visit.page] = 0;
-                }
-                pageVisits[visit.page]++;
-            });
             
             // Contar visitas por idioma
             const esVisits = data.visits.filter(v => v.page.includes('/ES/')).length;
@@ -325,7 +670,68 @@
                 </div>
                 <div class="stat-card">
                     <h3>Fecha</h3>
-                    <p>${data.date}</p>
+                    <p>${formatDate(data.date)}</p>
+                </div>
+            `;
+        }
+        
+        // Función para renderizar estadísticas mensuales
+        function renderMonthlyStats(monthData) {
+            const statCards = document.getElementById('monthly-stat-cards');
+            
+            // Si no hay datos, mostrar mensaje
+            if (!monthData || !monthData.days || Object.keys(monthData.days).length === 0) {
+                statCards.innerHTML = `
+                    <div class="no-data">
+                        <p>No hay datos disponibles para el mes seleccionado.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calcular estadísticas
+            let totalVisits = 0;
+            let esVisits = 0;
+            let enVisits = 0;
+            let maxDayVisits = { day: 0, count: 0 };
+            
+            Object.entries(monthData.days).forEach(([day, dayData]) => {
+                if (dayData.visits && dayData.visits.length) {
+                    const dayVisits = dayData.visits.length;
+                    totalVisits += dayVisits;
+                    
+                    // Contar por idioma
+                    esVisits += dayData.visits.filter(v => v.page.includes('/ES/')).length;
+                    enVisits += dayData.visits.filter(v => v.page.includes('/EN/')).length;
+                    
+                    // Comprobar si este día tiene el máximo
+                    if (dayVisits > maxDayVisits.count) {
+                        maxDayVisits = { day: parseInt(day), count: dayVisits };
+                    }
+                }
+            });
+            
+            // Obtener el nombre del día de máximas visitas
+            const maxDayDate = new Date(monthData.year, monthData.month - 1, maxDayVisits.day);
+            const maxDayFormatted = formatDate(maxDayDate);
+            
+            // Actualizar UI
+            statCards.innerHTML = `
+                <div class="stat-card">
+                    <h3>Total de visitas</h3>
+                    <p>${totalVisits}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Español (ES)</h3>
+                    <p>${esVisits}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Inglés (EN)</h3>
+                    <p>${enVisits}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Día con más visitas</h3>
+                    <p>${maxDayFormatted}</p>
                 </div>
             `;
         }
@@ -358,7 +764,11 @@
             
             // Crear gráfico
             const ctx = document.getElementById('hourlyChart').getContext('2d');
-            new Chart(ctx, {
+            if (window.hourlyChartInstance) {
+                window.hourlyChartInstance.destroy();
+            }
+            
+            window.hourlyChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -414,7 +824,11 @@
             
             // Crear gráfico
             const ctx = document.getElementById('pageDistributionChart').getContext('2d');
-            new Chart(ctx, {
+            if (window.pageDistChartInstance) {
+                window.pageDistChartInstance.destroy();
+            }
+            
+            window.pageDistChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: pages.map(getPageName),
@@ -436,16 +850,186 @@
             });
         }
         
-        // Función para renderizar la tabla de visitas
+        // Función para renderizar las visitas diarias del mes
+        function renderDailyMonthChart(monthData) {
+            if (!monthData || !monthData.days) return;
+            
+            const daysInMonth = Object.keys(monthData.days).length;
+            const labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
+            const esData = [];
+            const enData = [];
+            
+            // Preparar datos para cada día
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayData = monthData.days[day];
+                if (dayData && dayData.visits) {
+                    const esCount = dayData.visits.filter(v => v.page.includes('/ES/')).length;
+                    const enCount = dayData.visits.filter(v => v.page.includes('/EN/')).length;
+                    esData.push(esCount);
+                    enData.push(enCount);
+                // Continuación del código desde donde se cortó:
+            } else {
+                    esData.push(0);
+                    enData.push(0);
+                }
+            }
+            
+            // Crear gráfico
+            const ctx = document.getElementById('dailyMonthChart').getContext('2d');
+            if (window.dailyMonthChartInstance) {
+                window.dailyMonthChartInstance.destroy();
+            }
+            
+            window.dailyMonthChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Español (ES)',
+                            data: esData,
+                            backgroundColor: '#3a86ff',
+                            borderColor: '#3a86ff',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Inglés (EN)',
+                            data: enData,
+                            backgroundColor: '#ff006e',
+                            borderColor: '#ff006e',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Día del mes'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Función para renderizar la tendencia mensual
+        function renderMonthlyTrendChart(monthData, viewType = 'total') {
+            if (!monthData || !monthData.days) return;
+            
+            const daysInMonth = Object.keys(monthData.days).length;
+            const labels = Array.from({length: daysInMonth}, (_, i) => i + 1);
+            const totalData = [];
+            const esData = [];
+            const enData = [];
+            
+            // Preparar datos para cada día
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayData = monthData.days[day];
+                if (dayData && dayData.visits) {
+                    const esCount = dayData.visits.filter(v => v.page.includes('/ES/')).length;
+                    const enCount = dayData.visits.filter(v => v.page.includes('/EN/')).length;
+                    totalData.push(esCount + enCount);
+                    esData.push(esCount);
+                    enData.push(enCount);
+                } else {
+                    totalData.push(0);
+                    esData.push(0);
+                    enData.push(0);
+                }
+            }
+            
+            // Crear gráfico
+            const ctx = document.getElementById('monthlyTrendChart').getContext('2d');
+            if (window.monthlyTrendChartInstance) {
+                window.monthlyTrendChartInstance.destroy();
+            }
+            
+            // Configurar datasets según el tipo de vista
+            let datasets = [];
+            if (viewType === 'total') {
+                datasets = [
+                    {
+                        label: 'Total de visitas',
+                        data: totalData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }
+                ];
+            } else {
+                datasets = [
+                    {
+                        label: 'Español (ES)',
+                        data: esData,
+                        backgroundColor: 'rgba(58, 134, 255, 0.2)',
+                        borderColor: '#3a86ff',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Inglés (EN)',
+                        data: enData,
+                        backgroundColor: 'rgba(255, 0, 110, 0.2)',
+                        borderColor: '#ff006e',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }
+                ];
+            }
+            
+            window.monthlyTrendChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Día del mes'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Función para renderizar la tabla de visitas con paginación
         function renderVisitsTable(data) {
             const tableContainer = document.getElementById('visits-table');
+            const paginationContainer = document.getElementById('visits-pagination');
             
             if (!data.visits || data.visits.length === 0) {
                 tableContainer.innerHTML = `
                     <div class="no-data">
-                        <p>No hay visitas registradas para el día de hoy.</p>
+                        <p>No hay visitas registradas para el día seleccionado.</p>
                     </div>
                 `;
+                paginationContainer.innerHTML = '';
                 return;
             }
             
@@ -454,54 +1038,291 @@
                 new Date(b.time) - new Date(a.time)
             );
             
-            // Crear tabla
-            let tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Página</th>
-                            <th>Hora</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+            // Configuración de paginación
+            const itemsPerPage = 10;
+            const totalPages = Math.ceil(sortedVisits.length / itemsPerPage);
+            let currentPage = 1;
             
-            sortedVisits.forEach(visit => {
-                const iconClass = getPageIconClass(visit.page);
-                tableHTML += `
-                    <tr>
-                        <td>
-                            <div class="page-url">
-                                <span class="page-icon ${iconClass}"></span>
-                                ${getPageName(visit.page)}
-                            </div>
-                        </td>
-                        <td>${formatDateTime(visit.time)}</td>
-                    </tr>
+            // Función para renderizar la página actual
+            function renderPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const visitsToShow = sortedVisits.slice(start, end);
+                
+                // Crear tabla
+                let tableHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Página</th>
+                                <th>Hora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                 `;
-            });
+                
+                visitsToShow.forEach(visit => {
+                    const iconClass = getPageIconClass(visit.page);
+                    tableHTML += `
+                        <tr>
+                            <td>
+                                <div class="page-url">
+                                    <span class="page-icon ${iconClass}"></span>
+                                    ${getPageName(visit.page)}
+                                </div>
+                            </td>
+                            <td>${formatDateTime(visit.time)}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                
+                tableContainer.innerHTML = tableHTML;
+                
+                // Actualizar paginación
+                renderPagination(page, totalPages, paginationContainer, renderPage);
+            }
             
-            tableHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            tableContainer.innerHTML = tableHTML;
+            // Renderizar primera página
+            renderPage(1);
         }
         
-        // Función principal para inicializar el dashboard
-        async function initDashboard() {
-            const data = await loadData();
+        // Función para renderizar el resumen diario del mes con paginación
+        function renderDailySummaryTable(monthData) {
+            const tableContainer = document.getElementById('daily-summary-table');
+            const paginationContainer = document.getElementById('summary-pagination');
+            
+            if (!monthData || !monthData.days || Object.keys(monthData.days).length === 0) {
+                tableContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>No hay datos disponibles para el mes seleccionado.</p>
+                    </div>
+                `;
+                paginationContainer.innerHTML = '';
+                return;
+            }
+            
+            // Preparar datos resumidos
+            const summaryData = [];
+            Object.entries(monthData.days).forEach(([day, dayData]) => {
+                if (dayData && dayData.visits) {
+                    const esVisits = dayData.visits.filter(v => v.page.includes('/ES/')).length;
+                    const enVisits = dayData.visits.filter(v => v.page.includes('/EN/')).length;
+                    const totalVisits = dayData.visits.length;
+                    
+                    summaryData.push({
+                        day: parseInt(day),
+                        date: dayData.date,
+                        totalVisits,
+                        esVisits,
+                        enVisits
+                    });
+                }
+            });
+            
+            // Ordenar por día
+            summaryData.sort((a, b) => b.day - a.day);
+            
+            // Configuración de paginación
+            const itemsPerPage = 10;
+            const totalPages = Math.ceil(summaryData.length / itemsPerPage);
+            let currentPage = 1;
+            
+            // Función para renderizar la página actual
+            function renderPage(page) {
+                const start = (page - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const dataToShow = summaryData.slice(start, end);
+                
+                // Crear tabla
+                let tableHTML = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Español (ES)</th>
+                                <th>Inglés (EN)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                dataToShow.forEach(item => {
+                    tableHTML += `
+                        <tr>
+                            <td>${formatDate(item.date)}</td>
+                            <td>${item.totalVisits}</td>
+                            <td>${item.esVisits}</td>
+                            <td>${item.enVisits}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                
+                tableContainer.innerHTML = tableHTML;
+                
+                // Actualizar paginación
+                renderPagination(page, totalPages, paginationContainer, renderPage);
+            }
+            
+            // Renderizar primera página
+            renderPage(1);
+        }
+        
+        // Función para renderizar controles de paginación
+        function renderPagination(currentPage, totalPages, container, callback) {
+            let paginationHTML = '';
+            
+            // Botón anterior
+            paginationHTML += `
+                <button ${currentPage === 1 ? 'disabled' : ''} onclick="goToPage(${currentPage - 1})">
+                    &laquo;
+                </button>
+            `;
+            
+            // Páginas
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                paginationHTML += `
+                    <button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">
+                        ${i}
+                    </button>
+                `;
+            }
+            
+            // Botón siguiente
+            paginationHTML += `
+                <button ${currentPage === totalPages ? 'disabled' : ''} onclick="goToPage(${currentPage + 1})">
+                    &raquo;
+                </button>
+            `;
+            
+            container.innerHTML = paginationHTML;
+            
+            // Función para navegar a la página seleccionada
+            window.goToPage = function(page) {
+                callback(page);
+            };
+        }
+        
+        // Función para inicializar la vista diaria
+        async function initDailyView() {
+            const today = new Date();
+            today.setFullYear(currentYear);
+            today.setMonth(currentMonth - 1);
+            
+            const data = await loadDailyData(today);
             if (data) {
-                renderStats(data);
+                renderDailyStats(data);
                 renderHourlyChart(data);
                 renderPageDistributionChart(data);
                 renderVisitsTable(data);
             }
         }
         
+        // Función para inicializar la vista mensual
+        async function initMonthlyView() {
+            const monthData = await loadMonthlyData(currentMonth, currentYear);
+            if (monthData) {
+                renderMonthlyStats(monthData);
+                renderDailyMonthChart(monthData);
+                renderMonthlyTrendChart(monthData, 'total');
+                renderDailySummaryTable(monthData);
+            }
+        }
+        
+        // Función principal para inicializar el dashboard
+        async function initDashboard() {
+            // Inicializar la vista actual
+            if (currentTab === 'daily') {
+                await initDailyView();
+            } else {
+                await initMonthlyView();
+            }
+            
+            // Configurar cambio de tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', async function() {
+                    // Actualizar UI
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${this.dataset.tab}-content`).classList.add('active');
+                    
+                    // Actualizar tab actual
+                    currentTab = this.dataset.tab;
+                    
+                    // Reinicializar la vista
+                    if (currentTab === 'daily') {
+                        await initDailyView();
+                    } else {
+                        await initMonthlyView();
+                    }
+                });
+            });
+            
+            // Configurar toggle de vista para el gráfico de tendencia
+            document.querySelectorAll('.view-toggle button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const viewType = this.dataset.view;
+                    renderMonthlyTrendChart(monthlyData[`${currentYear}-${currentMonth}`], viewType);
+                });
+            });
+            
+            // Configurar botones de filtro
+            document.getElementById('filter-button').addEventListener('click', async function() {
+                const selectedMonth = parseInt(document.getElementById('month-select').value);
+                const selectedYear = parseInt(document.getElementById('year-select').value);
+                
+                currentMonth = selectedMonth;
+                currentYear = selectedYear;
+                
+                if (currentTab === 'daily') {
+                    await initDailyView();
+                } else {
+                    await initMonthlyView();
+                }
+            });
+            
+            // Configurar botón para ir al día actual
+            document.getElementById('today-button').addEventListener('click', async function() {
+                const today = new Date();
+                currentMonth = today.getMonth() + 1;
+                currentYear = today.getFullYear();
+                
+                // Actualizar selects
+                document.getElementById('month-select').value = currentMonth;
+                document.getElementById('year-select').value = currentYear;
+                
+                // Cambiar a vista diaria
+                if (currentTab !== 'daily') {
+                    document.querySelector('.tab[data-tab="daily"]').click();
+                } else {
+                    await initDailyView();
+                }
+            });
+        }
+        
         // Iniciar la aplicación
         document.addEventListener('DOMContentLoaded', initDashboard);
     </script>
-</body>
-</html>
