@@ -441,13 +441,8 @@
             if (!response.ok) {
                 throw new Error('No se pudieron cargar los datos históricos');
             }
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                return await response.json();
-            } else {
-                console.warn('Respuesta no es JSON, intentando parsear como texto');
-                return await response.text();
-            }
+            const data = await response.json();
+            return data;
         } catch (error) {
             console.error('Error al cargar datos históricos:', error);
             document.querySelector('#monthlyChart').parentElement.innerHTML = `
