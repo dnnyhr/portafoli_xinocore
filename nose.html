@@ -523,17 +523,23 @@
         function renderHourlyChart(data) {
     if (!data.hourlyVisits) return;
 
-    const userTimezoneOffset = new Date().getTimezoneOffset() / 60; // Diferencia en horas
-    const localStartHour = (24 - userTimezoneOffset) % 24; // Hora local de inicio
+    // Obtener el desplazamiento horario del usuario en horas
+    const userTimezoneOffset = new Date().getTimezoneOffset() / 60;
+    
+    // Calcular la hora local de medianoche y ajustar la rotación de datos
+    const localMidnightHour = (24 - userTimezoneOffset) % 24;
 
-    // Ordenar las horas para empezar desde la medianoche local
-    const sortedHours = [...Array(24).keys()].map(i => (localStartHour + i) % 24);
+    // Obtener las horas ordenadas correctamente desde la medianoche local
+    const sortedHours = [...Array(24).keys()].map(i => (localMidnightHour + i) % 24);
 
+    // Crear etiquetas con las horas locales
     const labels = sortedHours.map(hour => {
-        const utcDate = new Date(Date.UTC(2023, 0, 1, hour));
-        return utcDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        const localDate = new Date();
+        localDate.setHours(hour, 0, 0, 0);
+        return localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     });
 
+    // Reordenar los datos según la medianoche local
     const esData = sortedHours.map(hour => data.hourlyVisits[hour]?.ES || 0);
     const enData = sortedHours.map(hour => data.hourlyVisits[hour]?.EN || 0);
 
@@ -574,6 +580,7 @@
         }
     });
 }
+
 
 
         
