@@ -738,126 +738,61 @@
         
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
-            // Destruir el gráfico existente si hay uno
-            if (monthlyChartInstance) {
-                monthlyChartInstance.destroy();
+    // 1️⃣ Restaurar el canvas si no existe
+    let container = document.querySelector('#monthlyChart').parentElement;
+    if (!document.querySelector('#monthlyChart')) {
+        container.innerHTML = `<canvas id="monthlyChart"></canvas>`; // 🔥 Restaurar el canvas
+    }
+    
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
+
+    // 2️⃣ Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+    if (monthlyChartInstance) {
+        monthlyChartInstance.destroy();
+    }
+
+    if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
+        container.innerHTML = `
+            <div class="no-data">
+                <p>No hay datos disponibles para el período seleccionado.</p>
+            </div>
+        `;
+        return;
+    }
+
+    // 3️⃣ Crear el gráfico con los datos nuevos
+    monthlyChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.dailyVisits.map(d => d.date.split('-')[2]), // Solo mostrar el día
+            datasets: [{
+                label: 'Total de visitas',
+                data: data.dailyVisits.map(d => d.total),
+                backgroundColor: 'rgba(58, 134, 255, 0.2)',
+                borderColor: '#3a86ff',
+                borderWidth: 2,
+                tension: 0.2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, ticks: { precision: 0 } },
+                x: { title: { display: true, text: 'Día del mes' } }
+            },
+            plugins: {
+                legend: { position: 'top' },
+                title: {
+                    display: true,
+                    text: `Visitas diarias - ${getMonthName(data.month)} ${data.year}`
+                }
             }
-            
-            if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
-                document.getElementById('monthlyChart').parentElement.innerHTML = `
-                    <div class="no-data">
-                        <p>No hay datos disponibles para el período seleccionado.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            const ctx = document.getElementById('monthlyChart').getContext('2d');
-            
-            // Preparar datos según la pestaña activa
-            let chartConfig;
-            
-            if (currentMonthlyTab === 'visits') {
-                // Configuración para mostrar total de visitas por día
-                chartConfig = {
-                    type: 'line',
-                    data: {
-                        labels: data.dailyVisits.map(d => d.date.split('-')[2]), // Solo mostrar el día
-                        datasets: [{
-                            label: 'Total de visitas',
-                            data: data.dailyVisits.map(d => d.total),
-                            backgroundColor: 'rgba(58, 134, 255, 0.2)',
-                            borderColor: '#3a86ff',
-                            borderWidth: 2,
-                            tension: 0.2,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    precision: 0
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Día del mes'
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top'
-                            },
-                            title: {
-                                display: true,
-                                text: `Visitas diarias - ${getMonthName(data.month)} ${data.year}`
-                            }
-                        }
-                    }
-                };
-            } else {
-                // Configuración para mostrar visitas por idioma
-                chartConfig = {
-                    type: 'bar',
-                    data: {
-                        labels: data.dailyVisits.map(d => d.date.split('-')[2]), // Solo mostrar el día
-                        datasets: [
-                            {
-                                label: 'Español (ES)',
-                                data: data.dailyVisits.map(d => d.es),
-                                backgroundColor: '#3a86ff',
-                                borderColor: '#3a86ff',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Inglés (EN)',
-                                data: data.dailyVisits.map(d => d.en),
-                                backgroundColor: '#ff006e',
-                                borderColor: '#ff006e',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    precision: 0
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Día del mes'
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                position: 'top'
-                            },
-                            title: {
-                                display: true,
-                                text: `Visitas por idioma - ${getMonthName(data.month)} ${data.year}`
-                            }
-                        }
-                    }
-                };
-            }
-            
-            // Crear el gráfico
-            monthlyChartInstance = new Chart(ctx, chartConfig);
         }
-        
+    });
+}
+
         // Obtener nombre del mes a partir del número
         function getMonthName(monthNumber) {
             const months = [
