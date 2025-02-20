@@ -738,15 +738,29 @@
         
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
-    // 1️⃣ Restaurar el canvas si no existe
-    let container = document.querySelector('#monthlyChart').parentElement;
-    if (!document.querySelector('#monthlyChart')) {
-        container.innerHTML = `<canvas id="monthlyChart"></canvas>`; // 🔥 Restaurar el canvas
+    // 1️⃣ Obtener el contenedor del gráfico
+    let container = document.querySelector('#monthlyChart')?.parentElement;
+
+    // 2️⃣ Si el contenedor no existe, restaurarlo
+    if (!container) {
+        let card = document.querySelector('.card:has(#monthlyChart)');
+        if (card) {
+            card.innerHTML = `<h2>Estadísticas mensuales</h2><div class="chart-container"><canvas id="monthlyChart"></canvas></div>`;
+            container = document.querySelector('#monthlyChart').parentElement;
+        } else {
+            console.error("No se pudo restaurar el gráfico porque el contenedor no existe.");
+            return;
+        }
     }
-    
+
+    // 3️⃣ Restaurar el canvas si no existe
+    if (!document.querySelector('#monthlyChart')) {
+        container.innerHTML = `<canvas id="monthlyChart"></canvas>`;
+    }
+
     const ctx = document.getElementById('monthlyChart').getContext('2d');
 
-    // 2️⃣ Si ya existe un gráfico, destruirlo antes de crear uno nuevo
+    // 4️⃣ Si ya existe un gráfico, destruirlo antes de crear uno nuevo
     if (monthlyChartInstance) {
         monthlyChartInstance.destroy();
     }
@@ -760,7 +774,7 @@
         return;
     }
 
-    // 3️⃣ Crear el gráfico con los datos nuevos
+    // 5️⃣ Crear el gráfico con los datos nuevos
     monthlyChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -792,6 +806,7 @@
         }
     });
 }
+
 
         // Obtener nombre del mes a partir del número
         function getMonthName(monthNumber) {
