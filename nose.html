@@ -87,33 +87,39 @@
     <script>
         async function loadChart(date) {
     let url = window.location.origin + `?stats=true&date=${date}`;
-    console.log("URL solicitada:", url); // Agrega este log para depuración
-    let response = await fetch(url);
+    console.log("URL solicitada:", url);
     
+    let response = await fetch(url);
     if (!response.ok) {
         console.error("Error al obtener datos:", response.status);
         return;
     }
 
     let data = await response.json();
-    console.log("Datos recibidos:", data); // Verifica que devuelve visitas
-    
-    if (!data.visits) {
-        console.error("El JSON no tiene la clave 'visits'");
-        return;
+    console.log("Datos recibidos:", data);
+
+    // Asegurar que solo usamos visitas de la fecha correcta
+    let correctDate = new Date(date).toISOString().split("T")[0];
+    let filteredVisits = data.visits.filter(timestamp => 
+        new Date(timestamp).toISOString().split("T")[0] === correctDate
+    );
+
+    // Si no hay visitas para el día correcto
+    if (filteredVisits.length === 0) {
+        console.warn(`No hay datos para la fecha ${date}. Mostrando datos sin filtrar.`);
+        filteredVisits = data.visits; // Como respaldo, mostramos lo que venga del backend
     }
 
     let hourlyCounts = new Array(24).fill(0);
-    data.visits.forEach(timestamp => {
+    filteredVisits.forEach(timestamp => {
         let hour = new Date(timestamp).getHours();
         hourlyCounts[hour]++;
     });
 
-    document.getElementById("totalVisits").innerText = data.visits.length;
+    document.getElementById("totalVisits").innerText = filteredVisits.length;
 
     let ctx = document.getElementById("visitsChart").getContext("2d");
 
-    // 🔹 Verifica si el gráfico existe antes de destruirlo
     if (window.visitsChart instanceof Chart) {
         window.visitsChart.destroy();
     }
@@ -142,6 +148,7 @@
         }
     });
 }
+
 
 
         // Manejo del selector de fecha
