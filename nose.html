@@ -521,74 +521,60 @@
         
         // Función para renderizar el gráfico de visitas por hora
         function renderHourlyChart(data) {
-            if (!data.visits || data.visits.length === 0) return;
-            
-            // Agrupar visitas por hora
-            const hourlyData = {};
-            for (let i = 0; i < 24; i++) {
-                hourlyData[i] = { ES: 0, EN: 0 };
-            }
-            
-            data.visits.forEach(visit => {
-                if (!visit.time) return;
-                
-                const date = new Date(visit.time);
-                const hour = date.getHours();
-                
-                if (visit.page && visit.page.includes('/ES/')) {
-                    hourlyData[hour].ES++;
-                } else if (visit.page && visit.page.includes('/EN/')) {
-                    hourlyData[hour].EN++;
-                }
-            });
-            
-            // Preparar datos para el gráfico
-            const labels = Object.keys(hourlyData).map(hour => `${hour}:00`);
-            const esData = Object.values(hourlyData).map(d => d.ES);
-            const enData = Object.values(hourlyData).map(d => d.EN);
-            
-            // Crear gráfico
-            const ctx = document.getElementById('hourlyChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Español (ES)',
-                            data: esData,
-                            backgroundColor: '#3a86ff',
-                            borderColor: '#3a86ff',
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Inglés (EN)',
-                            data: enData,
-                            backgroundColor: '#ff006e',
-                            borderColor: '#ff006e',
-                            borderWidth: 1
-                        }
-                    ]
+    if (!data.hourlyVisits) return;
+
+    // 🔍 📊 Extraemos los datos correctamente estructurados
+    const labels = Object.keys(data.hourlyVisits).map(hour => `${hour}:00`);
+    const esData = Object.values(data.hourlyVisits).map(d => d.ES);
+    const enData = Object.values(data.hourlyVisits).map(d => d.EN);
+
+    const ctx = document.getElementById('hourlyChart').getContext('2d');
+
+    if (window.hourlyChartInstance) {
+        window.hourlyChartInstance.destroy();
+    }
+
+    window.hourlyChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Español (ES)',
+                    data: esData,
+                    backgroundColor: '#3a86ff',
+                    borderColor: '#3a86ff',
+                    borderWidth: 1
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        }
+                {
+                    label: 'Inglés (EN)',
+                    data: enData,
+                    backgroundColor: '#ff006e',
+                    borderColor: '#ff006e',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
                     }
                 }
-            });
+            },
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
         }
+    });
+}
+
         
         // Función para renderizar el gráfico de distribución de páginas
         function renderPageDistributionChart(data) {
