@@ -85,10 +85,10 @@
     </div>
 
     <script>
-        async function loadChart(date) {
+       async function loadChart(date) {
     let url = window.location.origin + `?stats=true&date=${date}`;
     console.log("URL solicitada:", url);
-    
+
     let response = await fetch(url);
     if (!response.ok) {
         console.error("Error al obtener datos:", response.status);
@@ -96,20 +96,28 @@
     }
 
     let data = await response.json();
-    console.log("Datos recibidos:", data);
+    console.log("🔹 Fecha solicitada:", date);
+    console.log("🔹 Fecha devuelta por backend:", data.date);
+    console.log("🔹 Primeros 5 registros de visitas:", data.visits.slice(0, 5));
 
-    // Asegurar que solo usamos visitas de la fecha correcta
-    let correctDate = new Date(date).toISOString().split("T")[0];
-    let filteredVisits = data.visits.filter(timestamp => 
-        new Date(timestamp).toISOString().split("T")[0] === correctDate
-    );
-
-    // Si no hay visitas para el día correcto
-    if (filteredVisits.length === 0) {
-        console.warn(`No hay datos para la fecha ${date}. Mostrando datos sin filtrar.`);
-        filteredVisits = data.visits; // Como respaldo, mostramos lo que venga del backend
+    if (!data.visits || !Array.isArray(data.visits)) {
+        console.error("⚠️ Error: El backend no devolvió una lista de visitas válida.");
+        return;
     }
 
+    // 🔹 Validar y corregir timestamps incorrectos
+    let filteredVisits = data.visits.filter(timestamp => {
+        let visitDate = new Date(timestamp);
+        return !isNaN(visitDate); // Elimina valores inválidos
+    });
+
+    if (filteredVisits.length === 0) {
+        console.warn(`⚠️ No hay visitas válidas para la fecha ${date}.`);
+        document.getElementById("totalVisits").innerText = "0";
+        return;
+    }
+
+    // 🔹 Contar visitas por hora
     let hourlyCounts = new Array(24).fill(0);
     filteredVisits.forEach(timestamp => {
         let hour = new Date(timestamp).getHours();
@@ -149,14 +157,6 @@
     });
 }
 
-let testDate = "2025-02-19";  // Reemplaza con la fecha que elegiste en el selector
-fetch(window.location.origin + `?stats=true&date=${testDate}`)
-    .then(response => response.json())
-    .then(data => {
-        console.log("🔹 Fecha solicitada:", testDate);
-        console.log("🔹 Fecha devuelta por el backend:", data.date);
-        console.log("🔹 Primeros 5 registros de visitas:", data.visits.slice(0, 5));
-    });
 
 
         // Manejo del selector de fecha
