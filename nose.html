@@ -565,22 +565,22 @@
     }
 
     window.hourlyChartInstance = new Chart(ctx, {
-        type: 'line',
+        type: 'bars',
         data: {
             labels: labels,
             datasets: [
                 {
                     label: 'Español (ES)',
                     data: esData,
-                    backgroundColor: '#3a86ff',
-                    borderColor: '#3a86ff',
+                    backgroundColor: '#6366f1',
+                    borderColor: '#6366f1',
                     borderWidth: 1
                 },
                 {
                     label: 'Inglés (EN)',
                     data: enData,
-                    backgroundColor: '#ff006e',
-                    borderColor: '#ff006e',
+                    backgroundColor: '#f472b6',
+                    borderColor: '#f472b6',
                     borderWidth: 1
                 }
             ]
@@ -771,8 +771,8 @@
         {
             label: 'Total de visitas',
             data: data.dailyVisits.map(d => d.total),
-            backgroundColor: 'rgba(58, 134, 255, 0.2)',
-            borderColor: '#3a86ff',
+            backgroundColor: '#6366f1',
+            borderColor: '#f472b6',
             borderWidth: 2,
             tension: 0.2,
             fill: true,
@@ -781,8 +781,8 @@
         {
             label: 'Visitas en Español (ES)',
             data: esData,
-            backgroundColor: 'rgba(58, 134, 255, 0.2)',
-            borderColor: '#3a86ff',
+            backgroundColor: '#6366f1',
+            borderColor: '#6366f1',
             borderWidth: 2,
             tension: 0.2,
             fill: true,
@@ -791,8 +791,8 @@
         {
             label: 'Visitas en Inglés (EN)',
             data: enData,
-            backgroundColor: 'rgba(255, 0, 110, 0.2)',
-            borderColor: '#ff006e',
+            backgroundColor: '#f472b6',
+            borderColor: '#f472b6',
             borderWidth: 2,
             tension: 0.2,
             fill: true,
