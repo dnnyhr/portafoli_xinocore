@@ -782,7 +782,6 @@
 
     const datasets = [
         {
-            label: 'Total de visitas',
             data: data.dailyVisits.map(d => d.total),
             backgroundColor: 'rgba(244, 114, 182, 0.5)',
             borderColor: '#6366f1',
@@ -792,7 +791,6 @@
             hidden: currentMonthlyTab === 'language'
         },
         {
-            label: 'Visitas en Español (ES)',
             data: esData,
             backgroundColor: 'rgba(99, 102, 241, 0.1)',
             borderColor: '#6366f1',
@@ -802,7 +800,6 @@
             hidden: currentMonthlyTab === 'visits'
         },
         {
-            label: 'Visitas en Inglés (EN)',
             data: enData,
             backgroundColor: 'rgba(244, 114, 182, 0.1)',
             borderColor: '#f472b6',
