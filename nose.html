@@ -445,7 +445,8 @@
             if (contentType && contentType.includes('application/json')) {
                 return await response.json();
             } else {
-                throw new Error('Respuesta no es JSON');
+                console.warn('Respuesta no es JSON, intentando parsear como texto');
+                return await response.text();
             }
         } catch (error) {
             console.error('Error al cargar datos históricos:', error);
