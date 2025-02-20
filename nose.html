@@ -524,26 +524,27 @@
     if (!data.hourlyVisits) return;
 
     // Obtener el desplazamiento horario del usuario en horas
-    const userTimezoneOffset = new Date().getTimezoneOffset() / 60;
+    const userTimezoneOffset = new Date().getTimezoneOffset() / 60; // Diferencia en horas
 
-    // Convertir correctamente cada hora UTC a la hora local
-    const labels = [...Array(24).keys()].map(utcHour => {
-        const localHour = (utcHour - userTimezoneOffset + 24) % 24; // Ajustar la hora a la zona horaria del usuario
+    // Crear un array de 24 posiciones para ordenar correctamente los datos
+    let translatedVisits = Array(24).fill({ ES: 0, EN: 0 });
+
+    // Recorrer cada hora en UTC y trasladarla a la zona horaria del usuario
+    Object.keys(data.hourlyVisits).forEach(utcHour => {
+        const localHour = (parseInt(utcHour) - userTimezoneOffset + 24) % 24; // Convertir a hora local
+        translatedVisits[localHour] = data.hourlyVisits[utcHour] || { ES: 0, EN: 0 };
+    });
+
+    // Crear etiquetas para la gráfica (de 00:00 a 23:00 en hora local)
+    const labels = [...Array(24).keys()].map(hour => {
         const localDate = new Date();
-        localDate.setHours(localHour, 0, 0, 0);
+        localDate.setHours(hour, 0, 0, 0);
         return localDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
     });
 
-    // Ajustar los datos de visitas según la zona horaria del usuario
-    const esData = [...Array(24).keys()].map(utcHour => {
-        const localHour = (utcHour - userTimezoneOffset + 24) % 24;
-        return data.hourlyVisits[localHour]?.ES || 0;
-    });
-
-    const enData = [...Array(24).keys()].map(utcHour => {
-        const localHour = (utcHour - userTimezoneOffset + 24) % 24;
-        return data.hourlyVisits[localHour]?.EN || 0;
-    });
+    // Extraer los datos ya traducidos a la hora local
+    const esData = translatedVisits.map(entry => entry.ES);
+    const enData = translatedVisits.map(entry => entry.EN);
 
     const ctx = document.getElementById('hourlyChart').getContext('2d');
 
@@ -582,9 +583,6 @@
         }
     });
 }
-
-
-
 
         
         // Función para renderizar el gráfico de distribución de páginas
