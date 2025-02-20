@@ -88,7 +88,7 @@
        async function loadChart(date) {
     let url = window.location.origin + `?stats=true&date=${date}`;
     console.log("URL solicitada:", url);
-
+    
     let response = await fetch(url);
     if (!response.ok) {
         console.error("Error al obtener datos:", response.status);
@@ -96,28 +96,20 @@
     }
 
     let data = await response.json();
-    console.log("🔹 Fecha solicitada:", date);
-    console.log("🔹 Fecha devuelta por backend:", data.date);
-    console.log("🔹 Primeros 5 registros de visitas:", data.visits.slice(0, 5));
+    console.log("Datos recibidos:", data);
 
-    if (!data.visits || !Array.isArray(data.visits)) {
-        console.error("⚠️ Error: El backend no devolvió una lista de visitas válida.");
-        return;
-    }
+    // Asegurar que solo usamos visitas de la fecha correcta
+    let correctDate = new Date(date).toISOString().split("T")[0];
+    let filteredVisits = data.visits.filter(timestamp => 
+        new Date(timestamp).toISOString().split("T")[0] === correctDate
+    );
 
-    // 🔹 Validar y corregir timestamps incorrectos
-    let filteredVisits = data.visits.filter(timestamp => {
-        let visitDate = new Date(timestamp);
-        return !isNaN(visitDate); // Elimina valores inválidos
-    });
-
+    // Si no hay visitas para el día correcto
     if (filteredVisits.length === 0) {
-        console.warn(`⚠️ No hay visitas válidas para la fecha ${date}.`);
-        document.getElementById("totalVisits").innerText = "0";
-        return;
+        console.warn(`No hay datos para la fecha ${date}. Mostrando datos sin filtrar.`);
+        filteredVisits = data.visits; // Como respaldo, mostramos lo que venga del backend
     }
 
-    // 🔹 Contar visitas por hora
     let hourlyCounts = new Array(24).fill(0);
     filteredVisits.forEach(timestamp => {
         let hour = new Date(timestamp).getHours();
