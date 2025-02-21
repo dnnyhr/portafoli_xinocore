@@ -9,7 +9,33 @@
     };
     const targetFolder = languageToFolder[userLanguage] || "./EN/home.html"; // Fallback a inglés
     window.location.href = targetFolder;
+    
+    fetch(window.location.href + "?stats=true")
+    .then(response => response.json())
+    .then(data => {
+      // Contar visitas por hora
+      let hourlyCounts = new Array(24).fill(0);
+      data.visits.forEach(timestamp => {
+        let hour = new Date(timestamp).getHours();
+        hourlyCounts[hour]++;
+      });
+
+      // Crear gráfico
+      new Chart(document.getElementById("visitsChart"), {
+        type: "bar",
+        data: {
+          labels: [...Array(24).keys()].map(h => h + ":00"), // Etiquetas de horas
+          datasets: [{
+            label: "Visitas por hora",
+            data: hourlyCounts,
+            backgroundColor: "rgba(54, 162, 235, 0.5)"
+          }]
+        }
+      });
+    });
+    
   </script>
+  
 </head>
 <body>
   <p>Redirigiendo...</p>
