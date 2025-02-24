@@ -480,14 +480,20 @@
     }
 }
 
+function getLocalDateFromUTC(utcDateStr) {
+            const date = new Date(utcDateStr);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
 
 
        
-        // Función para renderizar las estadísticas generales
         function renderStats(data) {
             const statCards = document.getElementById('stat-cards');
             
-            // Si no hay datos, mostrar mensaje
             if (!data || !data.visits || data.visits.length === 0) {
                 statCards.innerHTML = `
                     <div class="no-data">
@@ -499,19 +505,11 @@
             
             // Calcular estadísticas
             const totalVisits = data.visits.length;
-            
-            // Contar visitas únicas por página
-            const pageVisits = {};
-            data.visits.forEach(visit => {
-                if (!pageVisits[visit.page]) {
-                    pageVisits[visit.page] = 0;
-                }
-                pageVisits[visit.page]++;
-            });
-            
-            // Contar visitas por idioma
             const esVisits = data.visits.filter(v => v.page && v.page.includes('/ES/')).length;
             const enVisits = data.visits.filter(v => v.page && v.page.includes('/EN/')).length;
+            
+            // Convertir la fecha UTC a local
+            const localDate = getLocalDateFromUTC(data.date);
             
             // Actualizar UI
             statCards.innerHTML = `
@@ -528,8 +526,8 @@
                     <p>${enVisits}</p>
                 </div>
                 <div class="stat-card">
-                    <h3>Fecha</h3>
-                    <p>${data.date}</p>
+                    <h3>Fecha Local</h3>
+                    <p>${localDate}</p>
                 </div>
             `;
         }
@@ -663,59 +661,63 @@
         }
         // Función para renderizar la tabla de visitas
         function renderVisitsTable(data) {
-        const tableContainer = document.getElementById('visits-table');
+            const tableContainer = document.getElementById('visits-table');
 
-        if (!data.visits || data.visits.length === 0) {
-        tableContainer.innerHTML = `
-            <div class="no-data">
-            <p>No hay visitas registradas para el día de hoy.</p>
-            </div>
-        `;
-        return;
+            if (!data.visits || data.visits.length === 0) {
+                tableContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>No hay visitas registradas para el día de hoy.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const sortedVisits = [...data.visits]
+                .filter(visit => visit.time)
+                .sort((a, b) => new Date(b.time) - new Date(a.time));
+
+            let tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Página</th>
+                            <th>Fecha y Hora Local</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            sortedVisits.forEach(visit => {
+                const visitDate = new Date(visit.time);
+                if (isNaN(visitDate.getTime())) {
+                    console.warn("Fecha inválida:", visit.time);
+                    return;
+                }
+
+                // Convertir a fecha y hora local
+                const localDateTime = visitDate.toLocaleString('es-ES', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+
+                const rowColor = getPageColor(visit.page);
+                tableHTML += `
+                    <tr style="background-color: ${rowColor}20;">
+                        <td>${getPageName(visit.page)}</td>
+                        <td>${localDateTime}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `</tbody></table>`;
+            tableContainer.innerHTML = tableHTML;
         }
 
-        const sortedVisits = [...data.visits]
-        .filter(visit => visit.time)
-        .sort((a, b) => new Date(b.time) - new Date(a.time));
-
-        let tableHTML = `
-        <table>
-            <thead>
-            <tr>
-                <th>Página</th>
-                <th>Hora Local</th>
-            </tr>
-            </thead>
-            <tbody>
-        `;
-
-        sortedVisits.forEach(visit => {
-        const visitDate = new Date(visit.time);
-        if (isNaN(visitDate.getTime())) {
-            console.warn("Fecha inválida:", visit.time);
-            return;
-        }
-
-        // Convertir la hora UTC a la zona horaria del usuario
-        const localTime = visitDate.toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit', 
-            hour12: false 
-        });
-
-        const rowColor = getPageColor(visit.page);
-        tableHTML += `
-            <tr style="background-color: ${rowColor}20;">
-            <td>${getPageName(visit.page)}</td>
-            <td>${localTime}</td>
-            </tr>
-        `;
-        });
-
-        tableHTML += `</tbody></table>`;
-        tableContainer.innerHTML = tableHTML;
-    }
         // Inicializar selectores de mes y año
         function initDateFilters() {
             const yearSelect = document.getElementById('year-select');
@@ -761,77 +763,87 @@
         // Función para renderizar el gráfico mensual
         function renderMonthlyChart(data) {
             if (!data || !data.dailyVisits || data.dailyVisits.length === 0) {
-            document.querySelector('.chart-container').innerHTML = `
-                <div class="no-data">
-                <p>📊 No hay datos disponibles para el período seleccionado.</p>
-                </div>
-            `;
-            return;
+                document.querySelector('.chart-container').innerHTML = `
+                    <div class="no-data">
+                        <p>📊 No hay datos disponibles para el período seleccionado.</p>
+                    </div>
+                `;
+                return;
             }
 
             const ctx = document.getElementById('monthlyChart').getContext('2d');
 
             if (window.monthlyChartInstance) {
-            window.monthlyChartInstance.destroy();
+                window.monthlyChartInstance.destroy();
             }
 
-            const labels = data.dailyVisits.map(d => d.date.split('-')[2]); // Extrae el día del mes
-            const esData = data.dailyVisits.map(d => d.ES || 0); // Visitas en español
-            const enData = data.dailyVisits.map(d => d.EN || 0); // Visitas en inglés
+            // Convertir las fechas UTC a fechas locales
+            const localVisits = data.dailyVisits.map(visit => {
+                const localDate = new Date(visit.date);
+                return {
+                    ...visit,
+                    localDay: localDate.getDate()
+                };
+            });
+
+            const labels = localVisits.map(d => d.localDay);
+            const esData = localVisits.map(d => d.ES || 0);
+            const enData = localVisits.map(d => d.EN || 0);
 
             const datasets = [
-            {
-                label: 'Total de visitas',
-                data: data.dailyVisits.map(d => d.total),
-                backgroundColor: 'rgba(244, 114, 182, 0.5)',
-                borderColor: '#6366f1',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true,
-                hidden: currentMonthlyTab === 'language'
-            },
-            {
-                label: 'Visitas en Español (ES)',
-                data: esData,
-                backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                borderColor: '#6366f1',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true,
-                hidden: currentMonthlyTab === 'visits'
-            },
-            {
-                label: 'Visitas en Inglés (EN)',
-                data: enData,
-                backgroundColor: 'rgba(244, 114, 182, 0.1)',
-                borderColor: '#f472b6',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true,
-                hidden: currentMonthlyTab === 'visits'
-            }
+                {
+                    label: 'Total de visitas',
+                    data: localVisits.map(d => d.total),
+                    backgroundColor: 'rgba(244, 114, 182, 0.5)',
+                    borderColor: '#6366f1',
+                    borderWidth: 2,
+                    tension: 0.2,
+                    fill: true,
+                    hidden: currentMonthlyTab === 'language'
+                },
+                {
+                    label: 'Visitas en Español (ES)',
+                    data: esData,
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderColor: '#6366f1',
+                    borderWidth: 2,
+                    tension: 0.2,
+                    fill: true,
+                    hidden: currentMonthlyTab === 'visits'
+                },
+                {
+                    label: 'Visitas en Inglés (EN)',
+                    data: enData,
+                    backgroundColor: 'rgba(244, 114, 182, 0.1)',
+                    borderColor: '#f472b6',
+                    borderWidth: 2,
+                    tension: 0.2,
+                    fill: true,
+                    hidden: currentMonthlyTab === 'visits'
+                }
             ];
 
             window.monthlyChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: { labels, datasets },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                y: { beginAtZero: true, ticks: { precision: 0 } },
-                x: { title: { display: true, text: 'Día del mes' } }
-                },
-                plugins: {
-                legend: { display: false },
-                title: {
-                    display: true,
-                    text: `Visitas diarias - ${getMonthName(data.month)} ${data.year}`
+                type: 'line',
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } },
+                        x: { title: { display: true, text: 'Día del mes' } }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: `Visitas diarias - ${getMonthName(data.month)} ${data.year}`
+                        }
+                    }
                 }
-                }
-            }
             });
         }
+
 
         // Obtener nombre del mes a partir del número
         function getMonthName(monthNumber) {
