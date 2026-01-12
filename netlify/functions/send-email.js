@@ -21,7 +21,7 @@ const templates = {
                 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(99,102,241,0.15),0 0 0 1px rgba(99,102,241,0.08)">
                     <tr>
                         <td style="padding:45px 40px;text-align:center;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#f472b6 100%)">
-                            <img src="https://xinocoree.netlify.app/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2);z-index:9999">
+                            <img src="https://xinocore.com/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2);z-index:9999">
                             <h1 style="font-family:'Montserrat',Arial,sans-serif;color:#ffffff;font-size:28px;margin:0 0 6px;font-weight:800">¡Mensaje Recibido!</h1>
                             <p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0;letter-spacing:2px;text-transform:uppercase">Xinocore</p>
                         </td>
@@ -87,7 +87,7 @@ const templates = {
                 <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(99,102,241,0.15),0 0 0 1px rgba(99,102,241,0.08)">
                     <tr>
                         <td style="padding:45px 40px;text-align:center;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#f472b6 100%)">
-                            <img src="https://xinocoree.netlify.app/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2);z-index:9999">
+                            <img src="https://xinocore.com/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2);z-index:9999">
                             <h1 style="font-family:'Montserrat',Arial,sans-serif;color:#ffffff;font-size:28px;margin:0 0 6px;font-weight:800">Message Received!</h1>
                             <p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0;letter-spacing:2px;text-transform:uppercase">Xinocore</p>
                         </td>
