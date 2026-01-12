@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Gracias por tu mensaje! - Xinocore</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f472b6;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            background: #0a0a1f;
+        }
+
+        /* ========================================
+           COSMIC BACKGROUND
+           ======================================== */
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, #0a0a1f 0%, #1a1a3e 50%, #2d1b4e 100%);
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(2px 2px at 60px 70px, white, transparent),
+                radial-gradient(1px 1px at 50px 50px, white, transparent),
+                radial-gradient(1px 1px at 130px 80px, white, transparent),
+                radial-gradient(2px 2px at 90px 10px, white, transparent);
+            background-size: 200px 200px;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .nebula-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .nebula-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -10s;
+        }
+
+        .nebula-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.3) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        /* Shooting Stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+            animation: shoot 3s linear infinite;
+        }
+
+        .shooting-star:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shooting-star:nth-child(2) {
+            top: 50%;
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .shooting-star:nth-child(3) {
+            top: 70%;
+            left: 80%;
+            animation-delay: 4s;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(300px, 300px);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Planets */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .planet-1 {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            top: 15%;
+            left: 10%;
+            box-shadow: 0 0 40px rgba(244, 114, 182, 0.6);
+            animation: orbit1 30s infinite linear;
+        }
+
+        .planet-2 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            top: 70%;
+            right: 15%;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+            animation: orbit2 25s infinite linear;
+        }
+
+        .planet-3 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            bottom: 20%;
+            left: 20%;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+            animation: orbit3 20s infinite linear;
+        }
+
+        @keyframes orbit1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, -30px) rotate(180deg); }
+        }
+
+        @keyframes orbit2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-40px, 40px) rotate(180deg); }
+        }
+
+        @keyframes orbit3 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 20px) rotate(180deg); }
+        }
+
+        /* ========================================
+           CONTENT CONTAINER
+           ======================================== */
+        .container {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            position: relative;
+        }
+
+        .success-icon::before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+            opacity: 0.3;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .success-icon svg {
+            width: 50px;
+            height: 50px;
+            color: white;
+            stroke-width: 3;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            opacity: 0;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0;
+        }
+
+        .email-info {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            opacity: 0;
+        }
+
+        .email-info svg {
+            width: 32px;
+            height: 32px;
+            color: #6366f1;
+            margin-bottom: 0.5rem;
+        }
+
+        .email-info h3 {
+            font-size: 1rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .email-info a {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .email-info a:hover {
+            color: #8b5cf6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .countdown {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            opacity: 0;
+        }
+
+        .countdown span {
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .planet-1,
+            .planet-2,
+            .planet-3 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cosmic Background -->
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="nebula nebula-1"></div>
+        <div class="nebula nebula-2"></div>
+        <div class="nebula nebula-3"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="shooting-star"></div>
+        <div class="planet planet-1"></div>
+        <div class="planet planet-2"></div>
+        <div class="planet planet-3"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="container" id="container">
+        <div class="success-icon" id="success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <polyline points="20 6 9 17 4 12"/>
+            </svg>
+        </div>
+
+        <h1 id="title">¡Mensaje Enviado con Éxito!</h1>
+
+        <p id="message">
+            Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos
+            a tu correo electrónico lo antes posible.
+        </p>
+
+        <div class="email-info" id="email-info">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <h3>También puedes escribirnos directamente a:</h3>
+            <a href="mailto:Dannyherrod@xinocore.com">Dannyherrod@xinocore.com</a>
+        </div>
+
+        <a href="index.html" class="btn" id="btn">Volver al Inicio</a>
+
+        <p class="countdown" id="countdown">Serás redirigido automáticamente en <span id="seconds">10</span> segundos...</p>
+    </div>
+
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <script>
+        // ========================================
+        // GSAP ANIMATIONS
+        // ========================================
+
+        // Animate container entrance
+        gsap.from('#container', {
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            scale: 0.9,
+            ease: 'back.out(1.7)'
+        });
+
+        // Animate success icon
+        gsap.to('#success-icon', {
+            duration: 0.6,
+            opacity: 1,
+            scale: 1,
+            delay: 0.3,
+            ease: 'elastic.out(1, 0.5)',
+            onStart: function() {
+                gsap.from('#success-icon svg', {
+                    duration: 0.4,
+                    scale: 0,
+                    rotation: -180,
+                    delay: 0.4,
+                    ease: 'back.out(2)'
+                });
+            }
+        });
+
+        // Stagger animation for text elements
+        gsap.to(['#title', '#message', '#email-info', '#btn', '#countdown'], {
+            duration: 0.6,
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+            delay: 0.6,
+            ease: 'power2.out'
+        });
+
+        gsap.from(['#title', '#message', '#email-info', '#btn', '#countdown'], {
+            duration: 0.6,
+            y: 30,
+            stagger: 0.15,
+            delay: 0.6,
+            ease: 'power2.out'
+        });
+
+        // Animate planets
+        gsap.to('.planet-1', {
+            duration: 3,
+            y: -20,
+            x: 20,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        gsap.to('.planet-2', {
+            duration: 4,
+            y: 30,
+            x: -30,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        gsap.to('.planet-3', {
+            duration: 2.5,
+            y: 15,
+            x: 15,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        // Rotate planets
+        gsap.to('.planet-1', {
+            duration: 20,
+            rotation: 360,
+            repeat: -1,
+            ease: 'none'
+        });
+
+        gsap.to('.planet-2', {
+            duration: 15,
+            rotation: -360,
+            repeat: -1,
+            ease: 'none'
+        });
+
+        gsap.to('.planet-3', {
+            duration: 18,
+            rotation: 360,
+            repeat: -1,
+            ease: 'none'
+        });
+
+        // Animate nebulas
+        gsap.to('.nebula-1', {
+            duration: 20,
+            x: 50,
+            y: -50,
+            scale: 1.2,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        gsap.to('.nebula-2', {
+            duration: 25,
+            x: -50,
+            y: 50,
+            scale: 0.8,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut'
+        });
+
+        gsap.to('.nebula-3', {
+            duration: 15,
+            rotation: 360,
+            repeat: -1,
+            ease: 'none'
+        });
+
+        // Pulsate success icon ring
+        gsap.to('#success-icon::before', {
+            duration: 2,
+            scale: 1.5,
+            opacity: 0,
+            repeat: -1,
+            ease: 'power1.out'
+        });
+
+        // ========================================
+        // COUNTDOWN & REDIRECT
+        // ========================================
+        let seconds = 10;
+        const countdownElement = document.getElementById('seconds');
+
+        const countdown = setInterval(() => {
+            seconds--;
+            countdownElement.textContent = seconds;
+
+            // Pulse animation on countdown number
+            gsap.fromTo('#seconds',
+                { scale: 1.2, color: '#6366f1' },
+                { scale: 1, color: '#6366f1', duration: 0.3, ease: 'back.out(2)' }
+            );
+
+            if (seconds <= 0) {
+                clearInterval(countdown);
+
+                // Fade out animation before redirect
+                gsap.to('#container', {
+                    duration: 0.5,
+                    opacity: 0,
+                    scale: 0.9,
+                    y: -30,
+                    ease: 'back.in(1.7)',
+                    onComplete: () => {
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }, 1000);
+
+        // Stop countdown if user clicks the button
+        document.getElementById('btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            clearInterval(countdown);
+
+            // Fade out animation
+            gsap.to('#container', {
+                duration: 0.5,
+                opacity: 0,
+                scale: 0.9,
+                y: -30,
+                ease: 'back.in(1.7)',
+                onComplete: () => {
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+
+        // Hover animation for button
+        const btn = document.getElementById('btn');
+        btn.addEventListener('mouseenter', () => {
+            gsap.to(btn, {
+                duration: 0.3,
+                scale: 1.05,
+                boxShadow: '0 10px 25px rgba(99, 102, 241, 0.4)',
+                ease: 'power2.out'
+            });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, {
+                duration: 0.3,
+                scale: 1,
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Respaldos de JavaScript original (opcional - puedes comentar esta línea si quieres subirlos)
+assets/js/original/
+
+# Archivos de desarrollo
+*.log
+.env
+.env.local
+
+# Cache
+.cache/
+.temp/
+*.txt
+.doc/

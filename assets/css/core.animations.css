@@ -1,0 +1,395 @@
+/* ========================================
+   GSAP ENHANCED ANIMATIONS STYLES
+   Estilos adicionales para animaciones GSAP
+   ======================================== */
+
+/* Mejorar el rendering 3D - OPTIMIZADO */
+.portfolio-card,
+.service-card {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    /* will-change removido - solo aplicar durante hover */
+}
+
+.portfolio-card:hover,
+.service-card:hover {
+    will-change: transform;
+}
+
+/* Smooth transitions para elementos animados - OPTIMIZADO */
+/* will-change removido - GSAP lo maneja automáticamente */
+
+/* Optimización para animaciones de scroll - OPTIMIZADO */
+/* will-change removido - aplicar solo cuando sea necesario */
+
+/* Efecto de brillo para botones magnéticos */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Efecto de partículas en hover */
+.service-icon,
+.feature-icon {
+    position: relative;
+    overflow: visible;
+}
+
+.service-icon::after,
+.feature-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: inherit;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+    animation: iconPulse 2s ease-out infinite;
+}
+
+@keyframes iconPulse {
+    0% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+/* Mejorar el efecto de las tarjetas de portfolio */
+.portfolio-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, rgba(244, 114, 182, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.portfolio-card:hover::after {
+    opacity: 1;
+}
+
+/* Efecto de brillo en el logo */
+.logo-icon {
+    position: relative;
+}
+
+.logo-icon::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.logo:hover .logo-icon::before {
+    opacity: 1;
+}
+
+/* Mejorar las estrellas con efecto de profundidad */
+.stars {
+    animation: twinkle 4s ease-in-out infinite, starMove 100s linear infinite;
+}
+
+.stars::before {
+    animation: twinkle 3s ease-in-out infinite reverse;
+    animation-delay: 0.5s;
+}
+
+.stars::after {
+    animation: twinkle 5s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+/* Efecto de resplandor para elementos importantes */
+.gradient-text {
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
+}
+
+/* Animación de pulsación para stats */
+.stat-number {
+    display: inline-block;
+}
+
+/* Efecto de onda en botones */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
+    transition: width 0s, height 0s;
+}
+
+/* Efecto de cristal para las tarjetas */
+.service-card,
+.contact-item {
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover,
+.contact-item:hover {
+    backdrop-filter: blur(20px);
+}
+
+/* Mejorar nebulosas con efecto de brillo */
+.nebula {
+    animation: float 25s ease-in-out infinite, pulse 8s ease-in-out infinite, nebulaGlow 10s ease-in-out infinite;
+}
+
+@keyframes nebulaGlow {
+    0%, 100% {
+        filter: blur(80px) brightness(1);
+    }
+    50% {
+        filter: blur(100px) brightness(1.3);
+    }
+}
+
+/* Efecto de parallax para imágenes */
+.portfolio-image,
+.placeholder-image {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cursor personalizado para elementos interactivos */
+.portfolio-card,
+.service-card,
+.btn {
+    cursor: pointer;
+}
+
+/* Efecto de destello en iconos */
+@keyframes iconShine {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.service-icon,
+.feature-icon,
+.contact-icon {
+    background-size: 200% auto;
+    animation: iconShine 3s linear infinite;
+}
+
+/* Mejorar el scroll indicator */
+.scroll-indicator span {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Efecto de flotación para el WhatsApp button */
+@keyframes floatWhatsApp {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    75% {
+        transform: translateY(-5px) rotate(-5deg);
+    }
+}
+
+.whatsapp-float {
+    animation: floatWhatsApp 3s ease-in-out infinite;
+}
+
+/* Efecto de onda de energía */
+@keyframes energyWave {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(99, 102, 241, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 0 20px rgba(99, 102, 241, 0);
+    }
+}
+
+.btn-primary {
+    animation: energyWave 2s ease-out infinite;
+}
+
+/* Mejorar el cohete con trail effect */
+.rocket::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 200%;
+    top: 100%;
+    left: 0;
+    background: linear-gradient(to bottom,
+        rgba(251, 191, 36, 0.3) 0%,
+        rgba(249, 115, 22, 0.2) 50%,
+        transparent 100%);
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+/* Efecto de partículas para secciones espaciales */
+.space-bg::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(2px 2px at 90% 80%, rgba(165, 180, 252, 0.6), transparent),
+        radial-gradient(1px 1px at 50% 50%, rgba(196, 181, 253, 0.7), transparent),
+        radial-gradient(1px 1px at 80% 10%, rgba(251, 191, 36, 0.5), transparent);
+    background-size: 300% 300%;
+    animation: particles 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes particles {
+    0%, 100% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+}
+
+
+/* Efecto de energía en los títulos */
+.section-title {
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--primary) 20%,
+        var(--secondary) 50%,
+        var(--accent) 80%,
+        transparent 100%);
+    border-radius: 2px;
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        opacity: 0.6;
+        width: 60px;
+    }
+    50% {
+        opacity: 1;
+        width: 80px;
+    }
+}
+
+/* Responsive optimizations */
+@media (max-width: 768px) {
+    /* Reducir efectos en móviles para mejor performance */
+    .nebula {
+        animation-duration: 30s;
+    }
+
+    .btn::before,
+    .btn::after {
+        display: none;
+    }
+
+    .service-icon::after,
+    .feature-icon::after {
+        display: none;
+    }
+}
+
+/* Modo de contraste alto */
+@media (prefers-contrast: high) {
+    .gradient-text {
+        filter: none;
+    }
+
+    .nebula {
+        opacity: 0.5;
+    }
+}
+
+/* Reducir movimiento si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

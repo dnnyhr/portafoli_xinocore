@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubre nuestros proyectos de desarrollo web. Páginas, menús digitales y catálogos para negocios locales.">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xinocore.com/portafolio.html">
+    <meta property="og:site_name" content="Xinocore">
+    <meta property="og:title" content="Portfolio – Xinocore | Web Projects">
+    <meta property="og:description" content="Explore our web development projects. Websites, digital menus, and catalogs for local businesses.">
+    <meta property="og:image" content="https://xinocore.com/assets/images/og/og-portfolio.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Xinocore - Portfolio of Projects">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portfolio – Xinocore | Web Projects">
+    <meta name="twitter:description" content="Explore our web development projects. Websites, digital menus, and catalogs for local businesses.">
+    <meta name="twitter:image" content="https://xinocore.com/assets/images/og/og-portfolio.jpg">
+
+    <title>Portafolio - Xinocore | Desarrollo Web en Jinotega</title>
+    <link rel="icon" type="image/png" href="assets/images/favicons/portafolio.png">
+
+    <!-- Preload recursos críticos -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" as="script">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" as="style">
+
+    <!-- Fuentes optimizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+
+    <!-- CSS Base Styles -->
+    <link rel="stylesheet" href="assets/css/main.css?v=3.0">
+    <!-- Core Animations & Effects -->
+    <link rel="stylesheet" href="assets/css/core.animations.css?v=3.0">
+    <link rel="stylesheet" href="assets/css/core.effects.css?v=3.0">
+    <!-- Components -->
+    <link rel="stylesheet" href="assets/css/components.whatsapp.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/components.language-selector.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/components.process-carousel.css?v=1.0">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon" id="portfolio-header-logo" style="cursor: pointer;">
+                        <svg width="40" height="40" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="portfolio-header-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M328 30C328.683 30.2277 329.366 30.4554 330.069 30.6899C355.276 39.2388 378.252 52.4303 399 69C399.576 69.4592 400.153 69.9185 400.747 70.3916C416.447 83.0477 431.334 97.5065 443 114C443.41 114.576 443.82 115.152 444.242 115.746C464.175 144.058 478.571 175.154 486 209C486.213 209.967 486.426 210.934 486.646 211.931C492.697 240.944 493.062 274.963 487 304C486.694 305.488 486.694 305.488 486.382 307.007C479.878 337.767 468.903 366.963 451 393C450.597 393.595 450.194 394.19 449.779 394.804C443.742 403.687 437.092 411.941 430 420C429.192 420.92 428.384 421.841 427.551 422.789C425.391 425.216 423.208 427.616 421 430C420.058 431.023 420.058 431.023 419.098 432.066C414.26 437.137 410.207 440.093 403 440.438C398.269 440.274 395.582 439.24 392 436C388.154 431.749 387.51 428.269 387.273 422.758C389.213 415.395 395.914 409.91 401.25 404.812C407.888 398.307 413.645 391.583 419 384C419.395 383.455 419.789 382.91 420.196 382.349C452.559 337.455 465.36 280.364 457.035 225.801C454.033 208.188 448.98 191.43 442 175C441.678 174.241 441.355 173.482 441.023 172.7C432.338 152.601 419.921 134.166 405 118.152C403.159 116.171 401.423 114.136 399.688 112.063C368.294 76.2972 317.285 53.1546 270.27 49.2813C222.696 46.3144 175.172 55.2703 135 82C133.912 82.7206 132.824 83.4412 131.703 84.1836C118.523 93.0465 106 103.5 95.375 115.566C92.0875 118.994 89.2032 122.107 85.9375 125.938C56.6268 161.419 38.5209 207.834 38 254C37.989 254.836 37.9779 255.671 37.9666 256.532C37.5908 305.511 54.0049 355.839 86.4375 392.938C89 396 89 396 89 398C89.66 398 90.32 398 91 398C96.4542 403.166 103.157 410.275 103.5 418.125C102.728 424.11 100.618 428.104 96 432C90.3562 433.881 84.2236 434.046 78.8125 431.5C71.4234 424.932 65.0788 417.796 59 410C58.3677 409.19 58.3677 409.19 57.7227 408.364C45.9374 393.143 36.004 376.505 28 359C27.7029 358.351 27.4058 357.701 27.0996 357.032C4.29823 306.338 1.59689 249.551 15 196C15.1826 195.255 15.3651 194.511 15.5532 193.743C30.759 133.061 73.5456 82.2634 126.138 50.1992C155.7 32.5352 189.664 21.1718 224 18C225.661 17.8337 225.661 17.8337 227.355 17.6641C261.52 14.7002 295.543 19.0836 328 30Z" fill="url(#portfolio-header-gradient)"/>
+                            <path id="portfolio-header-left-eye" d="M134.176 153.013C142.425 152.712 146.926 157.884 146.926 157.884C146.926 157.884 200.441 210.162 223.913 233.54C241.073 250.646 239.926 252.013 239.926 258.325C239.926 264.638 234.908 271.805 223.426 283.325C199.201 307.608 175.44 332.395 151.339 356.808C146.303 361.78 141.72 364.753 134.426 364.763C129.287 364.623 125.303 362.412 121.426 358.825C118 353.842 117.241 351.254 117 345.247C117.907 339.021 122.754 334.632 126.926 330.2C147.745 307.908 170.263 287.32 192.363 266.325C194.559 264.269 197.717 261.488 197.426 258.325C196.117 255.708 194.468 254.045 192.363 252.013C169.472 229.604 147.18 206.731 124.199 184.413C119.762 180.001 117.148 176.357 117.113 169.888C117.251 165.009 118.314 161.403 121.891 157.884C126.177 154.205 128.605 153.144 134.176 153.013Z" fill="#8b5cf6"/>
+                            <path id="portfolio-header-right-eye" d="M364.766 364.75C356.517 365.051 352.016 359.879 352.016 359.879C352.016 359.879 298.501 307.601 275.029 284.223C257.869 267.117 259.016 265.75 259.016 259.438C259.016 253.125 264.033 245.957 275.516 234.438C299.74 210.154 323.501 185.368 347.603 160.955C352.638 155.983 357.222 153.01 364.516 153C369.654 153.14 373.639 155.351 377.516 158.938C380.942 163.92 381.701 166.508 381.942 172.516C381.034 178.742 376.187 183.13 372.016 187.563C351.196 209.854 328.679 230.442 306.578 251.438C304.383 253.494 301.224 256.275 301.516 259.438C302.824 262.054 304.473 263.717 306.578 265.75C329.47 288.159 351.762 311.032 374.742 333.35C379.18 337.762 381.794 341.406 381.828 347.875C381.691 352.754 380.628 356.36 377.051 359.879C372.764 363.558 370.337 364.618 364.766 364.75Z" fill="url(#portfolio-header-gradient)"/>
+                            <path id="portfolio-header-mouth" d="M200 320 Q250 360 300 320" stroke="url(#portfolio-header-gradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Xinocore</span>
+                </a>
+
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav class="nav" id="nav">
+                    <a href="index.html#inicio" class="nav-link" data-i18n="nav.home">Inicio</a>
+                    <a href="index.html#servicios" class="nav-link" data-i18n="nav.services">Servicios</a>
+                    <a href="portafolio.html" class="nav-link active" data-i18n="nav.portfolio">Portafolio</a>
+                    <a href="index.html#nosotros" class="nav-link" data-i18n="nav.about">Sobre Nosotros</a>
+                    <a href="index.html#contacto" class="nav-link btn-contact" data-i18n="nav.contact">Contacto</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-selector-btn" data-lang="es" aria-label="Español">
+            🇪🇸 ES
+        </button>
+        <button class="lang-selector-btn" data-lang="en" aria-label="English">
+            🇺🇸 EN
+        </button>
+    </div>
+
+    <!-- Portfolio Hero -->
+    <section class="portfolio-hero">
+        <div class="space-bg">
+            <div class="stars"></div>
+            <div class="nebula nebula-1"></div>
+            <div class="nebula nebula-2"></div>
+        </div>
+        <div class="container">
+            <div class="portfolio-hero-content">
+                <h1 class="portfolio-hero-title">
+                    <span class="gradient-text" data-i18n="portfolio.hero_title">Proyectos creados</span>
+                </h1>
+                <p class="portfolio-hero-subtitle" data-i18n="portfolio.hero_subtitle">
+                    Descubre cómo hemos ayudado a negocios locales a brillar en el mundo digital.
+                    Cada proyecto es una historia de transformación y éxito.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters - Generated dynamically from project categories -->
+    <div class="filters-wrapper" id="filters-wrapper">
+        <div class="container">
+            <div class="filters">
+                <!-- Los filtros se generan dinámicamente desde main.js basándose en categoryLabel del JSON -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-section">
+        <div class="container">
+            <div class="portfolio-full-grid" id="portfolio-grid">
+                <!-- Proyectos cargados dinámicamente desde data.projects.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="portfolio.process_title">Cómo Trabajamos</h2>
+                <p class="section-subtitle" data-i18n="portfolio.process_subtitle">Un proceso simple y efectivo para tu proyecto</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step" data-aos>
+                    <div class="process-number">01</div>
+                    <div class="process-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="process-title" data-i18n="portfolio.process1_title">Consulta</h3>
+                    <p class="process-description" data-i18n="portfolio.process1_text">Conversamos sobre tu negocio, objetivos y necesidades específicas.</p>
+                </div>
+
+                <div class="process-step" data-aos>
+                    <div class="process-number">02</div>
+                    <div class="process-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="process-title" data-i18n="portfolio.process2_title">Diseño</h3>
+                    <p class="process-description" data-i18n="portfolio.process2_text">Creamos un diseño personalizado que refleje la identidad de tu marca.</p>
+                </div>
+
+                <div class="process-step" data-aos>
+                    <div class="process-number">03</div>
+                    <div class="process-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                    </div>
+                    <h3 class="process-title" data-i18n="portfolio.process3_title">Desarrollo</h3>
+                    <p class="process-description" data-i18n="portfolio.process3_text">Construimos tu sitio con las mejores prácticas y tecnologías modernas.</p>
+                </div>
+
+                <div class="process-step" data-aos>
+                    <div class="process-number">04</div>
+                    <div class="process-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="process-title" data-i18n="portfolio.process4_title">Lanzamiento</h3>
+                    <p class="process-description" data-i18n="portfolio.process4_text">Publicamos tu proyecto y te capacitamos para administrarlo fácilmente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="space-bg">
+            <div class="stars"></div>
+            <div class="nebula nebula-3"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title" data-i18n="portfolio.cta_title">¿Listo para Tu Proyecto?</h2>
+                <p class="cta-text" data-i18n="portfolio.cta_text">
+                    Tu negocio merece una web que brille. Creamos algo único y funcional, hecho a tu medida
+                </p>
+                <a href="index.html#contacto" class="btn btn-primary btn-large" data-i18n="portfolio.cta_button">Iniciar Proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon" id="portfolio-footer-logo" style="cursor: pointer;">
+                            <svg width="32" height="32" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="portfolio-footer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M328 30C328.683 30.2277 329.366 30.4554 330.069 30.6899C355.276 39.2388 378.252 52.4303 399 69C399.576 69.4592 400.153 69.9185 400.747 70.3916C416.447 83.0477 431.334 97.5065 443 114C443.41 114.576 443.82 115.152 444.242 115.746C464.175 144.058 478.571 175.154 486 209C486.213 209.967 486.426 210.934 486.646 211.931C492.697 240.944 493.062 274.963 487 304C486.694 305.488 486.694 305.488 486.382 307.007C479.878 337.767 468.903 366.963 451 393C450.597 393.595 450.194 394.19 449.779 394.804C443.742 403.687 437.092 411.941 430 420C429.192 420.92 428.384 421.841 427.551 422.789C425.391 425.216 423.208 427.616 421 430C420.058 431.023 420.058 431.023 419.098 432.066C414.26 437.137 410.207 440.093 403 440.438C398.269 440.274 395.582 439.24 392 436C388.154 431.749 387.51 428.269 387.273 422.758C389.213 415.395 395.914 409.91 401.25 404.812C407.888 398.307 413.645 391.583 419 384C419.395 383.455 419.789 382.91 420.196 382.349C452.559 337.455 465.36 280.364 457.035 225.801C454.033 208.188 448.98 191.43 442 175C441.678 174.241 441.355 173.482 441.023 172.7C432.338 152.601 419.921 134.166 405 118.152C403.159 116.171 401.423 114.136 399.688 112.063C368.294 76.2972 317.285 53.1546 270.27 49.2813C222.696 46.3144 175.172 55.2703 135 82C133.912 82.7206 132.824 83.4412 131.703 84.1836C118.523 93.0465 106 103.5 95.375 115.566C92.0875 118.994 89.2032 122.107 85.9375 125.938C56.6268 161.419 38.5209 207.834 38 254C37.989 254.836 37.9779 255.671 37.9666 256.532C37.5908 305.511 54.0049 355.839 86.4375 392.938C89 396 89 396 89 398C89.66 398 90.32 398 91 398C96.4542 403.166 103.157 410.275 103.5 418.125C102.728 424.11 100.618 428.104 96 432C90.3562 433.881 84.2236 434.046 78.8125 431.5C71.4234 424.932 65.0788 417.796 59 410C58.3677 409.19 58.3677 409.19 57.7227 408.364C45.9374 393.143 36.004 376.505 28 359C27.7029 358.351 27.4058 357.701 27.0996 357.032C4.29823 306.338 1.59689 249.551 15 196C15.1826 195.255 15.3651 194.511 15.5532 193.743C30.759 133.061 73.5456 82.2634 126.138 50.1992C155.7 32.5352 189.664 21.1718 224 18C225.661 17.8337 225.661 17.8337 227.355 17.6641C261.52 14.7002 295.543 19.0836 328 30Z" fill="url(#portfolio-footer-gradient)"/>
+                                <path id="portfolio-footer-left-eye" d="M134.176 153.013C142.425 152.712 146.926 157.884 146.926 157.884C146.926 157.884 200.441 210.162 223.913 233.54C241.073 250.646 239.926 252.013 239.926 258.325C239.926 264.638 234.908 271.805 223.426 283.325C199.201 307.608 175.44 332.395 151.339 356.808C146.303 361.78 141.72 364.753 134.426 364.763C129.287 364.623 125.303 362.412 121.426 358.825C118 353.842 117.241 351.254 117 345.247C117.907 339.021 122.754 334.632 126.926 330.2C147.745 307.908 170.263 287.32 192.363 266.325C194.559 264.269 197.717 261.488 197.426 258.325C196.117 255.708 194.468 254.045 192.363 252.013C169.472 229.604 147.18 206.731 124.199 184.413C119.762 180.001 117.148 176.357 117.113 169.888C117.251 165.009 118.314 161.403 121.891 157.884C126.177 154.205 128.605 153.144 134.176 153.013Z" fill="#8b5cf6"/>
+                                <path id="portfolio-footer-right-eye" d="M364.766 364.75C356.517 365.051 352.016 359.879 352.016 359.879C352.016 359.879 298.501 307.601 275.029 284.223C257.869 267.117 259.016 265.75 259.016 259.438C259.016 253.125 264.033 245.957 275.516 234.438C299.74 210.154 323.501 185.368 347.603 160.955C352.638 155.983 357.222 153.01 364.516 153C369.654 153.14 373.639 155.351 377.516 158.938C380.942 163.92 381.701 166.508 381.942 172.516C381.034 178.742 376.187 183.13 372.016 187.563C351.196 209.854 328.679 230.442 306.578 251.438C304.383 253.494 301.224 256.275 301.516 259.438C302.824 262.054 304.473 263.717 306.578 265.75C329.47 288.159 351.762 311.032 374.742 333.35C379.18 337.762 381.794 341.406 381.828 347.875C381.691 352.754 380.628 356.36 377.051 359.879C372.764 363.558 370.337 364.618 364.766 364.75Z" fill="url(#portfolio-footer-gradient)"/>
+                                <path id="portfolio-footer-mouth" d="M200 320 Q250 360 300 320" stroke="url(#portfolio-footer-gradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0"/>
+                            </svg>
+                        </div>
+                        <span>Xinocore</span>
+                    </div>
+                    <p class="footer-description" data-i18n="footer.description">
+                        Impulsando negocios locales hacia el futuro digital.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.quick_links">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#inicio" data-i18n="nav.home">Inicio</a></li>
+                        <li><a href="index.html#servicios" data-i18n="nav.services">Servicios</a></li>
+                        <li><a href="portafolio.html" data-i18n="nav.portfolio">Portafolio</a></li>
+                        <li><a href="index.html#nosotros" data-i18n="nav.about">Sobre Nosotros</a></li>
+                        <li><a href="index.html#contacto" data-i18n="nav.contact">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.services">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#servicios" data-i18n="footer.services_web">Páginas Web</a></li>
+                        <li><a href="index.html#servicios" data-i18n="footer.services_menu">Menús Digitales</a></li>
+                        <li><a href="index.html#servicios" data-i18n="footer.services_catalog">Catálogos</a></li>
+                        <li><a href="index.html#servicios" data-i18n="footer.services_card">Tarjetas Digitales</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.contact">Contacto</h4>
+                    <ul class="footer-contact">
+                        <li data-contact="location">Jinotega, Nicaragua</li>
+                        <li data-contact="email">Dannyherrod@xinocore.com</li>
+                        <li data-contact="phone">+505 8724 8446</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">&copy; 2026 Xinocore. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <button id="whatsapp-float-btn" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </button>
+
+    <!-- WhatsApp Modal -->
+    <div id="whatsapp-modal" class="whatsapp-modal">
+        <div class="whatsapp-modal-backdrop"></div>
+
+        <!-- Space Background -->
+        <div class="space-bg-modal">
+            <div class="stars-modal"></div>
+
+            <!-- Planets -->
+            <div class="planets-container">
+                <div class="planet planet-1"></div>
+                <div class="planet planet-2"></div>
+                <div class="planet planet-3"></div>
+            </div>
+
+            <!-- Shooting Stars -->
+            <div class="shooting-stars">
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
+            </div>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="whatsapp-modal-content">
+            <button class="whatsapp-modal-close" id="close-modal" aria-label="Cerrar modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+
+            <div class="whatsapp-modal-header">
+                <div class="whatsapp-icon-large">
+                    <svg width="50" height="50" viewBox="0 0 24 24" fill="white">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </div>
+                <h3>Contáctanos por WhatsApp</h3>
+                <p>Escribe tu mensaje y te responderemos pronto</p>
+            </div>
+
+            <div class="whatsapp-modal-body">
+                <form id="whatsapp-form">
+                    <div class="form-group-modal">
+                        <label for="whatsapp-message">Tu mensaje</label>
+                        <textarea
+                            id="whatsapp-message"
+                            name="message"
+                            rows="5"
+                            placeholder="Hola, me gustaría información sobre..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-whatsapp-send">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                        <span>Enviar Mensaje</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuration Script - Load First -->
+    <script src="assets/js/config.js?v=1.0"></script>
+
+    <!-- i18n System -->
+    <script src="assets/js/i18n.js?v=1.0"></script>
+
+    <!-- GSAP Library - Optimizado con defer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <!-- Components -->
+    <script src="assets/js/components.whatsapp.js?v=1.0" defer></script>
+    <script src="assets/js/components.contact-region.js?v=1.0" defer></script>
+    <script src="assets/js/components.process-carousel.js?v=1.0" defer></script>
+
+    <!-- Core Scripts -->
+    <script src="assets/js/core.animations.js?v=2.0" defer></script>
+    <script src="assets/js/core.effects.js?v=2.0" defer></script>
+    <script src="assets/js/main.js?v=2.0" defer></script>
+
+    <!-- Logo Animation Script -->
+    <style>
+        /* Animaciones para el logo */
+        #portfolio-header-left-eye.animate-once,
+        #portfolio-header-right-eye.animate-once,
+        #portfolio-header-mouth.animate-once,
+        #portfolio-footer-left-eye.animate-once,
+        #portfolio-footer-right-eye.animate-once,
+        #portfolio-footer-mouth.animate-once {
+            animation-iteration-count: 1 !important;
+            animation-fill-mode: forwards;
+        }
+
+        #portfolio-header-left-eye:not(.animate-once),
+        #portfolio-header-right-eye:not(.animate-once),
+        #portfolio-header-mouth:not(.animate-once),
+        #portfolio-footer-left-eye:not(.animate-once),
+        #portfolio-footer-right-eye:not(.animate-once),
+        #portfolio-footer-mouth:not(.animate-once) {
+            animation: none;
+        }
+
+        #portfolio-header-left-eye, #portfolio-header-right-eye,
+        #portfolio-footer-left-eye, #portfolio-footer-right-eye {
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        #portfolio-header-mouth, #portfolio-footer-mouth {
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        .animate-once#portfolio-header-left-eye,
+        .animate-once#portfolio-header-right-eye,
+        .animate-once#portfolio-footer-left-eye,
+        .animate-once#portfolio-footer-right-eye {
+            animation: cuteFace 9s;
+        }
+
+        .animate-once#portfolio-header-mouth,
+        .animate-once#portfolio-footer-mouth {
+            animation: mouthAppear 9s;
+        }
+
+        @keyframes mouthAppear {
+            0%, 49%, 60%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.8);
+            }
+            52% {
+                opacity: 1;
+                transform: translateY(-50px) scale(1);
+                stroke-width: 8;
+            }
+            55% {
+                opacity: 1;
+                transform: translateY(-50px) scale(1.2) skewX(10deg);
+                stroke-width: 10;
+            }
+            58% {
+                opacity: 0;
+                transform: translateY(-60px) scale(0.8);
+            }
+        }
+
+        @keyframes cuteFace {
+            0%, 100% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            10% {
+                transform: translateX(-40px) scale(0.9, 1.1) rotate(-8deg);
+                animation-timing-function: ease-in-out;
+            }
+            20% {
+                transform: translateX(-40px) scale(1.1, 0.9) rotate(-5deg);
+            }
+            30% {
+                transform: translateX(40px) scale(0.9, 1.1) rotate(8deg);
+                animation-timing-function: ease-in-out;
+            }
+            40% {
+                transform: translateX(40px) scale(1.1, 0.9) rotate(5deg);
+            }
+            45% {
+                transform: translateX(0) scale(1.05) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-35px) scale(1.2, 0.8);
+            }
+            55% {
+                transform: translateY(-10px) scaleY(0.1) scaleX(1.3);
+                opacity: 1;
+            }
+            60% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para animar el logo
+            function animateLogo(prefix) {
+                const leftEye = document.getElementById(prefix + '-left-eye');
+                const rightEye = document.getElementById(prefix + '-right-eye');
+                const mouth = document.getElementById(prefix + '-mouth');
+
+                if (!leftEye || !rightEye || !mouth) return;
+
+                const elements = [leftEye, rightEye, mouth];
+                let isAnimating = false;
+
+                const startAnimation = () => {
+                    if (isAnimating) return;
+
+                    isAnimating = true;
+
+                    elements.forEach(element => {
+                        element.style.animation = 'none';
+                        element.classList.remove('animate-once');
+                        void element.offsetWidth;
+                        element.style.animation = '';
+                    });
+
+                    requestAnimationFrame(() => {
+                        elements.forEach(element => {
+                            element.classList.add('animate-once');
+                        });
+                    });
+
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 9000);
+                };
+
+                // Animar al cargar la página
+                startAnimation();
+
+                // Animar al hacer click en el logo
+                const logo = document.getElementById(prefix + '-logo');
+                if (logo) {
+                    logo.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (!isAnimating) {
+                            startAnimation();
+                        }
+                    });
+                }
+            }
+
+            // Inicializar animación para header y footer
+            animateLogo('portfolio-header');
+            animateLogo('portfolio-footer');
+        });
+    </script>
+
+    <!-- Noscript fallback para fuentes -->
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
+</body>
+</html>

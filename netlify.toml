@@ -1,0 +1,92 @@
+# ========================================
+# XINOCORE - Configuración de Netlify
+# ========================================
+
+# Build settings - Sin comando de build (deploy directo)
+[build]
+  publish = "."
+  # command = "npm run build"  # Ya ofuscamos localmente, no necesitamos ofuscar en Netlify
+
+# Headers personalizados (opcional - Netlify ya tiene buenos defaults)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Seguridad adicional
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Cache optimizado para assets estáticos
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache para imágenes
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache para CSS y JS
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# HTML sin cache (siempre fresco)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Redirecciones (si las necesitas en el futuro)
+# [[redirects]]
+#   from = "/old-page"
+#   to = "/new-page"
+#   status = 301
+
+# ========================================
+# PRETTY URLs - Ocultar extensiones .html
+# ========================================
+
+# 1. Redirigir URLs con .html a versión sin extensión (EXCEPTO index.html)
+[[redirects]]
+  from = "/gracias.html"
+  to = "/gracias"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/portafolio.html"
+  to = "/portafolio"
+  status = 301
+  force = true
+
+# 2. Servir archivos .html cuando se accede sin extensión
+[[redirects]]
+  from = "/gracias"
+  to = "/gracias.html"
+  status = 200
+
+[[redirects]]
+  from = "/portafolio"
+  to = "/portafolio.html"
+  status = 200

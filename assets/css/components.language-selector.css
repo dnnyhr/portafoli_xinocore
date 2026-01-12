@@ -1,0 +1,212 @@
+/* ========================================
+   SELECTOR DE IDIOMA - Temática Espacial
+   ======================================== */
+
+.language-selector {
+    position: fixed;
+    top: 90px; /* Debajo del header (header ~70px + margen) */
+    right: 20px;
+    z-index: 9998;
+    display: flex;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(31, 41, 55, 0.8) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(139, 92, 246, 0.2),
+        0 0 30px rgba(139, 92, 246, 0.2);
+    transition: all 0.3s ease;
+}
+
+.language-selector:hover {
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(139, 92, 246, 0.4),
+        0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+.lang-selector-btn {
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.lang-selector-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(99, 102, 241, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.lang-selector-btn:hover {
+    color: #fff;
+    border-color: rgba(139, 92, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.lang-selector-btn:hover::before {
+    opacity: 1;
+}
+
+.lang-selector-btn.active {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    border-color: #8b5cf6;
+    color: #fff;
+    box-shadow:
+        0 4px 12px rgba(139, 92, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.lang-selector-btn.active::after {
+    content: '✓';
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.lang-selector-btn:active {
+    transform: translateY(0);
+}
+
+/* Versión en Header (alternativa - no usada actualmente) */
+.nav-language-selector {
+    display: flex;
+    gap: 4px;
+    margin-left: 20px;
+}
+
+.nav-language-selector .lang-selector-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .language-selector {
+        top: 16px;
+        right: 16px;
+        padding: 5px;
+        gap: 6px;
+    }
+
+    .lang-selector-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-selector {
+        top: 12px;
+        right: 12px;
+        padding: 4px;
+        gap: 4px;
+    }
+
+    .lang-selector-btn {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+
+    /* Ajustar para no interferir con el header en móviles */
+    .language-selector {
+        top: 80px; /* Debajo del header */
+    }
+}
+
+/* Animación de entrada - deshabilitada en móviles para mejor rendimiento */
+@keyframes lang-selector-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Solo animar en desktop para evitar lag en iOS */
+@media (min-width: 769px) {
+    .language-selector {
+        animation: lang-selector-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+    }
+}
+
+/* Efecto de partículas al cambiar idioma (opcional) */
+@keyframes particle-burst {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0);
+    }
+}
+
+/* Accesibilidad - Focus states */
+.lang-selector-btn:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.3),
+        0 4px 12px rgba(139, 92, 246, 0.4);
+}
+
+.lang-selector-btn:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+.lang-selector-btn:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 2px;
+}
+
+/* Modo oscuro - ajustes adicionales si fuera necesario */
+@media (prefers-color-scheme: dark) {
+    .language-selector {
+        background: linear-gradient(135deg, rgba(10, 15, 25, 0.9) 0%, rgba(20, 25, 35, 0.9) 100%);
+    }
+}
+
+/* Print styles - ocultar en impresión */
+@media print {
+    .language-selector {
+        display: none;
+    }
+}

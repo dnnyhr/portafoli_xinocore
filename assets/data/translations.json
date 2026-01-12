@@ -1,0 +1,354 @@
+{
+  "es": {
+    "page_title": {
+      "index": "Xinocore - Desarrollo Web",
+      "portfolio": "Portafolio - Xinocore | Desarrollo Web"
+    },
+    "og": {
+      "site_name": "Xinocore",
+      "index": {
+        "title": "Xinocore – Desarrollo Web Profesional",
+        "description": "Creamos sitios web modernos, rápidos y listos para vender. Soluciones digitales para negocios locales. ¡Escríbenos!"
+      },
+      "portfolio": {
+        "title": "Portafolio – Xinocore | Proyectos Web",
+        "description": "Descubre nuestros proyectos de desarrollo web. Páginas, menús digitales y catálogos para negocios locales."
+      }
+    },
+    "nav": {
+      "home": "Inicio",
+      "services": "Servicios",
+      "portfolio": "Portafolio",
+      "about": "Sobre Nosotros",
+      "contact": "Contacto"
+    },
+    "hero": {
+      "title_line1": "Impulsa tu Negocio",
+      "title_line2": "Hacia el Futuro Digital",
+      "subtitle": "Tu negocio merece una web que lo represente. Nosotros la construimos.",
+      "cta_projects": "Ver Proyectos",
+      "cta_contact": "Contacto"
+    },
+    "services": {
+      "title": "Lo que tu negocio necesita para brillar ✨",
+      "subtitle": "Lo creamos contigo, a tu estilo y sin complicaciones.",
+      "web": {
+        "title": "Páginas Web para Negocios",
+        "description": "Páginas web hechas para conectar con tus clientes y mostrar lo mejor de tu negocio. Modernas, rápidas y pensadas para verse increíbles desde cualquier celular.",
+        "benefit1": "Diseño único que sí te representa",
+        "benefit2": "Se ve increíble en cualquier pantalla",
+        "benefit3": "Clientes encuentran tu negocio más fácil"
+      },
+      "menu": {
+        "title": "Menús Digitales",
+        "description": "Menús bonitos e interactivos para que tus clientes vean todo desde su celular. Sin apps, sin complicaciones, solo un QR y a disfrutar.",
+        "benefit1": "Los actualizás cuando querrás, sin reimprimir",
+        "benefit2": "Fotos que antojan y muestran lo mejor de tu menú",
+        "benefit3": "QR listo para la mesa, redes o mostrador"
+      },
+      "catalog": {
+        "title": "Catálogos en Línea",
+        "description": "Mostrá lo que vendés con un catálogo que se ve bien y se siente fácil de usar. Tus clientes exploran, eligen y te escriben sin complicarse.",
+        "benefit1": "Tus productos organizados y con fotos que enamoran",
+        "benefit2": "Encuentran lo que buscan rápido y sin estrés",
+        "benefit3": "Con botón directo para pedir por WhatsApp"
+      },
+      "card": {
+        "title": "Tarjetas con QR",
+        "description": "Diseñadas solo para vos y tu marca. El QR lleva a una web propia donde mostrás quién sos, qué hacés, o lo que vendés, de forma profesional y fácil de compartir.",
+        "benefit1": "Un diseño que te representa",
+        "benefit2": "Tu web personal en un solo escaneo",
+        "benefit3": "Para profesionales, negocios y restaurantes"
+      }
+    },
+    "portfolio_preview": {
+      "title": "Proyectos Destacados",
+      "subtitle": "Conoce algunos de nuestros trabajos recientes",
+      "cta": "Ver Todo el Portafolio"
+    },
+    "about": {
+      "title": "Sobre Xinocore",
+      "text1": "En <strong>Xinocore</strong> diseñamos y desarrollamos soluciones web enfocadas en impulsar negocios hacia el mundo digital. Cada proyecto se crea con estrategia, diseño y propósito.",
+      "text2": "Creemos que la presencia en internet no debería ser un lujo, sino una oportunidad para todos. Por eso creamos sitios, menús, catálogos y herramientas digitales accesibles, claras y hechas a la medida de cada negocio.",
+      "mission_title": "Nuestra Misión",
+      "mission_text": "Transformar ideas locales en experiencias digitales que conectan, venden y dejan huella. Hacer que cada negocio se sienta orgulloso de su presencia en internet.",
+      "location": "Jinotega, Nicaragua",
+      "feature1_title": "Precios Accesibles",
+      "feature1_text": "Tarifas justas pensadas para negocios locales",
+      "feature2_title": "Soporte Cercano",
+      "feature2_text": "Comunicación clara, directa y sin enredos",
+      "feature3_title": "Diseño Profesional",
+      "feature3_text": "No solo bonito, funcional y hecho para captar clientes",
+      "feature4_title": "Entrega Rápida",
+      "feature4_text": "Tu proyecto listo en tiempo récord",
+      "stat1_number": "6+",
+      "stat1_label": "Años de experiencia",
+      "stat2_number": "100%",
+      "stat2_label": "creatividad",
+      "stat3_number": "100%",
+      "stat3_label": "Dedicación"
+    },
+    "cta": {
+      "title": "¿Listo para llevar tu negocio más allá?",
+      "text": "No hace falta ser grande para brillar. Hagamos juntos una web que te represente y conecte con tus clientes de verdad.",
+      "button": "Iniciar Mi Proyecto"
+    },
+    "contact": {
+      "title": "Conectemos 🚀",
+      "subtitle": "Juntos hacemos que tu negocio destaque en internet",
+      "form_title": "Envíanos un Correo Electrónico",
+      "form_subtitle": "Completa el formulario y te responderemos a tu correo a la brevedad posible",
+      "form": {
+        "name": "Nombre Completo *",
+        "name_placeholder": "Ej: Maria Alejandra",
+        "email": "Tu Correo Electrónico *",
+        "email_placeholder": "Ej: Maria@ejemplo.com",
+        "email_helper": "Te responderemos a este correo",
+        "phone": "Teléfono",
+        "phone_placeholder": "Ej: +505 8724 8446",
+        "service": "Servicio de Interés",
+        "service_default": "Selecciona un servicio",
+        "service_web": "Página Web",
+        "service_menu": "Menú Digital",
+        "service_catalog": "Catálogo en Línea",
+        "service_card": "Tarjeta Digital",
+        "service_other": "Otro",
+        "message": "Tu Mensaje *",
+        "message_placeholder": "Cuéntanos sobre tu proyecto o consulta...",
+        "submit": "Enviar Correo Electrónico",
+        "privacy": "Al enviar este formulario, tu información será enviada directamente a nuestro correo electrónico."
+      },
+      "info": {
+        "location_title": "Ubicación",
+        "location_text": "Jinotega, Nicaragua",
+        "email_title": "Email",
+        "whatsapp_title": "WhatsApp",
+        "whatsapp_text": "+505 8724 8446"
+      }
+    },
+    "footer": {
+      "description": "Impulsando negocios locales hacia el futuro digital.",
+      "quick_links": "Enlaces Rápidos",
+      "services": "Servicios",
+      "services_web": "Páginas Web",
+      "services_menu": "Menús Digitales",
+      "services_catalog": "Catálogos",
+      "services_card": "Tarjetas Digitales",
+      "contact": "Contacto",
+      "copyright": "© 2026 Xinocore. Todos los derechos reservados."
+    },
+    "whatsapp": {
+      "float_button_aria": "Contactar por WhatsApp",
+      "modal_title": "Enviar mensaje por WhatsApp",
+      "modal_subtitle": "Escribe tu mensaje y nos pondremos en contacto contigo",
+      "form_label": "Tu mensaje:",
+      "form_placeholder": "Hola, estoy interesado en sus servicios...",
+      "button": "Enviar a WhatsApp",
+      "close_aria": "Cerrar",
+      "region_selector": {
+        "title": "Selecciona tu ubicación",
+        "subtitle": "Para enviarte al número correcto de WhatsApp",
+        "nicaragua": "Nicaragua",
+        "usa": "Estados Unidos"
+      }
+    },
+    "portfolio": {
+      "hero_title": "Proyectos creados",
+      "hero_subtitle": "Descubre cómo hemos ayudado a negocios locales a brillar en el mundo digital. Cada proyecto es una historia de transformación y éxito.",
+      "filter_all": "Todos",
+      "filter_web": "Páginas Web",
+      "filter_menu": "Menús Digitales",
+      "filter_catalog": "Catálogos",
+      "filter_card": "Tarjetas",
+      "process_title": "Cómo Trabajamos",
+      "process_subtitle": "Un proceso simple y efectivo para tu proyecto",
+      "process1_title": "Consulta",
+      "process1_text": "Conversamos sobre tu negocio, objetivos y necesidades específicas.",
+      "process2_title": "Diseño",
+      "process2_text": "Creamos un diseño personalizado que refleje la identidad de tu marca.",
+      "process3_title": "Desarrollo",
+      "process3_text": "Construimos tu sitio con las mejores prácticas y tecnologías modernas.",
+      "process4_title": "Lanzamiento",
+      "process4_text": "Publicamos tu proyecto y te capacitamos para administrarlo fácilmente.",
+      "cta_title": "¿Listo para Tu Proyecto?",
+      "cta_text": "Tu negocio merece una web que brille. Creamos algo único y funcional, hecho a tu medida",
+      "cta_button": "Iniciar Proyecto"
+    }
+  },
+  "en": {
+    "page_title": {
+      "index": "Xinocore - Web Development",
+      "portfolio": "Portfolio - Xinocore | Web Development"
+    },
+    "og": {
+      "site_name": "Xinocore",
+      "index": {
+        "title": "Xinocore – Professional Web Development",
+        "description": "We create modern, fast websites ready to sell. Digital solutions for local businesses. Contact us!"
+      },
+      "portfolio": {
+        "title": "Portfolio – Xinocore | Web Projects",
+        "description": "Discover our web development projects. Websites, digital menus, and catalogs for local businesses."
+      }
+    },
+    "nav": {
+      "home": "Home",
+      "services": "Services",
+      "portfolio": "Portfolio",
+      "about": "About Us",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title_line1": "Propel Your Business",
+      "title_line2": "Into the Digital Future",
+      "subtitle": "Your business deserves a website that represents it. We build it.",
+      "cta_projects": "View Projects",
+      "cta_contact": "Contact"
+    },
+    "services": {
+      "title": "What your business needs to shine ✨",
+      "subtitle": "We create it with you, your way, without complications.",
+      "web": {
+        "title": "Business Websites",
+        "description": "Websites designed to connect with your customers and showcase the best of your business. Modern, fast, and built to look amazing on any mobile device.",
+        "benefit1": "Unique design that truly represents you",
+        "benefit2": "Looks incredible on any screen",
+        "benefit3": "Customers find your business easier"
+      },
+      "menu": {
+        "title": "Digital Menus",
+        "description": "Beautiful and interactive menus so your customers can see everything from their phones. No apps, no complications, just a QR code and enjoy.",
+        "benefit1": "Update whenever you want, no reprinting",
+        "benefit2": "Photos that entice and showcase the best of your menu",
+        "benefit3": "QR ready for tables, social media, or counter"
+      },
+      "catalog": {
+        "title": "Online Catalogs",
+        "description": "Show what you sell with a catalog that looks good and feels easy to use. Your customers explore, choose, and contact you without hassle.",
+        "benefit1": "Your products organized with photos that captivate",
+        "benefit2": "They find what they're looking for quickly and stress-free",
+        "benefit3": "With a direct button to order via WhatsApp"
+      },
+      "card": {
+        "title": "QR Business Cards",
+        "description": "Designed exclusively for you and your brand. The QR leads to your own website where you showcase who you are, what you do, or what you sell, professionally and easy to share.",
+        "benefit1": "A design that represents you",
+        "benefit2": "Your personal website in a single scan",
+        "benefit3": "For professionals, businesses, and restaurants"
+      }
+    },
+    "portfolio_preview": {
+      "title": "Featured Projects",
+      "subtitle": "Discover some of our recent work",
+      "cta": "View Full Portfolio"
+    },
+    "about": {
+      "title": "About Xinocore",
+      "text1": "At <strong>Xinocore</strong>, we design and develop web solutions focused on propelling new businesses into the digital world. Each project is created with strategy, design, and purpose.",
+      "text2": "We believe that an internet presence shouldn't be a luxury, but an opportunity for everyone. That's why we create accessible, clear, and custom-made websites, menus, catalogs, and digital tools for every business.",
+      "mission_title": "Our Mission",
+      "mission_text": "Transform local ideas into digital experiences that connect, sell, and leave a mark. Make every business feel proud of their internet presence.",
+      "location": "Jinotega, Nicaragua",
+      "feature1_title": "Affordable Prices",
+      "feature1_text": "Fair rates designed for local businesses",
+      "feature2_title": "Close Support",
+      "feature2_text": "Clear, direct communication without confusion",
+      "feature3_title": "Professional Design",
+      "feature3_text": "Not just pretty, functional and made to attract customers",
+      "feature4_title": "Fast Delivery",
+      "feature4_text": "Your project ready in record time",
+      "stat1_number": "6+",
+      "stat1_label": "Years of experience",
+      "stat2_number": "100%",
+      "stat2_label": "creativity",
+      "stat3_number": "100%",
+      "stat3_label": "Dedication"
+    },
+    "cta": {
+      "title": "Ready to take your business further?",
+      "text": "You don't need to be big to shine. Let's create together a website that represents you and truly connects with your customers.",
+      "button": "Start My Project"
+    },
+    "contact": {
+      "title": "Let's Connect 🚀",
+      "subtitle": "Together we make your business stand out online",
+      "form_title": "Send Us an Email",
+      "form_subtitle": "Complete the form and we'll respond to your email as soon as possible",
+      "form": {
+        "name": "Full Name *",
+        "name_placeholder": "E.g.: Maria Alejandra",
+        "email": "Your Email Address *",
+        "email_placeholder": "E.g.: Maria@example.com",
+        "email_helper": "We'll respond to this email",
+        "phone": "Phone",
+        "phone_placeholder": "E.g.: +505 8724 8446",
+        "service": "Service of Interest",
+        "service_default": "Select a service",
+        "service_web": "Website",
+        "service_menu": "Digital Menu",
+        "service_catalog": "Online Catalog",
+        "service_card": "Digital Card",
+        "service_other": "Other",
+        "message": "Your Message *",
+        "message_placeholder": "Tell us about your project or inquiry...",
+        "submit": "Send Email",
+        "privacy": "By submitting this form, your information will be sent directly to our email."
+      },
+      "info": {
+        "location_title": "Location",
+        "location_text": "Jinotega, Nicaragua",
+        "email_title": "Email",
+        "whatsapp_title": "WhatsApp",
+        "whatsapp_text": "+505 8724 8446"
+      }
+    },
+    "footer": {
+      "description": "Driving local businesses into the digital future.",
+      "quick_links": "Quick Links",
+      "services": "Services",
+      "services_web": "Websites",
+      "services_menu": "Digital Menus",
+      "services_catalog": "Catalogs",
+      "services_card": "Digital Cards",
+      "contact": "Contact",
+      "copyright": "© 2026 Xinocore. All rights reserved."
+    },
+    "whatsapp": {
+      "float_button_aria": "Contact via WhatsApp",
+      "modal_title": "Send WhatsApp message",
+      "modal_subtitle": "Write your message and we'll get in touch with you",
+      "form_label": "Your message:",
+      "form_placeholder": "Hello, I'm interested in your services...",
+      "button": "Send to WhatsApp",
+      "close_aria": "Close",
+      "region_selector": {
+        "title": "Select your location",
+        "subtitle": "To send you to the correct WhatsApp number",
+        "nicaragua": "Nicaragua",
+        "usa": "United States"
+      }
+    },
+    "portfolio": {
+      "hero_title": "Created projects",
+      "hero_subtitle": "Discover how we've helped local businesses shine in the digital world. Each project is a story of transformation and success.",
+      "filter_all": "All",
+      "filter_web": "Websites",
+      "filter_menu": "Digital Menus",
+      "filter_catalog": "Catalogs",
+      "filter_card": "Cards",
+      "process_title": "How We Work",
+      "process_subtitle": "A simple and effective process for your project",
+      "process1_title": "Consultation",
+      "process1_text": "We discuss your business, goals, and specific needs.",
+      "process2_title": "Design",
+      "process2_text": "We create a custom design that reflects your brand identity.",
+      "process3_title": "Development",
+      "process3_text": "We build your site with best practices and modern technologies.",
+      "process4_title": "Launch",
+      "process4_text": "We publish your project and train you to manage it easily.",
+      "cta_title": "Ready for Your Project?",
+      "cta_text": "Your business deserves a website that shines. We create something unique and functional, made to fit you",
+      "cta_button": "Start Project"
+    }
+  }
+}

@@ -1,43 +1,835 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <script>
-    const userLanguage = navigator.language.split("-")[0];
-    const languageToFolder = {
-      en: "./EN/home.html",
-      es: "./ES/Inicio.html",
-    };
-    const targetFolder = languageToFolder[userLanguage] || "./EN/home.html"; // Fallback a inglés
-    window.location.href = targetFolder;
-    
-    fetch(window.location.href + "?stats=true")
-    .then(response => response.json())
-    .then(data => {
-      // Contar visitas por hora
-      let hourlyCounts = new Array(24).fill(0);
-      data.visits.forEach(timestamp => {
-        let hour = new Date(timestamp).getHours();
-        hourlyCounts[hour]++;
-      });
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xinocore - Desarrollo web profesional. Soluciones digitales accesibles para negocios locales.">
 
-      // Crear gráfico
-      new Chart(document.getElementById("visitsChart"), {
-        type: "bar",
-        data: {
-          labels: [...Array(24).keys()].map(h => h + ":00"), // Etiquetas de horas
-          datasets: [{
-            label: "Visitas por hora",
-            data: hourlyCounts,
-            backgroundColor: "rgba(54, 162, 235, 0.5)"
-          }]
-        }
-      });
-    });
-    
-  </script>
-  
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xinocore.com">
+    <meta property="og:site_name" content="Xinocore">
+    <meta property="og:title" content="Xinocore – Professional Web Development">
+    <meta property="og:description" content="We build modern, fast websites ready to convert. Digital solutions for local businesses. Let's talk!">
+    <meta property="og:image" content="https://xinocore.com/assets/images/og/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Xinocore - Professional Web Development">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="es_ES">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Xinocore – Professional Web Development">
+    <meta name="twitter:description" content="We build modern, fast websites ready to convert. Digital solutions for local businesses.">
+    <meta name="twitter:image" content="https://xinocore.com/assets/images/og/og-image.jpg">
+    <title>Xinocore - Desarrollo Web</title>
+    <link rel="icon" type="image/png" href="assets/images/favicons/index.png">
+
+    <!-- Preload recursos críticos -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" as="script">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" as="style">
+
+    <!-- Fuentes optimizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+
+    <!-- CSS Base Styles -->
+    <link rel="stylesheet" href="assets/css/main.css?v=3.0">
+    <!-- Core Animations & Effects -->
+    <link rel="stylesheet" href="assets/css/core.animations.css?v=3.0">
+    <link rel="stylesheet" href="assets/css/core.effects.css?v=3.0">
+    <!-- Components -->
+    <link rel="stylesheet" href="assets/css/components.whatsapp.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/components.contact-form.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/components.language-selector.css?v=1.0">
+    <link rel="stylesheet" href="assets/css/components.services-carousel.css?v=1.0">
 </head>
 <body>
-  <p>Redirigiendo...</p>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon" id="header-logo" style="cursor: pointer;">
+                        <svg width="40" height="40" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="header-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M328 30C328.683 30.2277 329.366 30.4554 330.069 30.6899C355.276 39.2388 378.252 52.4303 399 69C399.576 69.4592 400.153 69.9185 400.747 70.3916C416.447 83.0477 431.334 97.5065 443 114C443.41 114.576 443.82 115.152 444.242 115.746C464.175 144.058 478.571 175.154 486 209C486.213 209.967 486.426 210.934 486.646 211.931C492.697 240.944 493.062 274.963 487 304C486.694 305.488 486.694 305.488 486.382 307.007C479.878 337.767 468.903 366.963 451 393C450.597 393.595 450.194 394.19 449.779 394.804C443.742 403.687 437.092 411.941 430 420C429.192 420.92 428.384 421.841 427.551 422.789C425.391 425.216 423.208 427.616 421 430C420.058 431.023 420.058 431.023 419.098 432.066C414.26 437.137 410.207 440.093 403 440.438C398.269 440.274 395.582 439.24 392 436C388.154 431.749 387.51 428.269 387.273 422.758C389.213 415.395 395.914 409.91 401.25 404.812C407.888 398.307 413.645 391.583 419 384C419.395 383.455 419.789 382.91 420.196 382.349C452.559 337.455 465.36 280.364 457.035 225.801C454.033 208.188 448.98 191.43 442 175C441.678 174.241 441.355 173.482 441.023 172.7C432.338 152.601 419.921 134.166 405 118.152C403.159 116.171 401.423 114.136 399.688 112.063C368.294 76.2972 317.285 53.1546 270.27 49.2813C222.696 46.3144 175.172 55.2703 135 82C133.912 82.7206 132.824 83.4412 131.703 84.1836C118.523 93.0465 106 103.5 95.375 115.566C92.0875 118.994 89.2032 122.107 85.9375 125.938C56.6268 161.419 38.5209 207.834 38 254C37.989 254.836 37.9779 255.671 37.9666 256.532C37.5908 305.511 54.0049 355.839 86.4375 392.938C89 396 89 396 89 398C89.66 398 90.32 398 91 398C96.4542 403.166 103.157 410.275 103.5 418.125C102.728 424.11 100.618 428.104 96 432C90.3562 433.881 84.2236 434.046 78.8125 431.5C71.4234 424.932 65.0788 417.796 59 410C58.3677 409.19 58.3677 409.19 57.7227 408.364C45.9374 393.143 36.004 376.505 28 359C27.7029 358.351 27.4058 357.701 27.0996 357.032C4.29823 306.338 1.59689 249.551 15 196C15.1826 195.255 15.3651 194.511 15.5532 193.743C30.759 133.061 73.5456 82.2634 126.138 50.1992C155.7 32.5352 189.664 21.1718 224 18C225.661 17.8337 225.661 17.8337 227.355 17.6641C261.52 14.7002 295.543 19.0836 328 30Z" fill="url(#header-gradient)"/>
+                            <path id="header-left-eye" d="M134.176 153.013C142.425 152.712 146.926 157.884 146.926 157.884C146.926 157.884 200.441 210.162 223.913 233.54C241.073 250.646 239.926 252.013 239.926 258.325C239.926 264.638 234.908 271.805 223.426 283.325C199.201 307.608 175.44 332.395 151.339 356.808C146.303 361.78 141.72 364.753 134.426 364.763C129.287 364.623 125.303 362.412 121.426 358.825C118 353.842 117.241 351.254 117 345.247C117.907 339.021 122.754 334.632 126.926 330.2C147.745 307.908 170.263 287.32 192.363 266.325C194.559 264.269 197.717 261.488 197.426 258.325C196.117 255.708 194.468 254.045 192.363 252.013C169.472 229.604 147.18 206.731 124.199 184.413C119.762 180.001 117.148 176.357 117.113 169.888C117.251 165.009 118.314 161.403 121.891 157.884C126.177 154.205 128.605 153.144 134.176 153.013Z" fill="#8b5cf6"/>
+                            <path id="header-right-eye" d="M364.766 364.75C356.517 365.051 352.016 359.879 352.016 359.879C352.016 359.879 298.501 307.601 275.029 284.223C257.869 267.117 259.016 265.75 259.016 259.438C259.016 253.125 264.033 245.957 275.516 234.438C299.74 210.154 323.501 185.368 347.603 160.955C352.638 155.983 357.222 153.01 364.516 153C369.654 153.14 373.639 155.351 377.516 158.938C380.942 163.92 381.701 166.508 381.942 172.516C381.034 178.742 376.187 183.13 372.016 187.563C351.196 209.854 328.679 230.442 306.578 251.438C304.383 253.494 301.224 256.275 301.516 259.438C302.824 262.054 304.473 263.717 306.578 265.75C329.47 288.159 351.762 311.032 374.742 333.35C379.18 337.762 381.794 341.406 381.828 347.875C381.691 352.754 380.628 356.36 377.051 359.879C372.764 363.558 370.337 364.618 364.766 364.75Z" fill="url(#header-gradient)"/>
+                            <path id="header-mouth" d="M200 320 Q250 360 300 320" stroke="url(#header-gradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">Xinocore</span>
+                </div>
+
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <nav class="nav" id="nav">
+                    <a href="#inicio" class="nav-link active" data-i18n="nav.home">Inicio</a>
+                    <a href="#servicios" class="nav-link" data-i18n="nav.services">Servicios</a>
+                    <a href="portafolio.html" class="nav-link" data-i18n="nav.portfolio">Portafolio</a>
+                    <a href="#nosotros" class="nav-link" data-i18n="nav.about">Sobre Nosotros</a>
+                    <a href="#contacto" class="nav-link btn-contact" data-i18n="nav.contact">Contacto</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-selector-btn" data-lang="es" aria-label="Español">
+            🇪🇸 ES
+        </button>
+        <button class="lang-selector-btn" data-lang="en" aria-label="English">
+            🇺🇸 EN
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="space-bg">
+            <div class="stars"></div>
+            <div class="nebula nebula-1"></div>
+            <div class="nebula nebula-2"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span data-i18n="hero.title_line1">Impulsa tu Negocio</span><br>
+                    <span class="gradient-text" data-i18n="hero.title_line2">Hacia el Futuro Digital</span>
+                </h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">
+                    Tu negocio merece una web que lo represente.
+                    Nosotros la construimos.
+                </p>
+                <div class="hero-cta">
+                    <a href="portafolio.html" class="btn btn-primary" data-i18n="hero.cta_projects">Ver Proyectos</a>
+                    <a href="#contacto" class="btn btn-secondary" data-i18n="hero.cta_contact">Contacto</a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="services.title">Lo que tu negocio necesita para brillar ✨</h2>
+                <p class="section-subtitle" data-i18n="services.subtitle">Lo creamos contigo, a tu estilo y sin complicaciones.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card" data-aos>
+                    <div class="service-icon">
+                        <img src="./assets/images/icons/Paginas web.svg" alt="Páginas Web" width="48" height="48">
+                    </div>
+                    <h3 class="service-title" data-i18n="services.web.title">Páginas Web para Negocios</h3>
+                    <p class="service-description" data-i18n="services.web.description">
+                    Páginas web hechas para conectar con tus clientes y mostrar lo mejor de tu negocio.
+  Modernas, rápidas y pensadas para verse increíbles desde cualquier celular.
+                    </p>
+                    <ul class="service-benefits">
+  <li data-i18n="services.web.benefit1">Diseño único que sí te representa</li>
+  <li data-i18n="services.web.benefit2">Se ve increíble en cualquier pantalla</li>
+  <li data-i18n="services.web.benefit3">Clientes encuentran tu negocio más fácil</li>
+                    </ul>
+                </div>
+
+                <div class="service-card" data-aos>
+                    <div class="service-icon">
+                        <img src="./assets/images/icons/Menús Digitales.svg" alt="Menús Digitales" width="48" height="48">
+                    </div>
+                    <h3 class="service-title" data-i18n="services.menu.title">Menús Digitales</h3>
+<p class="service-description" data-i18n="services.menu.description">
+  Menús bonitos e interactivos para que tus clientes vean todo desde su celular.
+  Sin apps, sin complicaciones, solo un QR y a disfrutar.
+</p>
+<ul class="service-benefits">
+  <li data-i18n="services.menu.benefit1">Los actualizás cuando querrás, sin reimprimir</li>
+  <li data-i18n="services.menu.benefit2">Fotos que antojan y muestran lo mejor de tu menú</li>
+  <li data-i18n="services.menu.benefit3">QR listo para la mesa, redes o mostrador</li>
+</ul>
+                </div>
+
+                <div class="service-card" data-aos>
+                    <div class="service-icon">
+                        <img src="./assets/images/icons/Catalogos Digi.svg" alt="Catálogos Digitales" width="48" height="48">
+                    </div>
+                    <h3 class="service-title" data-i18n="services.catalog.title">Catálogos en Línea</h3>
+<p class="service-description" data-i18n="services.catalog.description">
+  Mostrá lo que vendés con un catálogo que se ve bien y se siente fácil de usar.
+  Tus clientes exploran, eligen y te escriben sin complicarse.
+</p>
+<ul class="service-benefits">
+  <li data-i18n="services.catalog.benefit1">Tus productos organizados y con fotos que enamoran</li>
+  <li data-i18n="services.catalog.benefit2">Encuentran lo que buscan rápido y sin estrés</li>
+  <li data-i18n="services.catalog.benefit3">Con botón directo para pedir por WhatsApp</li>
+</ul>
+
+                </div>
+
+                <div class="service-card" data-aos>
+                    <div class="service-icon">
+                        <img src="./assets/images/icons/Tarjetas QR.svg" alt="Tarjetas QR" width="48" height="48">
+                    </div>
+                    <h3 class="service-title" data-i18n="services.card.title">Tarjetas con QR</h3>
+<p class="service-description" data-i18n="services.card.description">
+  Diseñadas solo para vos y tu marca. El QR lleva a una web propia donde mostrás
+  quién sos, qué hacés, o lo que vendés, de forma profesional y fácil de compartir.
+</p>
+<ul class="service-benefits">
+  <li data-i18n="services.card.benefit1">Un diseño que te representa</li>
+  <li data-i18n="services.card.benefit2">Tu web personal en un solo escaneo</li>
+  <li data-i18n="services.card.benefit3">Para profesionales, negocios y restaurantes</li>
+</ul>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Preview Section -->
+    <section class="portfolio-preview">
+        <div class="space-window">
+            <div class="stars"></div>
+        </div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="portfolio_preview.title">Proyectos Destacados</h2>
+                <p class="section-subtitle" data-i18n="portfolio_preview.subtitle">Conoce algunos de nuestros trabajos recientes</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Proyectos cargados dinámicamente desde data.projects.json -->
+            </div>
+            <center>
+                  <a href="portafolio.html" class="btn btn-primary btn-large" data-i18n="portfolio_preview.cta">Ver Todo el Portafolio</a>
+            </center>
+              
+          
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content" data-aos>
+                    <h2 class="section-title" data-i18n="about.title">Sobre Xinocore</h2>
+                    <p class="about-text" data-i18n="about.text1">
+  En <strong>Xinocore</strong> diseñamos y desarrollamos soluciones web enfocadas en impulsar negocios hacia el mundo digital.
+  Cada proyecto se crea con estrategia, diseño y propósito.
+</p>
+                    <p class="about-text" data-i18n="about.text2">
+  Creemos que la presencia en internet no debería ser un lujo, sino una oportunidad para todos.
+  Por eso creamos sitios, menús, catálogos y herramientas digitales accesibles, claras y hechas a la medida de cada negocio.
+</p>
+
+                    <div class="about-mission">
+                        <h3 data-i18n="about.mission_title">Nuestra Misión</h3>
+                        <p data-i18n="about.mission_text">
+    Transformar ideas locales en experiencias digitales que conectan, venden y dejan huella.
+    Hacer que cada negocio se sienta orgulloso de su presencia en internet.
+  </p>
+                    </div>
+
+                    
+                </div>
+
+                <div class="about-features" data-aos>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 data-i18n="about.feature1_title">Precios Accesibles</h4>
+                            <p data-i18n="about.feature1_text">Tarifas justas pensadas para negocios locales</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 data-i18n="about.feature2_title">Soporte Cercano</h4>
+                           <p data-i18n="about.feature2_text">Comunicación clara, directa y sin enredos</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 data-i18n="about.feature3_title">Diseño Profesional</h4>
+                             <p data-i18n="about.feature3_text">No solo bonito, funcional y hecho para captar clientes<
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 data-i18n="about.feature4_title">Entrega Rápida</h4>
+                            <p data-i18n="about.feature4_text">Tu proyecto listo en tiempo récord</p>
+                        </div>
+                    </div>
+
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-i18n="about.stat1_number">6+</div>
+                            <div class="stat-label" data-i18n="about.stat1_label">Años de experiencia</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-i18n="about.stat2_number">100%</div>
+                            <div class="stat-label" data-i18n="about.stat2_label">creatividad</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-i18n="about.stat3_number">100%</div>
+                            <div class="stat-label" data-i18n="about.stat3_label">Dedicación</div>
+                        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="space-bg">
+            <div class="stars"></div>
+            <div class="nebula nebula-3"></div>
+            <div class="rocket-container">
+                <svg class="rocket" width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Rocket Body -->
+                    <path d="M30 5L40 25L35 60L30 65L25 60L20 25L30 5Z" fill="url(#rocketGradient)" stroke="white" stroke-width="2"/>
+                    <!-- Rocket Window -->
+                    <circle cx="30" cy="25" r="6" fill="#ffffff" opacity="0.9"/>
+                    <circle cx="30" cy="25" r="4" fill="#6366f1" opacity="0.7"/>
+                    <!-- Rocket Fins -->
+                    <path d="M20 35L15 50L20 45Z" fill="#8b5cf6"/>
+                    <path d="M40 35L45 50L40 45Z" fill="#8b5cf6"/>
+                    <!-- Rocket Flame -->
+                    <g class="rocket-flame">
+                        <path d="M25 65L30 75L35 65Z" fill="#fbbf24" opacity="0.9">
+                            <animate attributeName="opacity" values="0.9;0.6;0.9" dur="0.3s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M27 68L30 78L33 68Z" fill="#f97316" opacity="0.8">
+                            <animate attributeName="opacity" values="0.8;0.5;0.8" dur="0.2s" repeatCount="indefinite"/>
+                        </path>
+                        <path d="M28 70L30 80L32 70Z" fill="#ef4444" opacity="0.7">
+                            <animate attributeName="opacity" values="0.7;0.4;0.7" dur="0.15s" repeatCount="indefinite"/>
+                        </path>
+                    </g>
+                    <defs>
+                        <linearGradient id="rocketGradient" x1="30" y1="5" x2="30" y2="65" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#e0e7ff"/>
+                            <stop offset="50%" stop-color="#c7d2fe"/>
+                            <stop offset="100%" stop-color="#a5b4fc"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title" data-i18n="cta.title">¿Listo para llevar tu negocio más allá?</h2>
+                <p class="cta-text" data-i18n="cta.text">
+                       No hace falta ser grande para brillar. Hagamos juntos una web que te represente y conecte
+                       con tus clientes de verdad.
+                </p>
+                <a href="#contacto" class="btn btn-primary btn-large" data-i18n="cta.button">Iniciar Mi Proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="contact.title">Conectemos 🚀</h2>
+<p class="section-subtitle" data-i18n="contact.subtitle">Juntos hacemos que tu negocio destaque en internet</p>
+
+
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-form-wrapper" data-aos>
+                    <div class="form-header">
+                        <div class="email-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <h3 data-i18n="contact.form_title">Envíanos un Correo Electrónico</h3>
+                        <p data-i18n="contact.form_subtitle">Completa el formulario y te responderemos a tu correo a la brevedad posible</p>
+                    </div>
+
+                    <form class="contact-form" id="contact-form" action="https://formsubmit.co/Dannyherrod@xinocore.com" method="POST">
+                        <!-- Honeypot para prevenir spam -->
+                        <input type="text" name="_honey" style="display:none">
+
+                        <!-- Deshabilitar captcha de FormSubmit -->
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <!-- Página de agradecimiento -->
+                        <input type="hidden" name="_next" value="https://xinocoree.netlify.app/gracias">
+
+                        <!-- Template personalizado -->
+                        <input type="hidden" name="_template" value="table">
+
+                        <!-- Asunto del correo -->
+                        <input type="hidden" name="_subject" value="Nuevo mensaje de contacto desde Xinocore">
+
+                        <div class="form-group">
+                            <label for="name" data-i18n="contact.form.name">Nombre Completo *</label>
+                            <input type="text" id="name" name="name" data-i18n-placeholder="contact.form.name_placeholder" placeholder="Ej: Maria Alejandra" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" data-i18n="contact.form.email">Tu Correo Electrónico *</label>
+                            <input type="email" id="email" name="email" data-i18n-placeholder="contact.form.email_placeholder" placeholder="Ej: Maria@ejemplo.com" required>
+                            <small data-i18n="contact.form.email_helper">Te responderemos a este correo</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" data-i18n="contact.form.phone">Teléfono</label>
+                            <input type="tel" id="phone" name="phone" data-i18n-placeholder="contact.form.phone_placeholder" placeholder="Ej: +505 8724 8446">
+                        </div>
+                        <div class="form-group">
+                            <label for="service" data-i18n="contact.form.service">Servicio de Interés</label>
+                            <select id="service" name="service">
+                                <option value="" data-i18n="contact.form.service_default">Selecciona un servicio</option>
+                                <option value="web" data-i18n="contact.form.service_web">Página Web</option>
+                                <option value="menu" data-i18n="contact.form.service_menu">Menú Digital</option>
+                                <option value="catalog" data-i18n="contact.form.service_catalog">Catálogo en Línea</option>
+                                <option value="card" data-i18n="contact.form.service_card">Tarjeta Digital</option>
+                                <option value="other" data-i18n="contact.form.service_other">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" data-i18n="contact.form.message">Tu Mensaje *</label>
+                            <textarea id="message" name="message" rows="4" data-i18n-placeholder="contact.form.message_placeholder" placeholder="Cuéntanos sobre tu proyecto o consulta..." required></textarea>
+                        </div>
+
+                        <div id="form-message" class="form-message" style="display:none;"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                            <span data-i18n="contact.form.submit">Enviar Correo Electrónico</span>
+                        </button>
+
+                        <p class="form-privacy" data-i18n="contact.form.privacy">Al enviar este formulario, tu información será enviada directamente a nuestro correo electrónico.</p>
+                    </form>
+                </div>
+                
+                <div class="contact-info" data-aos>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                        </div>
+                        <div>
+                            <h4 data-i18n="contact.info.location_title">Ubicación</h4>
+                            <p data-contact="location">Jinotega, Nicaragua</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 data-i18n="contact.info.email_title">Email</h4>
+                            <p data-contact="email">Dannyherrod@xinocore.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </div>
+                        <div>
+                            <h4 data-i18n="contact.info.whatsapp_title">WhatsApp</h4>
+                            <p data-contact="phone">+505 8724 8446</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon" id="footer-logo" style="cursor: pointer;">
+                            <svg width="32" height="32" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="footer-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#f472b6;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M328 30C328.683 30.2277 329.366 30.4554 330.069 30.6899C355.276 39.2388 378.252 52.4303 399 69C399.576 69.4592 400.153 69.9185 400.747 70.3916C416.447 83.0477 431.334 97.5065 443 114C443.41 114.576 443.82 115.152 444.242 115.746C464.175 144.058 478.571 175.154 486 209C486.213 209.967 486.426 210.934 486.646 211.931C492.697 240.944 493.062 274.963 487 304C486.694 305.488 486.694 305.488 486.382 307.007C479.878 337.767 468.903 366.963 451 393C450.597 393.595 450.194 394.19 449.779 394.804C443.742 403.687 437.092 411.941 430 420C429.192 420.92 428.384 421.841 427.551 422.789C425.391 425.216 423.208 427.616 421 430C420.058 431.023 420.058 431.023 419.098 432.066C414.26 437.137 410.207 440.093 403 440.438C398.269 440.274 395.582 439.24 392 436C388.154 431.749 387.51 428.269 387.273 422.758C389.213 415.395 395.914 409.91 401.25 404.812C407.888 398.307 413.645 391.583 419 384C419.395 383.455 419.789 382.91 420.196 382.349C452.559 337.455 465.36 280.364 457.035 225.801C454.033 208.188 448.98 191.43 442 175C441.678 174.241 441.355 173.482 441.023 172.7C432.338 152.601 419.921 134.166 405 118.152C403.159 116.171 401.423 114.136 399.688 112.063C368.294 76.2972 317.285 53.1546 270.27 49.2813C222.696 46.3144 175.172 55.2703 135 82C133.912 82.7206 132.824 83.4412 131.703 84.1836C118.523 93.0465 106 103.5 95.375 115.566C92.0875 118.994 89.2032 122.107 85.9375 125.938C56.6268 161.419 38.5209 207.834 38 254C37.989 254.836 37.9779 255.671 37.9666 256.532C37.5908 305.511 54.0049 355.839 86.4375 392.938C89 396 89 396 89 398C89.66 398 90.32 398 91 398C96.4542 403.166 103.157 410.275 103.5 418.125C102.728 424.11 100.618 428.104 96 432C90.3562 433.881 84.2236 434.046 78.8125 431.5C71.4234 424.932 65.0788 417.796 59 410C58.3677 409.19 58.3677 409.19 57.7227 408.364C45.9374 393.143 36.004 376.505 28 359C27.7029 358.351 27.4058 357.701 27.0996 357.032C4.29823 306.338 1.59689 249.551 15 196C15.1826 195.255 15.3651 194.511 15.5532 193.743C30.759 133.061 73.5456 82.2634 126.138 50.1992C155.7 32.5352 189.664 21.1718 224 18C225.661 17.8337 225.661 17.8337 227.355 17.6641C261.52 14.7002 295.543 19.0836 328 30Z" fill="url(#footer-gradient)"/>
+                                <path id="footer-left-eye" d="M134.176 153.013C142.425 152.712 146.926 157.884 146.926 157.884C146.926 157.884 200.441 210.162 223.913 233.54C241.073 250.646 239.926 252.013 239.926 258.325C239.926 264.638 234.908 271.805 223.426 283.325C199.201 307.608 175.44 332.395 151.339 356.808C146.303 361.78 141.72 364.753 134.426 364.763C129.287 364.623 125.303 362.412 121.426 358.825C118 353.842 117.241 351.254 117 345.247C117.907 339.021 122.754 334.632 126.926 330.2C147.745 307.908 170.263 287.32 192.363 266.325C194.559 264.269 197.717 261.488 197.426 258.325C196.117 255.708 194.468 254.045 192.363 252.013C169.472 229.604 147.18 206.731 124.199 184.413C119.762 180.001 117.148 176.357 117.113 169.888C117.251 165.009 118.314 161.403 121.891 157.884C126.177 154.205 128.605 153.144 134.176 153.013Z" fill="#8b5cf6"/>
+                                <path id="footer-right-eye" d="M364.766 364.75C356.517 365.051 352.016 359.879 352.016 359.879C352.016 359.879 298.501 307.601 275.029 284.223C257.869 267.117 259.016 265.75 259.016 259.438C259.016 253.125 264.033 245.957 275.516 234.438C299.74 210.154 323.501 185.368 347.603 160.955C352.638 155.983 357.222 153.01 364.516 153C369.654 153.14 373.639 155.351 377.516 158.938C380.942 163.92 381.701 166.508 381.942 172.516C381.034 178.742 376.187 183.13 372.016 187.563C351.196 209.854 328.679 230.442 306.578 251.438C304.383 253.494 301.224 256.275 301.516 259.438C302.824 262.054 304.473 263.717 306.578 265.75C329.47 288.159 351.762 311.032 374.742 333.35C379.18 337.762 381.794 341.406 381.828 347.875C381.691 352.754 380.628 356.36 377.051 359.879C372.764 363.558 370.337 364.618 364.766 364.75Z" fill="url(#footer-gradient)"/>
+                                <path id="footer-mouth" d="M200 320 Q250 360 300 320" stroke="url(#footer-gradient)" stroke-width="8" fill="none" stroke-linecap="round" opacity="0"/>
+                            </svg>
+                        </div>
+                        <span>Xinocore</span>
+                    </div>
+                    <p class="footer-description" data-i18n="footer.description">
+                        Impulsando negocios locales hacia el futuro digital.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.quick_links">Enlaces Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="#inicio" data-i18n="nav.home">Inicio</a></li>
+                        <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+                        <li><a href="portafolio.html" data-i18n="nav.portfolio">Portafolio</a></li>
+                        <li><a href="#nosotros" data-i18n="nav.about">Sobre Nosotros</a></li>
+                        <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.services">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#servicios" data-i18n="footer.services_web">Páginas Web</a></li>
+                        <li><a href="#servicios" data-i18n="footer.services_menu">Menús Digitales</a></li>
+                        <li><a href="#servicios" data-i18n="footer.services_catalog">Catálogos</a></li>
+                        <li><a href="#servicios" data-i18n="footer.services_card">Tarjetas Digitales</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-title" data-i18n="footer.contact">Contacto</h4>
+                    <ul class="footer-contact">
+                        <li data-contact="location">Jinotega, Nicaragua</li>
+                        <li data-contact="email">Dannyherrod@xinocore.com</li>
+                        <li data-contact="phone">+505 8724 8446</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">&copy; 2026 Xinocore. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <button id="whatsapp-float-btn" class="whatsapp-float" data-i18n-aria="whatsapp.float_button_aria" aria-label="Contactar por WhatsApp">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </button>
+
+    <!-- WhatsApp Modal -->
+    <div id="whatsapp-modal" class="whatsapp-modal">
+        <div class="whatsapp-modal-backdrop"></div>
+        <div class="space-bg-modal">
+            <div class="stars-modal"></div>
+            <div class="planets-container">
+                <div class="planet planet-1"></div>
+                <div class="planet planet-2"></div>
+                <div class="planet planet-3"></div>
+            </div>
+            <div class="shooting-stars">
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
+            </div>
+        </div>
+        <div class="whatsapp-modal-content">
+            <button class="whatsapp-modal-close" id="close-modal" data-i18n-aria="whatsapp.close_aria" aria-label="Cerrar">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="whatsapp-modal-header">
+                <div class="whatsapp-icon-large">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </div>
+                <h3 data-i18n="whatsapp.modal_title">Enviar mensaje por WhatsApp</h3>
+                <p data-i18n="whatsapp.modal_subtitle">Escribe tu mensaje y nos pondremos en contacto contigo</p>
+            </div>
+            <div class="whatsapp-modal-body">
+                <form id="whatsapp-form">
+                    <div class="form-group-modal">
+                        <label for="whatsapp-message" data-i18n="whatsapp.form_label">Tu mensaje:</label>
+                        <textarea
+                            id="whatsapp-message"
+                            name="message"
+                            rows="5"
+                            data-i18n-placeholder="whatsapp.form_placeholder"
+                            placeholder="Hola, estoy interesado en sus servicios..."
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn-whatsapp-send">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        <span data-i18n="whatsapp.button">Enviar a WhatsApp</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Configuration Script - Load First -->
+    <script src="assets/js/config.js?v=1.0"></script>
+
+    <!-- i18n System -->
+    <script src="assets/js/i18n.js?v=1.0"></script>
+
+    <!-- GSAP Library - Optimizado con defer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <!-- Components -->
+    <script src="assets/js/components.whatsapp.js?v=1.0" defer></script>
+    <script src="assets/js/components.contact-region.js?v=1.0" defer></script>
+    <script src="assets/js/components.services-carousel.js?v=1.0" defer></script>
+    <script src="assets/js/components.emailjs.js?v=1.0" defer></script>
+
+    <!-- Core Scripts -->
+    <script src="assets/js/core.animations.js?v=2.0" defer></script>
+    <script src="assets/js/core.effects.js?v=2.0" defer></script>
+    <script src="assets/js/main.js?v=2.0" defer></script>
+
+    <!-- Logo Animation Script -->
+    <style>
+        /* Animaciones para el logo */
+        #header-left-eye.animate-once,
+        #header-right-eye.animate-once,
+        #header-mouth.animate-once,
+        #footer-left-eye.animate-once,
+        #footer-right-eye.animate-once,
+        #footer-mouth.animate-once {
+            animation-iteration-count: 1 !important;
+            animation-fill-mode: forwards;
+        }
+
+        #header-left-eye:not(.animate-once),
+        #header-right-eye:not(.animate-once),
+        #header-mouth:not(.animate-once),
+        #footer-left-eye:not(.animate-once),
+        #footer-right-eye:not(.animate-once),
+        #footer-mouth:not(.animate-once) {
+            animation: none;
+        }
+
+        #header-left-eye, #header-right-eye,
+        #footer-left-eye, #footer-right-eye {
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        #header-mouth, #footer-mouth {
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+
+        .animate-once#header-left-eye,
+        .animate-once#header-right-eye,
+        .animate-once#footer-left-eye,
+        .animate-once#footer-right-eye {
+            animation: cuteFace 9s;
+        }
+
+        .animate-once#header-mouth,
+        .animate-once#footer-mouth {
+            animation: mouthAppear 9s;
+        }
+
+        @keyframes mouthAppear {
+            0%, 49%, 60%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 0;
+                transform: translateY(-40px) scale(0.8);
+            }
+            52% {
+                opacity: 1;
+                transform: translateY(-50px) scale(1);
+                stroke-width: 8;
+            }
+            55% {
+                opacity: 1;
+                transform: translateY(-50px) scale(1.2) skewX(10deg);
+                stroke-width: 10;
+            }
+            58% {
+                opacity: 0;
+                transform: translateY(-60px) scale(0.8);
+            }
+        }
+
+        @keyframes cuteFace {
+            0%, 100% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            10% {
+                transform: translateX(-40px) scale(0.9, 1.1) rotate(-8deg);
+                animation-timing-function: ease-in-out;
+            }
+            20% {
+                transform: translateX(-40px) scale(1.1, 0.9) rotate(-5deg);
+            }
+            30% {
+                transform: translateX(40px) scale(0.9, 1.1) rotate(8deg);
+                animation-timing-function: ease-in-out;
+            }
+            40% {
+                transform: translateX(40px) scale(1.1, 0.9) rotate(5deg);
+            }
+            45% {
+                transform: translateX(0) scale(1.05) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-35px) scale(1.2, 0.8);
+            }
+            55% {
+                transform: translateY(-10px) scaleY(0.1) scaleX(1.3);
+                opacity: 1;
+            }
+            60% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para animar el logo
+            function animateLogo(prefix) {
+                const leftEye = document.getElementById(prefix + '-left-eye');
+                const rightEye = document.getElementById(prefix + '-right-eye');
+                const mouth = document.getElementById(prefix + '-mouth');
+
+                if (!leftEye || !rightEye || !mouth) return;
+
+                const elements = [leftEye, rightEye, mouth];
+                let isAnimating = false;
+
+                const startAnimation = () => {
+                    if (isAnimating) return;
+
+                    isAnimating = true;
+
+                    elements.forEach(element => {
+                        element.style.animation = 'none';
+                        element.classList.remove('animate-once');
+                        void element.offsetWidth;
+                        element.style.animation = '';
+                    });
+
+                    requestAnimationFrame(() => {
+                        elements.forEach(element => {
+                            element.classList.add('animate-once');
+                        });
+                    });
+
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 9000);
+                };
+
+                // Animar al cargar la página
+                startAnimation();
+
+                // Animar al hacer click en el logo
+                const logo = document.getElementById(prefix + '-logo');
+                if (logo) {
+                    logo.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (!isAnimating) {
+                            startAnimation();
+                        }
+                    });
+                }
+            }
+
+            // Inicializar animación para header y footer
+            animateLogo('header');
+            animateLogo('footer');
+        });
+    </script>
+
+    <!-- Noscript fallback para fuentes -->
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
 </body>
 </html>

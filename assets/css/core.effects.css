@@ -1,0 +1,470 @@
+/* ========================================
+   EPIC EFFECTS - Efectos Visuales Impresionantes
+   ======================================== */
+
+/* OVERLAY DE HIPERESPACIO */
+.hyperspace-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.warp-lines-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.hyperspace-flash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(99,102,241,0.5) 50%, transparent 100%);
+    opacity: 0;
+}
+
+.warp-line {
+    filter: blur(1px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ESTRELLAS DESHABILITADAS (causan lag) */
+.warp-stars {
+    display: none !important;
+}
+
+.warp-star {
+    display: none !important;
+}
+
+/* ANILLO DE ENERGÍA DESHABILITADO (demasiado) */
+.energy-ring {
+    display: none !important;
+}
+
+/* BRILLO EN TARJETAS */
+.service-card,
+.portfolio-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before,
+.portfolio-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.service-card:hover::before,
+.portfolio-card:hover::before {
+    opacity: 1;
+    animation: rotateBg 3s linear infinite;
+}
+
+@keyframes rotateBg {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* PARTÍCULAS DESHABILITADAS (causan lag) */
+.floating-particles {
+    display: none !important;
+}
+
+.particle {
+    display: none !important;
+}
+
+
+.warp-tunnel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.warp-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 3px solid rgba(99, 102, 241, 0.8);
+    border-radius: 50%;
+    box-shadow:
+        0 0 20px rgba(99, 102, 241, 1),
+        inset 0 0 20px rgba(139, 92, 246, 0.8);
+}
+
+.transition-logo {
+    position: relative;
+    z-index: 10;
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1));
+}
+
+/* EFECTO DE BRILLO EN HOVER */
+.card-shine {
+    border-radius: inherit;
+    mix-blend-mode: overlay;
+}
+
+/* BOTONES PREMIUM - ULTRA SOFISTICADOS */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    isolation: isolate;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+}
+
+/* Gradiente animado de fondo con movimiento suave */
+.btn-primary {
+    background: linear-gradient(
+        135deg,
+        #6366f1 0%,
+        #8b5cf6 50%,
+        #d946ef 100%
+    );
+    background-size: 200% 200%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+    background-position: 100% 50%;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 20px 40px -10px rgba(99, 102, 241, 0.5),
+        0 0 40px rgba(139, 92, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Capa de brillo siguiendo cursor */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle 100px at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.1) 40%,
+        transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+/* Borde sutil en hover */
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0);
+    transition: border-color 0.4s ease;
+    pointer-events: none;
+}
+
+.btn:hover::after {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Estado activo elegante */
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+/* Botón secundario con estilo glassmorphism */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 35px -5px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* GLOW EFFECTS - DESHABILITADOS (muy básicos) */
+.glow-effect {
+    /* animation: glowPulse 2s ease-in-out infinite; */
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px currentColor);
+    }
+    50% {
+        filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 40px currentColor);
+    }
+}
+
+/* HERO TITLE SUTIL */
+.hero-title {
+    text-shadow:
+        0 0 15px rgba(99, 102, 241, 0.4),
+        0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* GRADIENT TEXT SUTIL */
+.gradient-text {
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3));
+}
+
+/* SCROLL INDICATOR MEJORADO */
+.scroll-indicator {
+    animation: scrollGlow 2s ease-in-out infinite;
+}
+
+@keyframes scrollGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 1));
+    }
+}
+
+/* NEBULOSAS CON MÁS BRILLO */
+.nebula {
+    animation:
+        float 25s ease-in-out infinite,
+        pulse 8s ease-in-out infinite,
+        nebulaGlow 10s ease-in-out infinite,
+        nebulaColor 15s ease-in-out infinite;
+}
+
+@keyframes nebulaColor {
+    0%, 100% {
+        filter: blur(80px) brightness(1) hue-rotate(0deg);
+    }
+    33% {
+        filter: blur(90px) brightness(1.3) hue-rotate(20deg);
+    }
+    66% {
+        filter: blur(85px) brightness(1.1) hue-rotate(-10deg);
+    }
+}
+
+/* MODAL ENHANCEMENTS */
+.modal-content {
+    box-shadow:
+        0 0 60px rgba(99, 102, 241, 0.4),
+        0 0 120px rgba(139, 92, 246, 0.3),
+        0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: modalShine 3s ease-in-out infinite;
+}
+
+@keyframes modalShine {
+    0% {
+        left: -100%;
+    }
+    50%, 100% {
+        left: 200%;
+    }
+}
+
+/* PORTFOLIO CARD HOVER EFFECT */
+.portfolio-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.portfolio-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* SERVICE ICON - GSAP maneja la animación */
+.service-icon {
+    /* animation: iconFloat 3s ease-in-out infinite; */
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(-3deg);
+    }
+    75% {
+        transform: translateY(-8px) rotate(3deg);
+    }
+}
+
+/* STATS COUNTER - SIN PULSO */
+.stat-number {
+    /* animation: statGlow 2s ease-in-out infinite; */
+    text-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+}
+
+@keyframes statGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 20px rgba(99, 102, 241, 0.6),
+            0 0 30px rgba(139, 92, 246, 0.4);
+    }
+}
+
+/* CTA BUTTON - DESHABILITADO (se veía horrible) */
+.cta-content .btn {
+    /* animation: ctaGlow 1.5s ease-in-out infinite; */
+}
+
+@keyframes ctaGlow {
+    0%, 100% {
+        box-shadow:
+            0 4px 20px rgba(99, 102, 241, 0.4),
+            0 0 40px rgba(139, 92, 246, 0.2);
+    }
+    50% {
+        box-shadow:
+            0 8px 40px rgba(99, 102, 241, 0.8),
+            0 0 80px rgba(139, 92, 246, 0.6),
+            0 0 120px rgba(244, 114, 182, 0.4);
+    }
+}
+
+/* WHATSAPP BUTTON - SIN PULSO */
+.whatsapp-float {
+    /* animation: whatsappEpic 2s ease-in-out infinite; */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.whatsapp-float:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 36px rgba(37, 211, 102, 0.5);
+}
+
+@keyframes whatsappEpic {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow:
+            0 12px 36px rgba(37, 211, 102, 0.6),
+            0 0 60px rgba(37, 211, 102, 0.4);
+    }
+}
+
+/* PERFORMANCE */
+.hyperspace-overlay {
+    will-change: opacity;
+}
+
+.warp-line,
+.warp-star {
+    will-change: transform, opacity;
+}
+
+.portfolio-card,
+.service-card {
+    will-change: transform;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    /* Reducir efectos en móviles */
+    .energy-ring {
+        display: none;
+    }
+
+    .floating-particles {
+        display: none;
+    }
+
+    .warp-stars {
+        opacity: 0.5;
+    }
+
+    .hero-title,
+    .gradient-text,
+    .stat-number {
+        animation: none;
+    }
+}
+
+/* REDUCIR MOVIMIENTO */
+@media (prefers-reduced-motion: reduce) {
+    .hyperspace-overlay,
+    .warp-stars,
+    .floating-particles,
+    .energy-ring {
+        display: none !important;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
