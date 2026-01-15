@@ -177,16 +177,22 @@
     transition: width 0s, height 0s;
 }
 
-/* Efecto de cristal para las tarjetas */
+/* Efecto de cristal para las tarjetas - Solo en desktop (backdrop-filter es muy costoso en móvil) */
 .service-card,
 .contact-item {
-    backdrop-filter: blur(10px);
     transition: all 0.3s ease;
 }
 
-.service-card:hover,
-.contact-item:hover {
-    backdrop-filter: blur(20px);
+@media (min-width: 769px) {
+    .service-card,
+    .contact-item {
+        backdrop-filter: blur(10px);
+    }
+
+    .service-card:hover,
+    .contact-item:hover {
+        backdrop-filter: blur(20px);
+    }
 }
 
 /* Mejorar nebulosas con efecto de brillo */
@@ -369,6 +375,39 @@
     .service-icon::after,
     .feature-icon::after {
         display: none;
+    }
+
+    /* Optimizar animaciones pesadas - reducir frecuencia */
+    .stars {
+        animation: twinkle 6s ease-in-out infinite;
+    }
+
+    .stars::before,
+    .stars::after {
+        animation: twinkle 8s ease-in-out infinite;
+    }
+
+    /* Reducir animaciones de iconos en móvil */
+    .service-icon,
+    .feature-icon,
+    .contact-icon {
+        animation: iconShine 6s linear infinite;
+    }
+
+    /* Reducir frecuencia de energyWave en móvil */
+    .btn-primary {
+        animation: energyWave 4s ease-out infinite;
+    }
+
+    /* Reducir frecuencia de floatWhatsApp */
+    .whatsapp-float {
+        animation: floatWhatsApp 5s ease-in-out infinite;
+    }
+
+    /* Optimizar transiciones */
+    .portfolio-card,
+    .service-card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 }
 

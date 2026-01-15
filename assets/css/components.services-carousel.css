@@ -125,15 +125,15 @@
     }
 
     .service-card-carousel.active .service-icon {
-        animation: float-icon 3s ease-in-out infinite;
+        animation: float-icon 5s ease-in-out infinite;
     }
 
     @keyframes float-icon {
         0%, 100% {
-            transform: translateY(0px) translateZ(0);
+            transform: translateY(0px);
         }
         50% {
-            transform: translateY(-8px) translateZ(0);
+            transform: translateY(-6px);
         }
     }
 
@@ -212,16 +212,16 @@
         inset: -4px;
         border-radius: 50%;
         border: 2px solid rgba(139, 92, 246, 0.25);
-        animation: pulse-indicator 2.5s ease-in-out infinite;
+        animation: pulse-indicator 4s ease-in-out infinite;
     }
 
     @keyframes pulse-indicator {
         0%, 100% {
             transform: scale(1);
-            opacity: 0.8;
+            opacity: 0.6;
         }
         50% {
-            transform: scale(1.4);
+            transform: scale(1.3);
             opacity: 0;
         }
     }
@@ -334,16 +334,16 @@
         animation: slideInCarousel 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
     }
 
-    /* Optimización de rendimiento */
-    .service-card-carousel,
-    .carousel-nav-btn,
-    .carousel-indicator {
+    /* Optimización de rendimiento - will-change solo cuando es necesario */
+    .service-card-carousel.active,
+    .service-card-carousel.next,
+    .service-card-carousel.prev {
         will-change: transform, opacity;
     }
 
-    .service-card-carousel {
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
+    /* Limpiar will-change en elementos ocultos para liberar memoria GPU */
+    .service-card-carousel.hidden {
+        will-change: auto;
     }
 
     /* Ajustes para pantallas muy pequeñas */
