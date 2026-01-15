@@ -23,6 +23,122 @@
     <meta name="twitter:title" content="Xinocore – Professional Web Development">
     <meta name="twitter:description" content="We build modern, fast websites ready to convert. Digital solutions for local businesses.">
     <meta name="twitter:image" content="https://xinocore.com/assets/images/og/og-image.jpg">
+
+    <!-- Schema.org / JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://xinocore.com/#organization",
+                "name": "Xinocore",
+                "url": "https://xinocore.com",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://xinocore.com/assets/images/og/og-image.jpg",
+                    "width": 1200,
+                    "height": 630
+                },
+                "description": "Desarrollo web profesional. Soluciones digitales accesibles para negocios locales.",
+                "email": "Dannyherrod@xinocore.com",
+                "foundingDate": "2024",
+                "areaServed": ["Nicaragua", "United States", "Latin America"],
+                "serviceType": ["Web Development", "Digital Menus", "Online Catalogs", "QR Cards"]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://xinocore.com/#website",
+                "url": "https://xinocore.com",
+                "name": "Xinocore",
+                "description": "Desarrollo web profesional para negocios locales",
+                "publisher": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "inLanguage": ["es", "en"]
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "https://xinocore.com/#localbusiness-ni",
+                "name": "Xinocore Nicaragua",
+                "image": "https://xinocore.com/assets/images/og/og-image.jpg",
+                "url": "https://xinocore.com",
+                "telephone": "+505 8724 8446",
+                "email": "Dannyherrod@xinocore.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Jinotega",
+                    "addressCountry": "NI"
+                },
+                "priceRange": "$$",
+                "openingHoursSpecification": {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "09:00",
+                    "closes": "18:00"
+                }
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "https://xinocore.com/#localbusiness-us",
+                "name": "Xinocore USA",
+                "image": "https://xinocore.com/assets/images/og/og-image.jpg",
+                "url": "https://xinocore.com",
+                "telephone": "+1 (862) 460-0390",
+                "email": "Alejandralanzas@xinocore.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "West Orange",
+                    "addressRegion": "NJ",
+                    "addressCountry": "US"
+                },
+                "priceRange": "$$"
+            },
+            {
+                "@type": "Service",
+                "@id": "https://xinocore.com/#service-web",
+                "name": "Desarrollo de Páginas Web",
+                "description": "Sitios web modernos, rápidos y optimizados para convertir visitantes en clientes",
+                "provider": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "serviceType": "Web Development",
+                "areaServed": ["Nicaragua", "United States", "Latin America"]
+            },
+            {
+                "@type": "Service",
+                "@id": "https://xinocore.com/#service-menus",
+                "name": "Menús Digitales",
+                "description": "Menús digitales interactivos para restaurantes y negocios de comida",
+                "provider": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "serviceType": "Digital Menu Development"
+            },
+            {
+                "@type": "Service",
+                "@id": "https://xinocore.com/#service-catalogs",
+                "name": "Catálogos Digitales",
+                "description": "Catálogos online para mostrar productos y servicios de manera profesional",
+                "provider": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "serviceType": "Digital Catalog Development"
+            },
+            {
+                "@type": "Service",
+                "@id": "https://xinocore.com/#service-qr",
+                "name": "Tarjetas QR",
+                "description": "Tarjetas de presentación digitales con código QR para networking moderno",
+                "provider": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "serviceType": "QR Business Cards"
+            }
+        ]
+    }
+    </script>
+
     <title>Xinocore - Desarrollo Web</title>
     <link rel="icon" type="image/png" href="assets/images/favicons/index.png">
 

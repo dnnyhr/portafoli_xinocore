@@ -24,6 +24,55 @@
     <meta name="twitter:description" content="Explore our web development projects. Websites, digital menus, and catalogs for local businesses.">
     <meta name="twitter:image" content="https://xinocore.com/assets/images/og/og-portfolio.jpg">
 
+    <!-- Schema.org / JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": "https://xinocore.com/portafolio#webpage",
+                "url": "https://xinocore.com/portafolio",
+                "name": "Portafolio - Xinocore",
+                "description": "Descubre nuestros proyectos de desarrollo web. Páginas, menús digitales y catálogos para negocios locales.",
+                "isPartOf": {
+                    "@id": "https://xinocore.com/#website"
+                },
+                "about": {
+                    "@id": "https://xinocore.com/#organization"
+                },
+                "inLanguage": ["es", "en"]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://xinocore.com/portafolio#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Inicio",
+                        "item": "https://xinocore.com"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Portafolio",
+                        "item": "https://xinocore.com/portafolio"
+                    }
+                ]
+            },
+            {
+                "@type": "ItemList",
+                "@id": "https://xinocore.com/portafolio#projects",
+                "name": "Proyectos de Xinocore",
+                "description": "Colección de proyectos web desarrollados por Xinocore",
+                "itemListOrder": "https://schema.org/ItemListUnordered",
+                "numberOfItems": 10
+            }
+        ]
+    }
+    </script>
+
     <title>Portafolio - Xinocore | Desarrollo Web en Jinotega</title>
     <link rel="icon" type="image/png" href="assets/images/favicons/portafolio.png">
 
