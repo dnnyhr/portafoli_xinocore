@@ -1,7 +1,45 @@
 // Netlify Function: Send auto-response email via Resend API
 // No dependencies needed - uses native fetch
 
-const RESEND_API_KEY = 're_QUS8fwjd_LbuQqeAQtAcAprPum1MN8MFS';
+// API Keys from environment variables (set in Netlify dashboard)
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+    'https://xinocore.com',
+    'https://www.xinocore.com',
+    'http://localhost:5500',
+    'http://127.0.0.1:5500'
+];
+
+// Verify reCAPTCHA token with Google
+async function verifyRecaptcha(token) {
+    if (!token || !RECAPTCHA_SECRET_KEY) {
+        console.warn('Missing reCAPTCHA token or secret key');
+        return { success: false, score: 0 };
+    }
+
+    try {
+        const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `secret=${RECAPTCHA_SECRET_KEY}&response=${token}`
+        });
+
+        const result = await response.json();
+        console.log('reCAPTCHA result:', { success: result.success, score: result.score, action: result.action });
+
+        return {
+            success: result.success && result.score >= 0.5, // Score 0.5+ = likely human
+            score: result.score || 0,
+            action: result.action
+        };
+    } catch (error) {
+        console.error('reCAPTCHA verification error:', error);
+        return { success: false, score: 0 };
+    }
+}
 
 // Email templates
 const templates = {
@@ -140,9 +178,13 @@ const templates = {
 };
 
 exports.handler = async (event, context) => {
-    // CORS headers
+    // Get origin from request
+    const origin = event.headers.origin || event.headers.Origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+
+    // CORS headers - only allow specific origins
     const headers = {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': allowedOrigin,
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
@@ -163,7 +205,21 @@ exports.handler = async (event, context) => {
 
     try {
         const data = JSON.parse(event.body);
-        const { name, email, language = 'es' } = data;
+        const { name, email, language = 'es', recaptchaToken } = data;
+
+        // Verify reCAPTCHA first
+        const recaptchaResult = await verifyRecaptcha(recaptchaToken);
+
+        if (!recaptchaResult.success) {
+            console.warn('reCAPTCHA failed - possible bot. Score:', recaptchaResult.score);
+            return {
+                statusCode: 403,
+                headers,
+                body: JSON.stringify({ error: 'reCAPTCHA verification failed', score: recaptchaResult.score })
+            };
+        }
+
+        console.log('reCAPTCHA passed. Score:', recaptchaResult.score);
 
         // Validate required fields
         if (!name || !email) {

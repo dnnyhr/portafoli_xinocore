@@ -14,8 +14,30 @@
         return localStorage.getItem('xinocore-language') || 'es';
     }
 
+    // reCAPTCHA v3 Site Key
+    const RECAPTCHA_SITE_KEY = '6LdlSkwsAAAAANXLgAdrK6CNaqRMH5POVC05WkOo';
+
+    // Get reCAPTCHA token
+    async function getRecaptchaToken() {
+        return new Promise((resolve, reject) => {
+            if (typeof grecaptcha === 'undefined') {
+                console.warn('reCAPTCHA not loaded');
+                resolve(null);
+                return;
+            }
+            grecaptcha.ready(() => {
+                grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'contact_form' })
+                    .then(token => resolve(token))
+                    .catch(err => {
+                        console.error('reCAPTCHA error:', err);
+                        resolve(null);
+                    });
+            });
+        });
+    }
+
     // Send auto-response email via Netlify Function
-    async function sendAutoResponse(formData) {
+    async function sendAutoResponse(formData, recaptchaToken) {
         try {
             const response = await fetch('/.netlify/functions/send-email', {
                 method: 'POST',
@@ -25,7 +47,8 @@
                 body: JSON.stringify({
                     name: formData.name,
                     email: formData.email,
-                    language: getCurrentLanguage()
+                    language: getCurrentLanguage(),
+                    recaptchaToken: recaptchaToken
                 })
             });
 
@@ -83,18 +106,36 @@
                 submitBtn.innerHTML = '<span>' + (getCurrentLanguage() === 'en' ? 'Sending...' : 'Enviando...') + '</span>';
             }
 
-            // Send auto-response email
-            const emailResult = await sendAutoResponse(formData);
+            // Get reCAPTCHA token
+            const recaptchaToken = await getRecaptchaToken();
+
+            if (!recaptchaToken) {
+                console.warn('⚠️ Could not get reCAPTCHA token, continuing anyway...');
+            }
+
+            // Send auto-response email with reCAPTCHA verification
+            const emailResult = await sendAutoResponse(formData, recaptchaToken);
 
             if (emailResult.success) {
                 console.log('✅ Auto-response sent, now submitting to FormSubmit...');
+                // Submit to FormSubmit only if reCAPTCHA passed
+                contactForm.submit();
+            } else if (emailResult.error === 'reCAPTCHA verification failed') {
+                // Bot detected - don't submit
+                showFormMessage(formMessage, getCurrentLanguage() === 'en'
+                    ? 'Verification failed. Please try again.'
+                    : 'Verificación fallida. Por favor intenta de nuevo.', 'error');
+                if (submitBtn) {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>' + (getCurrentLanguage() === 'en' ? 'Send Message' : 'Enviar Mensaje') + '</span>';
+                }
+                return;
             } else {
                 console.warn('⚠️ Auto-response failed:', emailResult.error);
                 // Continue anyway - don't block the form submission
+                contactForm.submit();
             }
-
-            // Submit to FormSubmit
-            contactForm.submit();
         });
 
         console.log('✅ Email auto-response system ready');
