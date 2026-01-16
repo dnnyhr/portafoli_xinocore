@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="assets/css/main.css?v=3.0">
     <link rel="stylesheet" href="assets/css/core.animations.css?v=3.0">
     <link rel="stylesheet" href="assets/css/core.effects.css?v=3.0">
+    <link rel="stylesheet" href="assets/css/components.language-selector.css?v=1.0">
 
     <!-- GSAP para animaciones -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -158,6 +159,16 @@
     </style>
 </head>
 <body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-selector-btn" data-lang="es" aria-label="Español">
+            🇪🇸 ES
+        </button>
+        <button class="lang-selector-btn" data-lang="en" aria-label="English">
+            🇺🇸 EN
+        </button>
+    </div>
+
     <div class="error-page">
         <!-- Fondo de estrellas -->
         <div class="stars"></div>
@@ -186,13 +197,13 @@
             </div>
 
             <!-- Número 404 -->
-            <div class="error-code" id="error-code">404</div>
+            <div class="error-code" id="error-code" data-i18n="error404.code">404</div>
 
             <!-- Título -->
-            <h1 class="error-title" id="error-title">Página No Encontrada</h1>
+            <h1 class="error-title" id="error-title" data-i18n="error404.title">Página No Encontrada</h1>
 
             <!-- Descripción -->
-            <p class="error-description" id="error-description">
+            <p class="error-description" id="error-description" data-i18n="error404.description">
                 Lo sentimos, la página que buscas no existe o fue movida.
                 No te preocupes, podemos ayudarte a encontrar lo que necesitas.
             </p>
@@ -204,14 +215,14 @@
                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                     </svg>
-                    Volver al Inicio
+                    <span data-i18n="error404.btn_home">Volver al Inicio</span>
                 </a>
                 <a href="./index.html#contacto" class="btn btn-secondary">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                         <polyline points="22,6 12,13 2,6"/>
                     </svg>
-                    Contactar
+                    <span data-i18n="error404.btn_contact">Contactar</span>
                 </a>
             </div>
         </div>
@@ -326,5 +337,8 @@
             });
         });
     </script>
+
+    <!-- i18n System -->
+    <script src="assets/js/i18n.js?v=1.0"></script>
 </body>
 </html>

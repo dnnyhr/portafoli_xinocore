@@ -15,7 +15,12 @@
     <title>¡Gracias por tu mensaje! - Xinocore</title>
 
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Language Selector CSS -->
+    <link rel="stylesheet" href="assets/css/components.language-selector.css?v=1.0">
 
     <style>
         * {
@@ -378,6 +383,16 @@
     </style>
 </head>
 <body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <button class="lang-selector-btn" data-lang="es" aria-label="Español">
+            🇪🇸 ES
+        </button>
+        <button class="lang-selector-btn" data-lang="en" aria-label="English">
+            🇺🇸 EN
+        </button>
+    </div>
+
     <!-- Cosmic Background -->
     <div class="space-bg">
         <div class="stars"></div>
@@ -400,9 +415,9 @@
             </svg>
         </div>
 
-        <h1 id="title">¡Mensaje Enviado con Éxito!</h1>
+        <h1 id="title" data-i18n="thanks.title">¡Mensaje Enviado con Éxito!</h1>
 
-        <p id="message">
+        <p id="message" data-i18n="thanks.message">
             Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos
             a tu correo electrónico lo antes posible.
         </p>
@@ -412,13 +427,13 @@
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
             </svg>
-            <h3>También puedes escribirnos directamente a:</h3>
-            <a href="mailto:Dannyherrod@xinocore.com">Dannyherrod@xinocore.com</a>
+            <h3 data-i18n="thanks.email_label">También puedes escribirnos directamente a:</h3>
+            <a href="mailto:Dannyherrod@xinocore.com" id="contact-email-link"><span data-contact="email">Dannyherrod@xinocore.com</span></a>
         </div>
 
-        <a href="index.html" class="btn" id="btn">Volver al Inicio</a>
+        <a href="index.html" class="btn" id="btn" data-i18n="thanks.btn_home">Volver al Inicio</a>
 
-        <p class="countdown" id="countdown">Serás redirigido automáticamente en <span id="seconds">10</span> segundos...</p>
+        <p class="countdown" id="countdown"><span data-i18n="thanks.countdown">Serás redirigido automáticamente en</span> <span id="seconds">10</span> <span data-i18n="thanks.countdown_seconds">segundos...</span></p>
     </div>
 
     <!-- GSAP Library -->
@@ -632,5 +647,43 @@
             });
         });
     </script>
+
+    <!-- Config & Region System -->
+    <script src="assets/js/config.js?v=1.0"></script>
+    <script src="assets/js/components.contact-region.js?v=1.0"></script>
+
+    <!-- Update email link href when region changes -->
+    <script>
+        (function() {
+            'use strict';
+
+            function updateEmailLink() {
+                const emailSpan = document.querySelector('[data-contact="email"]');
+                const emailLink = document.getElementById('contact-email-link');
+
+                if (emailSpan && emailLink) {
+                    const email = emailSpan.textContent;
+                    emailLink.href = 'mailto:' + email;
+                }
+            }
+
+            // Update after region detection
+            const checkInterval = setInterval(() => {
+                if (window.detectedRegion) {
+                    setTimeout(updateEmailLink, 200);
+                    clearInterval(checkInterval);
+                }
+            }, 500);
+
+            // Initial update
+            setTimeout(updateEmailLink, 500);
+
+            // Stop checking after 10 seconds
+            setTimeout(() => clearInterval(checkInterval), 10000);
+        })();
+    </script>
+
+    <!-- i18n System -->
+    <script src="assets/js/i18n.js?v=1.0"></script>
 </body>
 </html>

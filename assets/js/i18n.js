@@ -126,6 +126,12 @@
         if (path.includes('portafolio')) {
             return 'portfolio';
         }
+        if (path.includes('gracias')) {
+            return 'thanks';
+        }
+        if (path.includes('404')) {
+            return 'error404';
+        }
         return 'index';
     }
 

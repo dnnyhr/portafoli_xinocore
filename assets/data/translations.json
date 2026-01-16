@@ -2,7 +2,9 @@
   "es": {
     "page_title": {
       "index": "Xinocore - Desarrollo Web",
-      "portfolio": "Portafolio - Xinocore | Desarrollo Web"
+      "portfolio": "Portafolio - Xinocore | Desarrollo Web",
+      "thanks": "¡Gracias por tu mensaje! - Xinocore",
+      "error404": "404 - Página No Encontrada | Xinocore"
     },
     "og": {
       "site_name": "Xinocore",
@@ -173,12 +175,31 @@
       "cta_title": "¿Listo para Tu Proyecto?",
       "cta_text": "Tu negocio merece una web que brille. Creamos algo único y funcional, hecho a tu medida",
       "cta_button": "Iniciar Proyecto"
+    },
+    "thanks": {
+      "page_title": "¡Gracias por tu mensaje! - Xinocore",
+      "title": "¡Mensaje Enviado con Éxito!",
+      "message": "Gracias por contactarnos. Hemos recibido tu mensaje y te responderemos a tu correo electrónico lo antes posible.",
+      "email_label": "También puedes escribirnos directamente a:",
+      "btn_home": "Volver al Inicio",
+      "countdown": "Serás redirigido automáticamente en",
+      "countdown_seconds": "segundos..."
+    },
+    "error404": {
+      "page_title": "404 - Página No Encontrada | Xinocore",
+      "code": "404",
+      "title": "Página No Encontrada",
+      "description": "Lo sentimos, la página que buscas no existe o fue movida. No te preocupes, podemos ayudarte a encontrar lo que necesitas.",
+      "btn_home": "Volver al Inicio",
+      "btn_contact": "Contactar"
     }
   },
   "en": {
     "page_title": {
       "index": "Xinocore - Web Development",
-      "portfolio": "Portfolio - Xinocore | Web Development"
+      "portfolio": "Portfolio - Xinocore | Web Development",
+      "thanks": "Thank you for your message! - Xinocore",
+      "error404": "404 - Page Not Found | Xinocore"
     },
     "og": {
       "site_name": "Xinocore",
@@ -349,6 +370,23 @@
       "cta_title": "Ready for Your Project?",
       "cta_text": "Your business deserves a website that shines. We create something unique and functional, made to fit you",
       "cta_button": "Start Project"
+    },
+    "thanks": {
+      "page_title": "Thank you for your message! - Xinocore",
+      "title": "Message Sent Successfully!",
+      "message": "Thank you for contacting us. We have received your message and will respond to your email as soon as possible.",
+      "email_label": "You can also write to us directly at:",
+      "btn_home": "Back to Home",
+      "countdown": "You will be automatically redirected in",
+      "countdown_seconds": "seconds..."
+    },
+    "error404": {
+      "page_title": "404 - Page Not Found | Xinocore",
+      "code": "404",
+      "title": "Page Not Found",
+      "description": "Sorry, the page you're looking for doesn't exist or has been moved. Don't worry, we can help you find what you need.",
+      "btn_home": "Back to Home",
+      "btn_contact": "Contact Us"
     }
   }
 }
