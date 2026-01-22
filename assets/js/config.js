@@ -10,7 +10,7 @@ const XinocoreConfig = {
      * true = Mostrar logs en consola
      * false = Ocultar todos los logs (modo producción)
      */
-    development: false,
+    development: true,
 
     /**
      * Información de contacto

@@ -14,6 +14,28 @@
         return localStorage.getItem('xinocore-language') || 'es';
     }
 
+    // Get notification email based on detected region
+    function getNotificationEmail() {
+        // Try to get from ContactRegion system
+        if (window.ContactRegion && typeof window.ContactRegion.getContactInfo === 'function') {
+            const region = window.ContactRegion.getRegion();
+            const contactInfo = window.ContactRegion.getContactInfo(region);
+            if (contactInfo && contactInfo.email) {
+                return contactInfo.email;
+            }
+        }
+        // Fallback to XinocoreConfig
+        if (typeof XinocoreConfig !== 'undefined' && XinocoreConfig.contact.regions) {
+            const region = window.detectedRegion || XinocoreConfig.contact.regions.default;
+            const regionConfig = XinocoreConfig.contact.regions[region];
+            if (regionConfig && regionConfig.email) {
+                return regionConfig.email;
+            }
+        }
+        // Default fallback
+        return 'Dannyherrod@xinocore.com';
+    }
+
     // reCAPTCHA v3 Site Key
     const RECAPTCHA_SITE_KEY = '6LdlSkwsAAAAANXLgAdrK6CNaqRMH5POVC05WkOo';
 
@@ -36,8 +58,8 @@
         });
     }
 
-    // Send auto-response email via Netlify Function
-    async function sendAutoResponse(formData, recaptchaToken) {
+    // Send contact form via Netlify Function (auto-response + notification)
+    async function sendContactForm(formData, recaptchaToken) {
         try {
             const response = await fetch('/.netlify/functions/send-email', {
                 method: 'POST',
@@ -47,15 +69,19 @@
                 body: JSON.stringify({
                     name: formData.name,
                     email: formData.email,
+                    phone: formData.phone,
+                    service: formData.service,
+                    message: formData.message,
                     language: getCurrentLanguage(),
-                    recaptchaToken: recaptchaToken
+                    recaptchaToken: recaptchaToken,
+                    notificationEmail: getNotificationEmail()
                 })
             });
 
             const result = await response.json();
 
             if (response.ok) {
-                console.log('✅ Auto-response email sent:', result.id);
+                console.log('✅ Contact form sent:', result.autoResponseId);
                 return { success: true, result };
             } else {
                 console.error('❌ Failed to send email:', result.error);
@@ -113,13 +139,23 @@
                 console.warn('⚠️ Could not get reCAPTCHA token, continuing anyway...');
             }
 
-            // Send auto-response email with reCAPTCHA verification
-            const emailResult = await sendAutoResponse(formData, recaptchaToken);
+            // Send contact form (auto-response to client + notification to owner)
+            const emailResult = await sendContactForm(formData, recaptchaToken);
 
             if (emailResult.success) {
-                console.log('✅ Auto-response sent, now submitting to FormSubmit...');
-                // Submit to FormSubmit only if reCAPTCHA passed
-                contactForm.submit();
+                console.log('✅ Form submitted successfully!');
+                // Show success message
+                showFormMessage(formMessage, getCurrentLanguage() === 'en'
+                    ? 'Message sent successfully! We\'ll get back to you soon.'
+                    : '¡Mensaje enviado con éxito! Te responderemos pronto.', 'success');
+                // Reset form
+                contactForm.reset();
+                // Reset button
+                if (submitBtn) {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>' + (getCurrentLanguage() === 'en' ? 'Send Message' : 'Enviar Mensaje') + '</span>';
+                }
             } else if (emailResult.error === 'reCAPTCHA verification failed') {
                 // Bot detected - don't submit
                 showFormMessage(formMessage, getCurrentLanguage() === 'en'
@@ -130,15 +166,21 @@
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<span>' + (getCurrentLanguage() === 'en' ? 'Send Message' : 'Enviar Mensaje') + '</span>';
                 }
-                return;
             } else {
-                console.warn('⚠️ Auto-response failed:', emailResult.error);
-                // Continue anyway - don't block the form submission
-                contactForm.submit();
+                // Other error
+                console.warn('⚠️ Form submission failed:', emailResult.error);
+                showFormMessage(formMessage, getCurrentLanguage() === 'en'
+                    ? 'Something went wrong. Please try again.'
+                    : 'Algo salió mal. Por favor intenta de nuevo.', 'error');
+                if (submitBtn) {
+                    submitBtn.classList.remove('loading');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span>' + (getCurrentLanguage() === 'en' ? 'Send Message' : 'Enviar Mensaje') + '</span>';
+                }
             }
         });
 
-        console.log('✅ Email auto-response system ready');
+        console.log('✅ Contact form system ready (no FormSubmit)');
     }
 
     // Show form message helper

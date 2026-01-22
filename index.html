@@ -555,21 +555,9 @@
                         <p data-i18n="contact.form_subtitle">Completa el formulario y te responderemos a tu correo a la brevedad posible</p>
                     </div>
 
-                    <form class="contact-form" id="contact-form" action="https://formsubmit.co/Dannyherrod@xinocore.com" method="POST">
+                    <form class="contact-form" id="contact-form">
                         <!-- Honeypot para prevenir spam -->
-                        <input type="text" name="_honey" style="display:none">
-
-                        <!-- Deshabilitar captcha de FormSubmit -->
-                        <input type="hidden" name="_captcha" value="false">
-
-                        <!-- Página de agradecimiento -->
-                        <input type="hidden" name="_next" value="https://xinocore.com/gracias">
-
-                        <!-- Template personalizado -->
-                        <input type="hidden" name="_template" value="table">
-
-                        <!-- Asunto del correo -->
-                        <input type="hidden" name="_subject" value="Nuevo mensaje de contacto desde Xinocore">
+                        <input type="text" name="_honey" style="display:none" autocomplete="off">
 
                         <div class="form-group">
                             <label for="name" data-i18n="contact.form.name">Nombre Completo *</label>

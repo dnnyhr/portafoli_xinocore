@@ -93,22 +93,9 @@
             }
         });
 
-        // Actualizar action del formulario de contacto si existe
-        updateContactFormAction(contactInfo.email);
-    }
-
-    /**
-     * Actualizar el action del formulario para enviar al email correcto
-     */
-    function updateContactFormAction(email) {
-        const contactForm = document.getElementById('contact-form');
-        if (!contactForm) return;
-
-        // FormSubmit.co acepta el email en la URL
-        const formSubmitUrl = `https://formsubmit.co/${email}`;
-        contactForm.setAttribute('action', formSubmitUrl);
-
-        console.log('[Contact Region] 📬 Formulario actualizado para enviar a:', email);
+        // Note: Form action is no longer needed since we use Netlify Functions
+        // The notification email is sent dynamically via components.emailjs.js
+        console.log('[Contact Region] 📬 Email de notificación para esta región:', contactInfo.email);
     }
 
     /**

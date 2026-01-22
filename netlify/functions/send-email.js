@@ -1,9 +1,18 @@
-// Netlify Function: Send auto-response email via Resend API
+// Netlify Function: Send auto-response + notification emails via Resend API
 // No dependencies needed - uses native fetch
 
 // API Keys from environment variables (set in Netlify dashboard)
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+
+// Allowed notification emails (for security - only send to these)
+const ALLOWED_targetNotificationEmailS = [
+    'Dannyherrod@xinocore.com',
+    'Alejandralanzas@xinocore.com'
+];
+
+// Default notification email
+const DEFAULT_targetNotificationEmail = 'Dannyherrod@xinocore.com';
 
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
@@ -177,6 +186,204 @@ const templates = {
     })
 };
 
+// Notification templates for owner (you receive this when someone contacts you)
+const notificationTemplates = {
+    es: (data) => ({
+        subject: `📬 Nuevo mensaje de ${data.name} - Xinocore`,
+        html: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;font-family:'Nunito',Arial,sans-serif;background:#f8f9ff">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(180deg,#f8f9ff 0%,#f0f0ff 100%);padding:30px 15px">
+        <tr>
+            <td align="center">
+                <p style="color:#c4b5fd;font-size:16px;letter-spacing:12px;margin:0 0 18px">✦ ✧ ★ ✧ ✦</p>
+                <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(99,102,241,0.15),0 0 0 1px rgba(99,102,241,0.08)">
+                    <tr>
+                        <td style="padding:45px 40px;text-align:center;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#f472b6 100%)">
+                            <img src="https://xinocoree.netlify.app/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2)">
+                            <h1 style="font-family:'Montserrat',Arial,sans-serif;color:#ffffff;font-size:28px;margin:0 0 6px;font-weight:800">📬 Nuevo Mensaje</h1>
+                            <p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0;letter-spacing:2px;text-transform:uppercase">Formulario de Contacto</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:40px;background:#ffffff">
+                            <p style="font-family:'Montserrat',Arial,sans-serif;color:#1a1a2e;font-size:20px;margin:0 0 25px;font-weight:700">¡Tienes un nuevo mensaje! 🎉</p>
+
+                            <!-- Datos del contacto -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px">
+                                <tr>
+                                    <td style="background:linear-gradient(135deg,#faf5ff 0%,#f5f3ff 100%);border-radius:12px;padding:20px;border:1px solid #e9d5ff">
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="padding:8px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">👤 Nombre</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0;font-weight:600">${data.name}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">📧 Email</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0"><a href="mailto:${data.email}" style="color:#6366f1;text-decoration:none">${data.email}</a></p>
+                                                </td>
+                                            </tr>
+                                            ${data.phone ? `<tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">📱 Teléfono</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0"><a href="tel:${data.phone}" style="color:#6366f1;text-decoration:none">${data.phone}</a></p>
+                                                </td>
+                                            </tr>` : ''}
+                                            ${data.service ? `<tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">🛠️ Servicio</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0">${data.service}</p>
+                                                </td>
+                                            </tr>` : ''}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Mensaje -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px">
+                                <tr>
+                                    <td style="background:#f8fafc;border-left:4px solid #6366f1;padding:20px;border-radius:0 12px 12px 0">
+                                        <span style="color:#6366f1;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:10px">💬 Mensaje</span>
+                                        <p style="color:#374151;font-size:15px;margin:0;line-height:1.8;white-space:pre-wrap">${data.message}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Botones de acción -->
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center" style="padding:5px">
+                                        <a href="mailto:${data.email}?subject=Re: Tu mensaje en Xinocore" style="display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#ffffff;text-decoration:none;padding:15px 30px;border-radius:50px;font-family:'Montserrat',Arial,sans-serif;font-weight:700;font-size:14px;box-shadow:0 8px 25px rgba(99,102,241,0.3)">✉️ Responder por Email</a>
+                                    </td>
+                                </tr>
+                                ${data.phone ? `<tr>
+                                    <td align="center" style="padding:10px 5px 5px">
+                                        <a href="https://wa.me/${data.phone.replace(/[^0-9]/g, '')}" style="display:inline-block;background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);color:#ffffff;text-decoration:none;padding:12px 25px;border-radius:50px;font-family:'Montserrat',Arial,sans-serif;font-weight:700;font-size:13px;box-shadow:0 8px 25px rgba(37,211,102,0.3)">💬 WhatsApp</a>
+                                    </td>
+                                </tr>` : ''}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:20px 40px;text-align:center;background:#fafaff;border-top:1px solid #f0f0f5">
+                            <p style="color:#9ca3af;font-size:12px;margin:0">Recibido el ${new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                        </td>
+                    </tr>
+                </table>
+                <p style="color:#d4d4e8;font-size:14px;letter-spacing:12px;margin:20px 0 0">✧ · ✦ · ✧</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`
+    }),
+    en: (data) => ({
+        subject: `📬 New message from ${data.name} - Xinocore`,
+        html: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;font-family:'Nunito',Arial,sans-serif;background:#f8f9ff">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(180deg,#f8f9ff 0%,#f0f0ff 100%);padding:30px 15px">
+        <tr>
+            <td align="center">
+                <p style="color:#c4b5fd;font-size:16px;letter-spacing:12px;margin:0 0 18px">✦ ✧ ★ ✧ ✦</p>
+                <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(99,102,241,0.15),0 0 0 1px rgba(99,102,241,0.08)">
+                    <tr>
+                        <td style="padding:45px 40px;text-align:center;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#f472b6 100%)">
+                            <img src="https://xinocoree.netlify.app/assets/images/icons/correo.png" alt="Xinocore" width="70" height="70" style="display:block;margin:0 auto 18px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.2)">
+                            <h1 style="font-family:'Montserrat',Arial,sans-serif;color:#ffffff;font-size:28px;margin:0 0 6px;font-weight:800">📬 New Message</h1>
+                            <p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0;letter-spacing:2px;text-transform:uppercase">Contact Form</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:40px;background:#ffffff">
+                            <p style="font-family:'Montserrat',Arial,sans-serif;color:#1a1a2e;font-size:20px;margin:0 0 25px;font-weight:700">You have a new message! 🎉</p>
+
+                            <!-- Contact data -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px">
+                                <tr>
+                                    <td style="background:linear-gradient(135deg,#faf5ff 0%,#f5f3ff 100%);border-radius:12px;padding:20px;border:1px solid #e9d5ff">
+                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td style="padding:8px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">👤 Name</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0;font-weight:600">${data.name}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">📧 Email</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0"><a href="mailto:${data.email}" style="color:#6366f1;text-decoration:none">${data.email}</a></p>
+                                                </td>
+                                            </tr>
+                                            ${data.phone ? `<tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">📱 Phone</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0"><a href="tel:${data.phone}" style="color:#6366f1;text-decoration:none">${data.phone}</a></p>
+                                                </td>
+                                            </tr>` : ''}
+                                            ${data.service ? `<tr>
+                                                <td style="padding:12px 0;border-bottom:1px solid #e9d5ff">
+                                                    <span style="color:#7c3aed;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px">🛠️ Service</span>
+                                                    <p style="color:#1a1a2e;font-size:16px;margin:5px 0 0">${data.service}</p>
+                                                </td>
+                                            </tr>` : ''}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Message -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 25px">
+                                <tr>
+                                    <td style="background:#f8fafc;border-left:4px solid #6366f1;padding:20px;border-radius:0 12px 12px 0">
+                                        <span style="color:#6366f1;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:10px">💬 Message</span>
+                                        <p style="color:#374151;font-size:15px;margin:0;line-height:1.8;white-space:pre-wrap">${data.message}</p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Action buttons -->
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td align="center" style="padding:5px">
+                                        <a href="mailto:${data.email}?subject=Re: Your message to Xinocore" style="display:inline-block;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);color:#ffffff;text-decoration:none;padding:15px 30px;border-radius:50px;font-family:'Montserrat',Arial,sans-serif;font-weight:700;font-size:14px;box-shadow:0 8px 25px rgba(99,102,241,0.3)">✉️ Reply by Email</a>
+                                    </td>
+                                </tr>
+                                ${data.phone ? `<tr>
+                                    <td align="center" style="padding:10px 5px 5px">
+                                        <a href="https://wa.me/${data.phone.replace(/[^0-9]/g, '')}" style="display:inline-block;background:linear-gradient(135deg,#25d366 0%,#128c7e 100%);color:#ffffff;text-decoration:none;padding:12px 25px;border-radius:50px;font-family:'Montserrat',Arial,sans-serif;font-weight:700;font-size:13px;box-shadow:0 8px 25px rgba(37,211,102,0.3)">💬 WhatsApp</a>
+                                    </td>
+                                </tr>` : ''}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:20px 40px;text-align:center;background:#fafaff;border-top:1px solid #f0f0f5">
+                            <p style="color:#9ca3af;font-size:12px;margin:0">Received on ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                        </td>
+                    </tr>
+                </table>
+                <p style="color:#d4d4e8;font-size:14px;letter-spacing:12px;margin:20px 0 0">✧ · ✦ · ✧</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>`
+    })
+};
+
 exports.handler = async (event, context) => {
     // Get origin from request
     const origin = event.headers.origin || event.headers.Origin || '';
@@ -205,7 +412,12 @@ exports.handler = async (event, context) => {
 
     try {
         const data = JSON.parse(event.body);
-        const { name, email, language = 'es', recaptchaToken } = data;
+        const { name, email, phone, service, message, language = 'es', recaptchaToken, notificationEmail } = data;
+
+        // Validate and get notification email (security check)
+        const targetNotificationEmail = ALLOWED_targetNotificationEmailS.includes(notificationEmail)
+            ? notificationEmail
+            : DEFAULT_targetNotificationEmail;
 
         // Verify reCAPTCHA first
         const recaptchaResult = await verifyRecaptcha(recaptchaToken);
@@ -222,49 +434,86 @@ exports.handler = async (event, context) => {
         console.log('reCAPTCHA passed. Score:', recaptchaResult.score);
 
         // Validate required fields
-        if (!name || !email) {
+        if (!name || !email || !message) {
             return {
                 statusCode: 400,
                 headers,
-                body: JSON.stringify({ error: 'Name and email are required' })
+                body: JSON.stringify({ error: 'Name, email and message are required' })
             };
         }
 
-        // Get template based on language
-        const template = templates[language] || templates.es;
-        const emailContent = template(name);
+        // Prepare form data for notification
+        const formData = { name, email, phone, service, message };
 
-        // Send email via Resend API
-        const response = await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${RESEND_API_KEY}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                from: 'Xinocore <noreply@xinocore.com>',
-                to: [email],
-                subject: emailContent.subject,
-                html: emailContent.html
+        // Get templates based on language
+        const autoResponseTemplate = templates[language] || templates.es;
+        const notificationTemplate = notificationTemplates[language] || notificationTemplates.es;
+
+        const autoResponseContent = autoResponseTemplate(name);
+        const notificationContent = notificationTemplate(formData);
+
+        // Send both emails in parallel
+        const [autoResponseResult, notificationResult] = await Promise.all([
+            // 1. Auto-response to customer
+            fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${RESEND_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    from: 'Xinocore <noreply@xinocore.com>',
+                    to: [email],
+                    subject: autoResponseContent.subject,
+                    html: autoResponseContent.html
+                })
+            }),
+            // 2. Notification to owner (you)
+            fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${RESEND_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    from: 'Xinocore Forms <noreply@xinocore.com>',
+                    to: [targetNotificationEmail],
+                    reply_to: email,
+                    subject: notificationContent.subject,
+                    html: notificationContent.html
+                })
             })
-        });
+        ]);
 
-        const result = await response.json();
+        const autoResponseData = await autoResponseResult.json();
+        const notificationData = await notificationResult.json();
 
-        if (!response.ok) {
-            console.error('Resend API error:', result);
+        // Check results
+        if (!autoResponseResult.ok) {
+            console.error('Auto-response error:', autoResponseData);
+        }
+        if (!notificationResult.ok) {
+            console.error('Notification error:', notificationData);
+        }
+
+        // Return success if at least auto-response worked
+        if (autoResponseResult.ok) {
+            console.log('Emails sent - Auto-response:', autoResponseData.id, '| Notification:', notificationData.id || 'failed');
             return {
-                statusCode: response.status,
+                statusCode: 200,
                 headers,
-                body: JSON.stringify({ error: result.message || 'Failed to send email' })
+                body: JSON.stringify({
+                    success: true,
+                    autoResponseId: autoResponseData.id,
+                    notificationId: notificationData.id || null
+                })
             };
         }
 
-        console.log('Email sent successfully:', result.id);
         return {
-            statusCode: 200,
+            statusCode: autoResponseResult.status,
             headers,
-            body: JSON.stringify({ success: true, id: result.id })
+            body: JSON.stringify({ error: autoResponseData.message || 'Failed to send email' })
         };
 
     } catch (error) {
