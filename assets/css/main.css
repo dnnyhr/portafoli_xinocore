@@ -63,11 +63,6 @@
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
-    /* Prevenir pull-to-refresh en iOS */
-    overscroll-behavior-y: none;
-    /* iOS viewport fix */
-    height: 100%;
-    height: -webkit-fill-available;
 }
 
 body {
@@ -79,12 +74,6 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Prevenir pull-to-refresh y bounce en iOS */
-    overscroll-behavior-y: none;
-    -webkit-overflow-scrolling: touch;
-    /* iOS viewport fix */
-    min-height: 100%;
-    min-height: -webkit-fill-available;
 }
 
 img {
@@ -428,12 +417,9 @@ p {
     width: 80%;
     max-width: 300px;
     height: 100vh;
-    height: 100dvh; /* Dynamic viewport height for iOS */
-    height: -webkit-fill-available;
     background: white;
     box-shadow: none;
     padding: 5rem 2rem 2rem;
-    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -505,8 +491,6 @@ p {
 .hero {
     position: relative;
     min-height: 100vh;
-    min-height: 100dvh; /* Dynamic viewport height for iOS */
-    min-height: -webkit-fill-available;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1491,7 +1475,6 @@ p {
 .portfolio-hero {
     position: relative;
     min-height: 60vh;
-    min-height: 60dvh; /* Dynamic viewport height for iOS */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2378,5 +2361,36 @@ p {
     .social-link svg {
         width: 20px;
         height: 20px;
+    }
+}
+
+/* ========================================
+   iOS SAFARI FIX
+   @supports (-webkit-touch-callout: none) solo aplica en iOS Safari
+   Esto evita el salto de la barra de navegación sin afectar Android/PC
+   ======================================== */
+@supports (-webkit-touch-callout: none) {
+    body {
+        /* Prevenir el efecto bounce en iOS */
+        overscroll-behavior-y: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+
+    .portfolio-hero {
+        min-height: -webkit-fill-available;
+    }
+
+    .nav {
+        height: -webkit-fill-available;
+        padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+    }
+
+    /* Ajuste para el botón flotante de WhatsApp */
+    .whatsapp-float {
+        bottom: calc(2rem + env(safe-area-inset-bottom));
     }
 }
